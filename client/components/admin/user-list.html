@@ -1,4 +1,50 @@
 <template name="userList">
-	user list
-	{{ value }}
+	<h1> - USER LIST- </h1>
+	<table border="1">
+		<tr>
+			<td>User Id</td>
+			<td>Username</td>
+			<td>Password</td>
+			<td>First Name</td>
+			<td>Middle Name</td>
+			<td>Last Name</td>
+			<td>State</td>
+			<td>Ban or Not</td>
+			<td>User Type</td>
+			<td>Program</td>
+			<td>Year</td>
+			<td>Department</td>
+			<td colspan="2">Action</td>
+		</tr>
+		{{#each users}}
+		<tr>
+			<td>{{_id}}</td>
+			<td>{{username}}</td>
+			<td>{{password}}</td>
+			<td>{{first_name}}</td>
+			<td>{{middle_name}}</td>
+			<td>{{last_name}}</td>
+			<td>
+				{{#if state}}
+					Online
+				{{else}}
+					Offline
+				{{/if}}
+			</td>
+			<td>
+				{{#if banned}}
+					Banned
+				{{else}}
+					Not Ban
+				{{/if}}
+			</td>
+			<td>{{user_type}}</td>
+			<td>{{program}}</td>
+			<td>{{year}}</td>
+			<td>{{department}}</td>
+			<td><button id="edit">Edit</button></td>
+			<td><button id="delete">Delete</button></td>
+		</tr>
+		{{/each}}
+	</table>
 </template>

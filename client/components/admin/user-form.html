@@ -1,4 +1,20 @@
 <template name="userForm">
-	user form<br>
-	{{ value }}
+	<h1> - USER FORM - </h1>
+	<form id="frmUser">
+		<label for="username">Username: </label> <input id="username" name="username" type="text" /><br/>
+		<label for="password">Password: </label> <input id="password" name="password" type="password" /><br/>
+		<label for="first_name">First Name: </label> <input id="first_name" name="first_name" type="text" /><br/>
+		<label for="last_name">Middle Name: </label> <input id="middle_name" name="middle_name" type="text" /><br/>
+		<label for="last_name">Last Name: </label> <input  id="last_name" name="last_name" type="text" /><br/>
+		<label for="user_type">User Type: </label>
+		<select id="user_type" name="user_type">
+			<option value="1">Instructor</option>
+			<option value="2">Students</option>
+		</select> <br/>
+		<label for="department">Department: </label> <input id="department" name="department" type="text" /><br/>
+		<label for="program">Program: </label> <input id="program" name="program" type="text" /><br/>
+		<label for="year">Year: </label> <input id="year" name="year" type="number" /><br/>
+
+		<input id="add" type="submit" value="ADD" class="newUser" />
+	</form>
 </template>
