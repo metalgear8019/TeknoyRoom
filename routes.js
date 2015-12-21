@@ -1,1 +1,0 @@
-/*routing for both client and server side URL patterns*/
