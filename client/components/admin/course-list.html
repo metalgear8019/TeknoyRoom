@@ -1,0 +1,22 @@
+<template name="courseList">
+	<h1> - Course List - </h1>
+	<table border="1" class="table">
+		<tr>
+			<th>Course Id</th>
+			<th>Subject Number</th>
+			<th>Title</th>
+			<th>Unit/s</th>
+			<th colspan="2">Actions</th>
+		</tr>
+		{{#each courses}}
+			<tr>
+				<td>{{_id}}</td>
+				<td>{{subject_number}}</td>
+				<td>{{title}}</td>
+				<td>{{unit}}</td>
+				<td><button id="edit">Edit</button></td>
+				<td><button id="delete">Delete</button></td>
+			</tr>
+		{{/each}}
+	</table>
+</template>
