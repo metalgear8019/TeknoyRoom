@@ -1,0 +1,17 @@
+<template name="semesterForm">
+	<h1> - semester form - </h1>
+	<form id="frmSemester">
+		<label for="school_year">School Year: </label> <input id="school_year" name="school_year" type="text" /><br/>
+		<label for="start_date">Start Date: </label> <input id="start_date" name="start_date" type="date" /><br/>
+		<label for="end_date">End Date: </label> <input id="end_date" name="end_date" type="date" /><br/>
+		<label for="name">Name: </label>
+		<select id="name" name="name">
+			<option value="1st">1st Semester</option>
+			<option value="2nd">2nd Semester</option>
+			<option value="3rd">3rd Semester</option>
+			<option value="summer">Summer Semester</option>
+		</select>
+		<br />
+		<input id="addSemester" type="submit" value="Add Semester" />
+	</form>
+</template>

@@ -11,24 +11,24 @@ Template.courseList.helpers
 Template.courseList.events
 (
 	{
-		"click #edit":function (event)
+		'click #edit':function (event)
 		{
 			event.preventDefault();
 
 			var course = {
-							subject_number: "subject_number",
-							title: "title",
-							unit: "unit"
+							subject_number: 'subject_number',
+							title: 'title',
+							unit: 'unit'
 						 };
 
-			Meteor.call("updateCourse", this._id, course);
+			Meteor.call('updateCourse', this._id, course);
 
 		},
 
-		"click #delete": function (event)
+		'click #delete': function (event)
 		{
 			event.preventDefault();
-			Meteor.call("deleteCourse", this._id);
+			Meteor.call('deleteCourse', this._id);
 		}
 	}
 );

@@ -1,4 +1,24 @@
 <template name="sectionList">
-	section list
-	{{ value }}
+	<h1> - section list - </h1>
+	<table class="table" border="1">
+		<tr>
+			<th>Section ID</th>
+			<th>Name</th>
+			<th>Course</th>
+			<th>Semester</th>
+			<th>Schedule</th>
+			<th colspan="2">Action</th>
+		</tr>
+		{{#each sections}}
+			<tr>
+				<td>{{_id}}</td>
+				<td>{{name}}</td>
+				<td>{{course}}</td>
+				<td>{{semester}}</td>
+				<td>{{schedule}}</td>
+				<td><button id="edit">Edit</button></td>
+				<td><button id="delete">Delete</button></td>
+			</tr>
+		{{/each}}
+	</table>
 </template>

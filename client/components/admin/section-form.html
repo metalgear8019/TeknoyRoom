@@ -1,4 +1,22 @@
 <template name="sectionForm">
-	section form<br>
-	{{ value }}
+	<h1> - section form - </h1>
+	<form id="frmSection">
+		<label for="name">Name: </label> <input id="name" name="name" type="text" /><br />
+		<label for="course">Course: </label>
+		<select id="course" name="course">
+			{{#each courses}}
+				<option value="{{_id}}">{{subject_number}}: {{title}}</option>
+			{{/each}}	
+		</select>
+		<br/>
+		<label for="semester">Semester: </label>
+		<select id="semester" name="semester">
+			{{#each semesters}}
+				<option value="{{_id}}">{{name}}: {{school_year}}</option>
+			{{/each}}	
+		</select>
+		<br />
+		<label for="schedule">Schedule: </label> <input id="schedule" name="schedule" type="text" /><br/>
+		<input type="submit" id="addSection" value="Add Section">
+	</form>
 </template>
