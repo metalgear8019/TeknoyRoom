@@ -1,3 +1,23 @@
 <template name="adminSidebar">
-	admin sidebar
+	<ul>
+		<li>Users
+			<ul>
+				<li><a href="/admin/user/new">Add User</a></li>
+				<li><a href="/admin/user/">Ban User</a></li>
+			</ul>
+		</li>
+		<li>Sections
+			<ul>
+				<li><a href="/admin/section/new">Add Section</a></li>
+				<li><a href="/admin/section/">Edit Section</a></li>
+				<li><a href="/admin/section/enroll">Enroll Students</a></li>
+			</ul>
+		</li>
+		<li>Courses
+			<ul>
+				<li><a href="/admin/course/new">Add Course</a></li>
+				<li><a href="/admin/course/">Edit Course</a></li>
+			</ul>
+		</li>
+	</ul>
 </template>
