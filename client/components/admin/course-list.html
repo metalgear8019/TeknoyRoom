@@ -23,110 +23,107 @@
 	<!-- Page Content -->
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
-			<div class="row" style="margin-left:-15px;">
-				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;margin-right">
+			<div class="row">
+				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;">
 					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
 				</div>
 			</div>
-			<form>
-	        	<div class="input-field">
-			      <input class="form-contol" type="text" placeholder="Section Name">
-			    </div>
 
-			    <hr style="border-color:#f8c400;">
-			    
-			    <p>
-			    	<label>Schedule</label>
-				</p>
+			<div class="alert alert-warning" role="alert" style="margin-top:10px;">Mark users to ban.</div>
 
-	      		<input type="checkbox" class="filled-in" id="filled-in-box1" />
-		      	<label for="filled-in-box1">Monday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+			<div class="row">
+				<form class="navbar-form navbar-left" role="search">
+				  	<div class="form-group">
+						<div class="input-group">
+							<span class="input-group-addon" style="background:#FFFFCC;border-color:#ffffe5;">
+								<i class="fa fa-search"></i>
+							</span>
+							<input type="text" id="search" name="firstname" class="form-control" style="background:#FFFFCC;border-color:#ffffe5;box-shadow:none;">
+						</div>
+					  	<div class="input-group dropdown" style="margin-left:20px;">
+						  <button class="btn btn-default dropdown-toggle form-control" type="button" style="width:200px;text-align:left;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    None &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						    <i class="fa fa-chevron-down"></i>
+						  </button>
 
-		      	<input type="checkbox" class="filled-in" id="filled-in-box2" />
-		      	<label for="filled-in-box2">Tuesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						    <li><a href="#">Action</a></li>
+						    <li><a href="#">Another action</a></li>
+						    <li><a href="#">Something else here</a></li>
+						    <li role="separator" class="divider"></li>
+						    <li><a href="#">Separated link</a></li>
+						  </ul>
+						</div>
+					</div>
+				  	<button type="submit" class="btn btn-default" style="margin-left:20px;background-color:#89343b;color:#fff;width:150px;">BAN SELECTED</button>
+				</form>
+			</div>
+			<!-- /#row for search bar -->
 
-		      	<input type="checkbox" class="filled-in" id="filled-in-box3" />
-		      	<label for="filled-in-box3">Wednesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input type="checkbox" class="filled-in" id="filled-in-box4" />
-		      	<label for="filled-in-box4">Thursday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input type="checkbox" class="filled-in" id="filled-in-box5" />
-		      	<label for="filled-in-box5">Friday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input type="checkbox" class="filled-in" id="filled-in-box6" />
-		      	<label for="filled-in-box6">Saturday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input type="checkbox" class="filled-in" id="filled-in-box7" />
-		      	<label for="filled-in-box7">Sunday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<div class="input-group">
-
-		      	<div class="dropdown" style="float:left;">
-				  <button class="btn btn-default dropdown-toggle" type="button" style="width:180px;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				    Start Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				    <i class="fa fa-chevron-down"></i>
-				  </button>
-
-				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				    <li><a href="#">Action</a></li>
-				    <li><a href="#">Another action</a></li>
-				    <li><a href="#">Something else here</a></li>
-				    <li role="separator" class="divider"></li>
-				    <li><a href="#">Separated link</a></li>
-				  </ul>
+			<div class="row" style="margin-top:20px;margin-left:2px;">
+				{{> courseItem }}
+				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
+				  	<div class="media-left">
+				    	<a href="#">
+				      		<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+				    	</a>
+				  	</div>
+				  	<div class="media-body">
+				    	<h4 class="media-heading">Tomas Santella</h4>
+				    	BSCS-2
+				  	</div>
 				</div>
-
-				<div style="float:left;margin-top:3px;">
-					&nbsp;&nbsp;&nbsp;to&nbsp;&nbsp;&nbsp;
+				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
+				  	<div class="media-left">
+				    	<a href="#">
+				      		<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+				    	</a>
+				  	</div>
+				  	<div class="media-body">
+				    	<h4 class="media-heading">Ralph Laviste</h4>
+				    	CS Department
+				  	</div>
 				</div>
+			</div>
 
-				<div class="dropdown" style="float:left;">
-				  <button class="btn btn-default dropdown-toggle" type="button" style="width:180px;" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				    End Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				    <i class="fa fa-chevron-down"></i>
-				  </button>
-
-				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-				    <li><a href="#">Action</a></li>
-				    <li><a href="#">Another action</a></li>
-				    <li><a href="#">Something else here</a></li>
-				    <li role="separator" class="divider"></li>
-				    <li><a href="#">Separated link</a></li>
-				  </ul>
+			<div class="row" style="margin-top:10px;margin-left:2px;">
+				<div class="well well-sm media col-xs-3" style="margin-top:15px;margin-right:25px;">
+				  	<div class="media-left">
+				    	<a href="#">
+				      		<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+				    	</a>
+				  	</div>
+				  	<div class="media-body">
+				    	<h4 class="media-heading">Larmie Santos</h4>
+				    	IT Department
+				  	</div>
 				</div>
-
+				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
+				  	<div class="media-left">
+				    	<a href="#">
+				      		<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+				    	</a>
+				  	</div>
+				  	<div class="media-body">
+				    	<h4 class="media-heading">Rex Seadino</h4>
+				    	IT Department
+				  	</div>
 				</div>
-
-			    <hr style="border-color:#f8c400;">
-
-		        <label>Start Date</label>
-			  	<select class="browser-default">
-			    	<option value="1" selected>mm/dd/yyyy</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			  	</select>
-
-		        <label>End Date</label>
-			  	<select class="browser-default">
-			    	<option value="1" selected>mm/dd/yyyy</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			  	</select>
-
-		        <label>Course</label>
-			  	<select class="browser-default">
-			    	<option value="1" selected>BSIT</option>
-			    	<option value="2">BSCS</option>
-			  	</select>
-			</form>
-
-			<a href="#"><button class="btn btn-default" style="background-color:#89343b;color:#fff;">EDIT</button></a>
+				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
+				  	<div class="media-left">
+				    	<a href="#">
+				      		<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+				    	</a>
+				  	</div>
+				  	<div class="media-body">
+				    	<h4 class="media-heading">Kim Agustin</h4>
+				    	BSIT-3
+				  	</div>
+				</div>
+			</div>
+			<!-- /#row for tiled searches -->
 		</div>
+		<!-- /#container-fluid -->
 	</div>
 	<!-- /#page-content-wrapper -->
 </template>
