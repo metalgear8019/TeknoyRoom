@@ -1,9 +1,49 @@
 <template name="courseForm">
-	<h1>- Course Form -</h1>
+	<!-- <h1>- Course Form -</h1>
 	<form id="frmCourse">
 		<label for="subject_number">Subject Number: </label> <input id="subject_number" name="subject_number" type="text" /> <br/>
 		<label for="title">Title: </label> <input id="title" name="title" type="text" /> <br/>
 		<label for="unit">Unit/s: </label> <input id="unit" name="unit" type="number" /> <br/>
 		<input id="addCourse" type="submit" value="ADD Course" />
-	</form>
+	</form> -->
+	<!-- Page Content -->
+	<div id="page-content-wrapper">
+		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
+			<div class="row" style="margin-left:-15px;">
+				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;margin-right">
+					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
+				</div>
+			</div>
+			<form>
+	        	<div class="input-field">
+			      <input class="form-contol" type="text" placeholder="Course Number">
+			    </div>
+
+			    <div class="input-field">
+			      <input class="form-contol" type="text" placeholder="Descriptive Title">
+			    </div>
+
+		        <label>Units</label>
+			  	<select class="browser-default">
+			    	<option value="1" selected>---</option>
+			    	<option value="2">..</option>
+			    	<option value="2">..</option>
+			    	<option value="2">..</option>
+			    	<option value="2">..</option>
+			  	</select>
+
+		        <label>Sections</label>
+			  	<select class="browser-default">
+			    	<option value="1" selected>---</option>
+			    	<option value="2">..</option>
+			    	<option value="2">..</option>
+			    	<option value="2">..</option>
+			    	<option value="2">..</option>
+			  	</select>
+		
+			<button type="submit" class="btn btn-default" style="background-color:#89343b;color:#fff;margin-top:20px;">ADD COURSE</button>
+			</form>
+		</div>
+	</div>
+	<!-- /#page-content-wrapper -->
 </template>

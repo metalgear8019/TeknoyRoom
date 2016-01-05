@@ -1,5 +1,5 @@
 <template name="adminSidebar">
-	<ul>
+	<!-- <ul>
 		<li>Users
 			<ul>
 				<li><a href="/admin/user/new">Add User</a></li>
@@ -19,5 +19,44 @@
 				<li><a href="/admin/course/">Edit Course</a></li>
 			</ul>
 		</li>
-	</ul>
+	</ul> -->
+
+	<!-- Sidebar -->
+	<div id="sidebar-wrapper">
+		<ul class="sidebar-nav">
+			<li class="sidebar-brand">
+				USERS
+			</li>
+			
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle collapsed" data-toggle="dropdown"><span></span>&nbsp;&nbsp; Add User</a>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="/admin/user/new" style="color:#000;">Student</a></li>
+					<li><a href="/admin/user/new" style="color:#000;">Instructor</a></li>
+				</ul>
+			</li>
+			<li><a href="/admin/user/"><span></span>&nbsp;&nbsp; Ban User</a></li>
+
+			<li><hr style="border-color:#f8c400;"></li>
+
+			<li class="sidebar-brand">
+				SECTIONS
+			</li>
+			
+			<li><a href="/admin/section/new"><span></span>&nbsp;&nbsp; Add Section</a></li>
+			<li><a href="/admin/section/"><span></span>&nbsp;&nbsp; Edit Section</a></li>
+			<li><a href="/admin/section/enroll"><span></span>&nbsp;&nbsp; Enrol Students</a></li>
+
+			<li><hr style="border-color:#f8c400;"></li>
+
+			<li class="sidebar-brand">
+				COURSES
+			</li>
+			
+			<li><a href="/admin/course/new"><span></span>&nbsp;&nbsp; Add Course</a></li>
+			<li><a href="/admin/course/"><span></span>&nbsp;&nbsp; Edit Course</a></li>
+
+		</ul>
+	</div>
+	<!-- /#sidebar-wrapper -->
 </template>
