@@ -29,6 +29,11 @@ Template.courseList.events
 		{
 			event.preventDefault();
 			Meteor.call('deleteCourse', this._id);
+		},
+
+		'click .pointer-hover': function (event)
+		{
+			FlowRouter.go('/admin/course/' + this._id);
 		}
 	}
 );
