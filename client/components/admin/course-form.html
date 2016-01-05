@@ -11,34 +11,27 @@
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
 			<div class="row" style="margin-left:-15px;">
 				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;margin-right">
-					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
+					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle">
+						<span class="glyphicon glyphicon-th"></span>
+					</a>
 				</div>
 			</div>
-			<form>
+			<form id="frmCourse">
 	        	<div class="input-field">
-			      <input class="form-contol" type="text" placeholder="Course Number">
+					<input id="subject_number" name="subject_number" class="form-contol" type="text" placeholder="Course Number">
 			    </div>
 
 			    <div class="input-field">
-			      <input class="form-contol" type="text" placeholder="Descriptive Title">
+					<input id="title" name="title" class="form-contol" type="text" placeholder="Descriptive Title">
 			    </div>
 
 		        <label>Units</label>
-			  	<select class="browser-default">
-			    	<option value="1" selected>---</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			  	</select>
-
-		        <label>Sections</label>
-			  	<select class="browser-default">
-			    	<option value="1" selected>---</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
+			  	<select class="browser-default" id="unit" name="unit">
+			    	<option value="1.0">1.0</option>
+			    	<option value="2.0">2.0</option>
+			    	<option value="3.0" selected>3.0</option>
+			    	<option value="4.0">4.0</option>
+			    	<option value="6.0">6.0</option>
 			  	</select>
 		
 			<button type="submit" class="btn btn-default" style="background-color:#89343b;color:#fff;margin-top:20px;">ADD COURSE</button>
