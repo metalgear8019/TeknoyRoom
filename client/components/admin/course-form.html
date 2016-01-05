@@ -17,12 +17,14 @@
 				</div>
 			</div>
 			<form id="frmCourse">
+				<input type="hidden" id="_id" name="_id" value={{ item._id }}>
+
 	        	<div class="input-field">
-					<input id="subject_number" name="subject_number" class="form-contol" type="text" placeholder="Course Number">
+					<input id="subject_number" name="subject_number" class="form-contol" type="text" placeholder="Course Number" value={{ item.subject_number }}>
 			    </div>
 
 			    <div class="input-field">
-					<input id="title" name="title" class="form-contol" type="text" placeholder="Descriptive Title">
+					<input id="title" name="title" class="form-contol" type="text" placeholder="Descriptive Title" value={{ item.title }}>
 			    </div>
 
 		        <label>Units</label>
@@ -34,7 +36,13 @@
 			    	<option value="6.0">6.0</option>
 			  	</select>
 		
-			<button type="submit" class="btn btn-default" style="background-color:#89343b;color:#fff;margin-top:20px;">ADD COURSE</button>
+			<button type="submit" class="btn btn-default" style="background-color:#89343b;color:#fff;margin-top:20px;">
+				{{ #if item.isNew }}
+					ADD
+				{{ else }}
+					EDIT
+				{{ /if }} COURSE
+			</button>
 			</form>
 		</div>
 	</div>

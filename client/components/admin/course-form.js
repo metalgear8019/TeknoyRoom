@@ -1,3 +1,13 @@
+Template.courseForm.helpers
+(
+	{
+		item: function() {
+			id = FlowRouter.getParam('id');
+			return Courses.findOne(id) || { _id: 'new', isNew: true };
+		}
+	}
+);
+
 Template.courseForm.events
 (
 	{
@@ -5,6 +15,7 @@ Template.courseForm.events
 		{
 			event.preventDefault();
 
+			var id = event.target._id.value;
 			var subject_number = event.target.subject_number.value;
 			var title = event.target.title.value;
 			var unit = event.target.unit.value;
@@ -19,11 +30,13 @@ Template.courseForm.events
 								unit: unit
 							 };
 
-				Meteor.call('addCourse', course);
+				if (id == 'new')
+					Meteor.call('addCourse', course);
+				else {
+					Meteor.call('updateCourse', id, course);
+				}
 
-				event.target.subject_number.value = '';
-				event.target.title.value = '';
-				event.target.unit.value = '';
+				FlowRouter.go('/admin/course/');
 			}
 			else
 			{
