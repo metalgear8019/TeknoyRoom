@@ -35,38 +35,52 @@
 				    </div>
 
 			        <div class="media-body">
-			        	<div class="input-field">
-							<input class="form-contol" type="text" placeholder="Name">
-					    </div>
+						<div class="input-field">
+							<input id="first_name" name="first_name" class="form-contol" type="text" placeholder="First Name">
+						</div>
+
+						<div class="input-field">
+							<input id="middle_name" name="middle_name" class="form-contol" type="text" placeholder="Middle Name">
+						</div>
+
+						<div class="input-field">
+							<input id="last_name" name="last_name" class="form-contol" type="text" placeholder="Last Name">
+						</div>
 
 				        <label>Profession</label>
-					  	<select class="browser-default">
-					    	<option value="1" selected>Student</option>
-					    	<option value="2">Teacher</option>
+					  	<select class="browser-default" id="type" name="type">
+					    	<option value="2" selected>Student</option>
+					    	<option value="1">Instructor</option>
 					  	</select>
 
-				        <label>Year</label>
-					  	<select class="browser-default">
-					    	<option value="1" selected>1</option>
-					    	<option value="2">2</option>
-					    	<option value="2">3</option>
-					    	<option value="2">4</option>
-					    	<option value="2">5</option>
-					  	</select>
+					  	{{ #if isStudent }}
+							<label>Year</label>
+							<select class="browser-default" id="year" name="year">
+								<option value="1" selected>1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+							</select>
 
-				        <label>Degree Program</label>
-					  	<select class="browser-default">
-					    	<option value="1" selected>BSIT</option>
-					    	<option value="2">BSCS</option>
-					  	</select>
+							<label>Degree Program</label>
+							<select class="browser-default" id="program" name="program">
+								<option value="1" selected>BSIT</option>
+								<option value="2">BSCS</option>
+							</select>
+						{{ else }}
+							<div class="input-field">
+								<input id="department" name="department" class="form-contol" type="text" placeholder="Department">
+							</div>
+						{{ /if }}
 
 				  		<label>Gender</label>
 					  	<p>
-							<input name="group1" type="radio" id="male" />
+							<input name="gender" type="radio" id="male" value="male" checked>
 							<label for="male" style="font-size:14px;">Male</label>
 					    </p>
 					    <p>
-							<input name="group1" type="radio" id="female" />
+							<input name="gender" type="radio" id="female" value="female">
 							<label for="female" style="font-size:14px;">Female</label>
 					    </p>
 
@@ -76,54 +90,5 @@
 			</div> <!-- /#media-->
 		</div>
 	</div>
-	<!-- /#page-content-wrapper -->
-
-	<!-- Add Instructor 
-	<div id="page-content-wrapper">
-		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
-			<div class="row">
-				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;">
-					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
-				</div>
-			</div>
-
-			<div class="media" style="margin-top:30px;">
-				<form class="navbar-form navbar-left" role="search">
-					<div class="media left" style="margin-right:30px;">
-				    	<input class = "media-object" type="image" alt="Profile Picture" src="/assets/profile-picture2.png" style="height:270px;">
-					    <input type="file" id="my_file" style="display: none;">
-				    </div>
-
-			        <div class="media-body">
-			        	<div class="input-field">
-							<input class="form-contol" type="text" placeholder="Name">
-					    </div>
-
-				        <label>Profession</label>
-					  	<select class="browser-default">
-					  		<option value="1">Student</option>
-					  		<option value="2" selected>Teacher</option>
-					  	</select>
-
-					  	<div class="input-field">
-					      <input class="form-contol" type="text" placeholder="Department">
-					    </div>
-
-				  		<label>Gender</label>
-					  	<p>
-							<input name="group1" type="radio" id="male" />
-							<label for="male" style="font-size:14px;">Male</label>
-					    </p>
-					    <p>
-							<input name="group1" type="radio" id="female" />
-							<label for="female" style="font-size:14px;">Female</label>
-					    </p>
-
-					    <button type="submit" class="btn btn-default" style="background-color:#89343b;color:#fff;">SUBMIT</button>
-				    </div>
-			    </form>-->
-			<!--</div>  /#media
-		</div>
-	</div>-->
 	<!-- /#page-content-wrapper -->
 </template>

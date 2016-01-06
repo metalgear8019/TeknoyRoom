@@ -1,3 +1,16 @@
+Template.userForm.created = function () {
+	Session.set('isStudent', true);
+};
+
+Template.userForm.helpers
+(
+	{
+		isStudent: function () {
+			return Session.get('isStudent');
+		}
+	}
+);
+
 Template.userForm.events
 (
 	{
@@ -14,6 +27,8 @@ Template.userForm.events
 			var department = event.target.department.value;
 			var program = event.target.program.value;
 			var year = event.target.year.value;
+			var gender = event.target.gender.value;
+			console.log('Gender: ' + gender);
 
 			if (username != '' || password != ''|| first_name != '' || middle_name != '' || last_name != '') 
 			{
@@ -63,6 +78,9 @@ Template.userForm.events
 			{
 				alert('Necessary fields must be filled..');
 			}
+		},
+		'change #type': function (event) {
+			Session.set('isStudent', (event.target.value == 2));
 		}
 	}
 );
