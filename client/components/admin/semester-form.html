@@ -7,31 +7,32 @@
 				</div>
 			</div>
 			<form id="frmSemester">
+				<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
+				
 				<div class="input-field">
-			      <input class="form-contol" id="semester_name" name="semester_name" type="text" placeholder="Semester Name">
+			      <input class="form-contol" id="school_year" name="school_year" type="text" placeholder="School Year i.e. 2015-2016" value="{{ item.school_year }}">
+			    </div>
+
+				<div class="input-field">
+			      <input class="form-contol" id="name" name="name" type="text" placeholder="Semester Name" value="{{ item.name }}">
 			    </div>
 
 	        	<div class="input-group">
-			      	<label>Start Year</label>
-				  	<select class="browser-default" id="start_year" name="start_year">
-				    	<option>2012</option>
-				    	<option>2013</option>
-				    	<option>2014</option>
-				    	<option>2015</option>
-				    	<option>2016</option>
-				  	</select>
-
-					<label>End Year</label>
-				  	<select class="browser-default" id="end_year" name="end_year">
-				    	<option>2015</option>
-				    	<option>2016</option>
-				    	<option>2017</option>
-				    	<option>2018</option>
-				    	<option>2019</option>
-				  	</select>
+			      	<label>Start Date</label>
+			      	<input id="start_date" name="start_date" type="date" class="datepicker" value="{{ item.start_date }}">
+				</div>
+				<div class="input-group">
+					<label>End Date</label>
+					<input id="end_date" name="end_date" type="date" class="datepicker" value="{{ item.end_date }}">
 				</div>
 		
-				<button class="btn btn-default" style="background-color:#89343b;color:#fff;margin-top:20px;">ADD SEMESTER</button>
+				<button class="btn btn-default" style="background-color:#89343b;color:#fff;margin-top:20px;">
+					{{ #if item.isNew }}
+						ADD
+					{{ else }}
+						EDIT
+					{{ /if }} SEMESTER
+				</button>
 			</form>
 		</div>
 	</div>

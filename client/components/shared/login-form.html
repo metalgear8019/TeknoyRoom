@@ -1,0 +1,38 @@
+<template name="loginForm">
+	<div class="row" style="margin-top:50px;margin-left:0;">
+		<div class="col-xs-12 col-sm-12 col-md-12" align="center">
+			<a href="#"><img style="width:235px" src="assets/teknoyroom.png"></a>
+		</div>
+
+		<form class="form-horizontal" role="form" method="post">
+			<div class="loginform col-xs-9 col-sm-8 col-md-4 col-xs-offset-1 col-md-offset-5 col-md-offset-4" style="margin-top:50px;padding:0;">
+				<br>
+				<div class="formrow">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-user"></i>
+						</span> 
+						<input class="form-control" placeholder="Username" name="username" type="text" autofocus="" required style="height:45px">
+					</div>
+				</div>
+
+				<div class="formrow">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<i class="fa fa-lock"></i>
+						</span> 
+						<input class="form-control" placeholder="Password" name="password" type="password" autofocus="" required style="height:45px">
+					</div>
+				</div>
+
+				<div class="formrow">
+					<input type="submit" value="SIGN IN" class="btn btn-danger form-control">
+				</div>
+
+				<div class="text-center">
+					<small><p><a href="#" style="text-decoration:none;">Forgot password?</a></p></small>
+				</div>
+			</div>
+		</form>
+	</div>
+</template>

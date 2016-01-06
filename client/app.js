@@ -10,38 +10,6 @@ Template.body.events
 			alert('toggle class');
 		},
 
-		'submit #frmSemester': function (event)
-		{
-			event.preventDefault();
-
-			var school_year = event.target.school_year.value;
-			var start_date = event.target.start_date.value;
-			var end_date = event.target.end_date.value;
-			var name = event.target.name.value;
-
-
-			if (school_year != '' || start_date != '' || end_date != '' || name != '')
-			{
-				var semester = {
-									school_year: school_year,
-									start_date: start_date,
-									end_date: end_date,
-									name: name
-							   };
-				
-				Meteor.call('addSemester', semester);
-
-				 event.target.school_year.value = '';
-				 event.target.start_date.value= this.defaultValue;
-				 event.target.end_date.value= this.defaultValue;
-				 event.target.start_date.value= '';
-			}
-			else
-			{
-				alert('Necessary fields must be filled..');
-			}
-		},
-
 		'submit #frmSection': function (event)
 		{
 			event.preventDefault();
