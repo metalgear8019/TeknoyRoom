@@ -100,29 +100,91 @@
 
 			    <hr style="border-color:#f8c400;">
 
-		        <label>Start Date</label>
-			  	<select class="browser-default">
-			    	<option value="1" selected>mm/dd/yyyy</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			  	</select>
+		        <div class="input-field">
+			      <input class="form-contol" type="text" placeholder="Semester">
+			    </div>
 
-		        <label>End Date</label>
-			  	<select class="browser-default">
-			    	<option value="1" selected>mm/dd/yyyy</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			    	<option value="2">..</option>
-			  	</select>
+		        <!-- Button trigger modal -->
 
-		        <label>Course</label>
-			  	<select class="browser-default">
-			    	<option value="1" selected>BSIT</option>
-			    	<option value="2">BSCS</option>
-			  	</select>
+		        <p>
+			    	<label>Course&nbsp;</label>
+					<button class="btn btn-default open-modal" type="button">
+					    <i class="fa fa-sticky-note-o"></i>
+					</button>
+				</p>
+
+		        
+
+				<!-- Modal -->
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+					     <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
+				        	<h5 class="modal-title" id="myModalLabel">Choose a course</h5>
+					    </div>
+					    <div class="modal-body">
+					        <table class="highlight">
+						        <thead>
+						          <tr>
+						              <th data-field="courseNumber">Course Number</th>
+						              <th data-field="descTitle">Descriptive Title</th>
+						              <th data-field="units">Units</th>
+						          </tr>
+						        </thead>
+
+						        <tbody>
+						          <tr>
+						            <td>CCS417</td>
+						            <td>Software Project</td>
+						            <td>6</td>
+						          </tr>
+						          <tr>
+						            <td>SOCSCI011</td>
+						            <td>Sociology and Family Planning</td>
+						            <td>3</td>
+						          </tr>
+						          <tr>
+						            <td>ENGL014</td>
+						            <td>Technical Writing</td>
+						            <td>3</td>
+						          </tr>
+						          <tr>
+						            <td>CCS417</td>
+						            <td>Software Project</td>
+						            <td>6</td>
+						          </tr>
+						          <tr>
+						            <td>SOCSCI011</td>
+						            <td>Sociology and Family Planning</td>
+						            <td>3</td>
+						          </tr>
+						          <tr>
+						            <td>ENGL014</td>
+						            <td>Technical Writing</td>
+						            <td>3</td>
+						          </tr>
+						          <tr>
+						            <td>CCS417</td>
+						            <td>Software Project</td>
+						            <td>6</td>
+						          </tr>
+						          <tr>
+						            <td>SOCSCI011</td>
+						            <td>Sociology and Family Planning</td>
+						            <td>3</td>
+						          </tr>
+						          <tr>
+						            <td>ENGL014</td>
+						            <td>Technical Writing</td>
+						            <td>3</td>
+						          </tr>
+						        </tbody>
+						    </table>
+					    </div>
+				    </div>
+				  </div>
+				</div>
 			</form>
 
 			<a href="#"><button class="btn btn-default" style="background-color:#89343b;color:#fff;">EDIT</button></a>

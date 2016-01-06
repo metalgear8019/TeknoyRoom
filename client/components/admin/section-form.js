@@ -12,3 +12,14 @@ Template.sectionForm.helpers
 		}
 	}
 );
+
+Template.sectionForm.events
+(
+	{
+		'click .open-modal': function (event)
+		{
+	        event.preventDefault();
+	        	$("#myModal").modal("show");
+		}
+	}
+);

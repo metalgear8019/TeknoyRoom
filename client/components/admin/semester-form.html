@@ -1,17 +1,39 @@
 <template name="semesterForm">
-	<h1> - semester form - </h1>
-	<form id="frmSemester">
-		<label for="school_year">School Year: </label> <input id="school_year" name="school_year" type="text" /><br/>
-		<label for="start_date">Start Date: </label> <input id="start_date" name="start_date" type="date" /><br/>
-		<label for="end_date">End Date: </label> <input id="end_date" name="end_date" type="date" /><br/>
-		<label for="name">Name: </label>
-		<select id="name" name="name">
-			<option value="1st">1st Semester</option>
-			<option value="2nd">2nd Semester</option>
-			<option value="3rd">3rd Semester</option>
-			<option value="summer">Summer Semester</option>
-		</select>
-		<br />
-		<input id="addSemester" type="submit" value="Add Semester" />
-	</form>
+	<div id="page-content-wrapper">
+		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
+			<div class="row" style="margin-left:-15px;">
+				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;margin-right">
+					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
+				</div>
+			</div>
+			<form id="frmSemester">
+				<div class="input-field">
+			      <input class="form-contol" id="semester_name" name="semester_name" type="text" placeholder="Semester Name">
+			    </div>
+
+	        	<div class="input-group">
+			      	<label>Start Year</label>
+				  	<select class="browser-default" id="start_year" name="start_year">
+				    	<option>2012</option>
+				    	<option>2013</option>
+				    	<option>2014</option>
+				    	<option>2015</option>
+				    	<option>2016</option>
+				  	</select>
+
+					<label>End Year</label>
+				  	<select class="browser-default" id="end_year" name="end_year">
+				    	<option>2015</option>
+				    	<option>2016</option>
+				    	<option>2017</option>
+				    	<option>2018</option>
+				    	<option>2019</option>
+				  	</select>
+				</div>
+		
+				<button class="btn btn-default" style="background-color:#89343b;color:#fff;margin-top:20px;">ADD SEMESTER</button>
+			</form>
+		</div>
+	</div>
+	<!-- /#page-content-wrapper -->
 </template>
