@@ -8,22 +8,22 @@
 				</div>
 			</div>
 			<div class="row" style="margin-top:20px;">
-					<table>
-						<tr>
-							<th>Subject Number</th>
-							<th>Title</th>
-							<th>Unit/s</th>
-							<th></th>
+				<table>
+					<tr>
+						<th>Subject Number</th>
+						<th>Title</th>
+						<th>Unit/s</th>
+						<th></th>
+					</tr>
+					{{#each courses}}
+						<tr class="pointer-hover">
+							<td>{{subject_number}}</td>
+							<td>{{title}}</td>
+							<td>{{unit}}</td>
+							<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
 						</tr>
-						{{#each courses}}
-							<tr class="pointer-hover">
-								<td>{{subject_number}}</td>
-								<td>{{title}}</td>
-								<td>{{unit}}</td>
-								<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
-							</tr>
-						{{/each}}
-					</table>
+					{{/each}}
+				</table>
 			</div>
 			<!-- /#row for tiled searches -->
 		</div>

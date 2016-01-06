@@ -22,7 +22,7 @@ Template.courseForm.events
 
 			console.log('Subject number: ' + subject_number + '\nTitle: ' + title + '\nUnit: ' + unit);
 
-			if (subject_number != '' || title != '' || unit != '') 
+			if (subject_number != '' && title != '' && unit != '') 
 			{
 				var course = {
 								subject_number: subject_number,
@@ -31,8 +31,11 @@ Template.courseForm.events
 							 };
 
 				if (id == 'new')
+				{
 					Meteor.call('addCourse', course);
-				else {
+				}
+				else 
+				{
 					Meteor.call('updateCourse', id, course);
 				}
 
