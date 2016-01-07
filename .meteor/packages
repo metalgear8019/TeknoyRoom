@@ -22,3 +22,6 @@ kadira:flow-router
 kadira:blaze-layout
 mizzao:jquery-ui
 twbs:bootstrap
+accounts-base
+accounts-password
+accounts-ui
