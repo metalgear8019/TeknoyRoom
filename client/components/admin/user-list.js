@@ -3,9 +3,15 @@ Template.userList.helpers
 	{
 		users: function()
 		{
-			console.log('users');
-		 	var ses = Session.get("searchTerm");
-			return Users.find({first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}});  
+		 	var searchTerm = Session.get('searchTerm');
+		 	var results = Users.find({
+		 		username: { $regex:  '.*' + searchTerm + '.*'},
+		 		first_name: { $regex:  '.*' + searchTerm + '.*'},
+		 		middle_name: { $regex:  '.*' + searchTerm + '.*'},
+		 		last_name: { $regex:  '.*' + searchTerm + '.*'}
+		 	});
+			console.log(searchTerm + ' >> ' + JSON.stringify(results));
+			return results;  
 		}
 	}
 );
