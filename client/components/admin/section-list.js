@@ -3,7 +3,17 @@ Template.sectionList.helpers
 	{
 		sections: function ()
 		{
-			return Sections.find({});
+			var result = Sections.find({});
+			//result.course = course;
+			console.log("course: " + result.course);
+			//result.course = Courses.findOne(result.course).title || '';
+			//result.semester = Semesters.findOne(result.semester).name || '';
+			return result;
+		},
+
+		courseInSection: function ()
+		{
+
 		}
 	}
 );

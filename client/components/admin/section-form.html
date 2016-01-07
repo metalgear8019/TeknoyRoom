@@ -1,25 +1,4 @@
 <template name="sectionForm">
-	<!-- <h1> - section form - </h1>
-	<form id="frmSection">
-		<label for="name">Name: </label> <input id="name" name="name" type="text" /><br />
-		<label for="course">Course: </label>
-		<select id="course" name="course">
-			{{#each courses}}
-				<option value="{{_id}}">{{subject_number}}: {{title}}</option>
-			{{/each}}	
-		</select>
-		<br/>
-		<label for="semester">Semester: </label>
-		<select id="semester" name="semester">
-			{{#each semesters}}
-				<option value="{{_id}}">{{name}}: {{school_year}}</option>
-			{{/each}}	
-		</select>
-		<br />
-		<label for="schedule">Schedule: </label> <input id="schedule" name="schedule" type="text" /><br/>
-		<input type="submit" id="addSection" value="Add Section">
-	</form> -->
-
 	<!-- Page Content -->
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
@@ -28,9 +7,9 @@
 					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
 				</div>
 			</div>
-			<form>
+			<form id="frmSection">
 	        	<div class="input-field">
-			      <input class="form-contol" type="text" placeholder="Section Name">
+			      <input id="name" name="name" class="form-contol" type="text" placeholder="Section Name">
 			    </div>
 
 			    <hr style="border-color:#f8c400;">
@@ -39,89 +18,95 @@
 			    	<label>Schedule</label>
 				</p>
 
-	      		<input type="checkbox" class="filled-in" id="filled-in-box1" />
+	      		<input name="days" type="checkbox" class="filled-in" id="filled-in-box1" value="2" />
 		      	<label for="filled-in-box1">Monday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-		      	<input type="checkbox" class="filled-in" id="filled-in-box2" />
+		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box2" value="3" />
 		      	<label for="filled-in-box2">Tuesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-		      	<input type="checkbox" class="filled-in" id="filled-in-box3" />
+		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box3" value="4" />
 		      	<label for="filled-in-box3">Wednesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-		      	<input type="checkbox" class="filled-in" id="filled-in-box4" />
+		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box4" value="5" />
 		      	<label for="filled-in-box4">Thursday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-		      	<input type="checkbox" class="filled-in" id="filled-in-box5" />
+		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box5" value="6" />
 		      	<label for="filled-in-box5">Friday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-		      	<input type="checkbox" class="filled-in" id="filled-in-box6" />
+		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box6" value="7"/>
 		      	<label for="filled-in-box6">Saturday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-		      	<input type="checkbox" class="filled-in" id="filled-in-box7" />
+		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box7" value="1" />
 		      	<label for="filled-in-box7">Sunday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
 		      	<div class="input-group">
+			      	<div class="form-row" style="float:left;">
+			      		<label for="start_time">Start time</label>
+						<input id="start_time" name="start_time" class="timepicker" type="text" >
+					</div>
 
-		      	<div class="dropdown" style="float:left;">
-				  <button class="btn btn-default dropdown-toggle" type="button" style="width:180px;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				    Start Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				    <i class="fa fa-chevron-down"></i>
-				  </button>
+					<div style="float:left;margin-left:60px;margin-right:60px;margin-top:30px;"><label>TO</label></div>
 
-				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-				    <li><a href="#">Action</a></li>
-				    <li><a href="#">Another action</a></li>
-				    <li><a href="#">Something else here</a></li>
-				    <li role="separator" class="divider"></li>
-				    <li><a href="#">Separated link</a></li>
-				  </ul>
-				</div>
-
-				<div style="float:left;margin-top:3px;">
-					&nbsp;&nbsp;&nbsp;to&nbsp;&nbsp;&nbsp;
-				</div>
-
-				<div class="dropdown" style="float:left;">
-				  <button class="btn btn-default dropdown-toggle" type="button" style="width:180px;" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-				    End Time &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				    <i class="fa fa-chevron-down"></i>
-				  </button>
-
-				  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-				    <li><a href="#">Action</a></li>
-				    <li><a href="#">Another action</a></li>
-				    <li><a href="#">Something else here</a></li>
-				    <li role="separator" class="divider"></li>
-				    <li><a href="#">Separated link</a></li>
-				  </ul>
-				</div>
-
+					<div class="form-row" style="float:left;">
+						<label for="end_time">End time</label>
+						<input id="end_time" name="end_time" class="timepicker" type="text" >
+					</div>
 				</div>
 
 			    <hr style="border-color:#f8c400;">
 
 		        <div class="input-field">
-			      <input class="form-contol" type="text" placeholder="Semester">
+			      <input id="semester" name="semester" class="form-contol" type="text" placeholder="Semester" value="{{semester.school_year}}  {{semester.name}}">
+
+			      <!-- Modal -->
+					<div class="modal fade" id="semester_modal" tabindex="-1" role="dialog" aria-labelledby="semester_modal">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+						     <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
+					        	<h5 class="modal-title" id="semester_modal">Choose a semester</h5>
+						    </div>
+						    <div class="modal-body">
+						        <table class="highlight">
+							        <thead>
+							          <tr>
+							              <th data-field="courseNumber">School Year</th>
+							              <th data-field="descTitle">Semester</th>
+							          </tr>
+							        </thead>
+
+							        <tbody>
+							        	{{#each semesters}}
+							        		<tr class="semester pointer-hover">
+							        			<td>{{ school_year }}</td>
+							        			<td>{{ name }}</td>
+							        		</tr>
+							        	{{/each}}
+							        </tbody>
+							    </table>
+						    </div>
+					    </div>
+					  </div>
+					</div>
 			    </div>
 
 		        <!-- Button trigger modal -->
 
-		        <p>
+		    	<span style="display:inline-block;">
 			    	<label>Course&nbsp;</label>
 					<button class="btn btn-default open-modal" type="button">
 					    <i class="fa fa-sticky-note-o"></i>
 					</button>
-				</p>
-
-		        
+					<input id="course" name= "course" type="text" value="{{course.subject_number}} {{course.title}}" />
+				</span>
 
 				<!-- Modal -->
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal fade" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="course_modal">
 				  <div class="modal-dialog">
 				    <div class="modal-content">
 					     <div class="modal-header">
 					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
-				        	<h5 class="modal-title" id="myModalLabel">Choose a course</h5>
+				        	<h5 class="modal-title" id="course_modal">Choose a course</h5>
 					    </div>
 					    <div class="modal-body">
 					        <table class="highlight">
@@ -134,60 +119,25 @@
 						        </thead>
 
 						        <tbody>
-						          <tr>
-						            <td>CCS417</td>
-						            <td>Software Project</td>
-						            <td>6</td>
-						          </tr>
-						          <tr>
-						            <td>SOCSCI011</td>
-						            <td>Sociology and Family Planning</td>
-						            <td>3</td>
-						          </tr>
-						          <tr>
-						            <td>ENGL014</td>
-						            <td>Technical Writing</td>
-						            <td>3</td>
-						          </tr>
-						          <tr>
-						            <td>CCS417</td>
-						            <td>Software Project</td>
-						            <td>6</td>
-						          </tr>
-						          <tr>
-						            <td>SOCSCI011</td>
-						            <td>Sociology and Family Planning</td>
-						            <td>3</td>
-						          </tr>
-						          <tr>
-						            <td>ENGL014</td>
-						            <td>Technical Writing</td>
-						            <td>3</td>
-						          </tr>
-						          <tr>
-						            <td>CCS417</td>
-						            <td>Software Project</td>
-						            <td>6</td>
-						          </tr>
-						          <tr>
-						            <td>SOCSCI011</td>
-						            <td>Sociology and Family Planning</td>
-						            <td>3</td>
-						          </tr>
-						          <tr>
-						            <td>ENGL014</td>
-						            <td>Technical Writing</td>
-						            <td>3</td>
-						          </tr>
+						        	{{#each courses}}
+						        		<tr class="course pointer-hover">
+						        			<td>{{ subject_number }}</td>
+						        			<td>{{ title }}</td>
+						        			<td>{{ unit }}</td>
+						        		</tr>
+						        	{{/each}}
 						        </tbody>
 						    </table>
 					    </div>
 				    </div>
 				  </div>
 				</div>
+				<div class="form-row">
+					<button type="submit" class="btn btn-default form-control" style="background-color:#89343b;color:#fff;">
+						ADD SECTION
+					</button>
+				</div>
 			</form>
-
-			<a href="#"><button class="btn btn-default" style="background-color:#89343b;color:#fff;">EDIT</button></a>
 		</div>
 	</div>
 	<!-- /#page-content-wrapper -->

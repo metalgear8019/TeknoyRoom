@@ -1,5 +1,5 @@
 <template name="sectionList">
-	<!-- <h1> - section list - </h1>
+	section list
 	<table class="table" border="1">
 		<tr>
 			<th>Section ID</th>
@@ -15,12 +15,14 @@
 				<td>{{name}}</td>
 				<td>{{course}}</td>
 				<td>{{semester}}</td>
-				<td>{{schedule}}</td>
+				<td>
+					{{#each schedule}}
+						{{day}} >> {{hour}} >> {{minute}} >> {{duration}}<br/>
+					{{/each}}
+				</td>
 				<td><button id="edit">Edit</button></td>
 				<td><button id="delete">Delete</button></td>
 			</tr>
 		{{/each}}
-	</table> -->
-
-	
+	</table> 
 </template>
