@@ -1,8 +1,9 @@
 <template name="userList">
-	<!-- <h1> - USER LIST- </h1>
+	  USER LIST-
+	 <br>
 	<table border="1" class="table">
 		<tr>
-			<th>User Id</th>
+			<th>Id Number</th>
 			<th>Username</th>
 			<th>Password</th>
 			<th>First Name</th>
@@ -18,7 +19,7 @@
 		</tr>
 		{{#each users}}
 		<tr>
-			<td>{{_id}}</td>
+			<td>{{id_number}}</td>
 			<td>{{username}}</td>
 			<td>{{password}}</td>
 			<td>{{first_name}}</td>
@@ -46,8 +47,8 @@
 			<td><button id="delete">Delete</button></td>
 		</tr>
 		{{/each}}
-	</table> -->
-	<!-- Page Content -->
+	</table>
+	<!-- Page Content
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
 			<div class="row">
@@ -84,9 +85,9 @@
 					</div>
 				  	<button type="submit" class="btn btn-default" style="margin-left:20px;background-color:#89343b;color:#fff;width:150px;">BAN SELECTED</button>
 				</form>
-			</div>
+			</div> -->
 			<!-- /#row for search bar -->
-
+			<!--
 			<div class="row" style="margin-top:20px;margin-left:2px;">
 				{{> userList }}
 				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
@@ -148,9 +149,10 @@
 				  	</div>
 				</div>
 			</div>
+			-->
 			<!-- /#row for tiled searches -->
-		</div>
+		<!-- </div> -->
 		<!-- /#container-fluid -->
-	</div>
+	<!-- </div> -->
 	<!-- /#page-content-wrapper -->
 </template>
