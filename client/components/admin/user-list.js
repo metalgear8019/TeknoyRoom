@@ -4,7 +4,8 @@ Template.userList.helpers
 		users: function()
 		{
 			console.log('users');
-			return Users.find({});
+		 	var ses = Session.get("searchTerm");
+			return Users.find({first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}});  
 		}
 	}
 );
@@ -34,6 +35,13 @@ Template.userList.events
 		{
 			event.preventDefault();
 			Meteor.call('deleteUser', this._id);
+		},
+
+		"keyup #search": function(event)
+		{
+			event.preventDefault();
+			 var value = event.target.value;
+			 Session.set("searchTerm", value);
 		}
 	}
 );
