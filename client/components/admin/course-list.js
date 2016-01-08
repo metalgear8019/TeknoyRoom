@@ -3,8 +3,15 @@ Template.courseList.helpers
 	{
 		courses: function()
 		{
-			var ses = Session.get("searchTerm");
-			return Courses.find({subject_number: {$regex: new RegExp('^'+ ses + '$', 'i')}});  
+			var ses = Session.get('searchTerm');
+		 	var results = Courses.find({
+		 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
+		 		subject_number: {$regex: new RegExp('^'+ ses + '$', 'i')}
+		 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
+		 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
+		 	});
+			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
+			return results;  
 		}
 	}
 );
@@ -27,7 +34,7 @@ Template.courseList.events
 		{
 			event.preventDefault();
 			 var value = event.target.value;
-			 Session.set("searchTerm", value);
+			 Session.set('searchTerm', value);
 		}
 	}
 );
