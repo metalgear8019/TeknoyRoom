@@ -23,3 +23,6 @@ kadira:blaze-layout
 mizzao:jquery-ui
 twbs:bootstrap
 jplack:bootstrap-timepicker
+accounts-base
+accounts-password
+aldeed:collection2

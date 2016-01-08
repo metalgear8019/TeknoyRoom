@@ -1,9 +1,13 @@
+Template.userList.onCreated = function () {
+	Session.set('searchTerm', '');
+};
+
 Template.userList.helpers
 (
 	{
 		users: function()
 		{
-		 	var ses = Session.get('searchTerm');
+			var ses = Session.get('searchTerm');
 		 	var results = Users.find({
 		 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
 		 		first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}
@@ -11,6 +15,7 @@ Template.userList.helpers
 		 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
 		 	});
 			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
+
 			return results;  
 		}
 	}

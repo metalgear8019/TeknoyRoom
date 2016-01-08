@@ -1,7 +1,11 @@
 <body style="background-color:#ffffe5;">
 	<!--{{> hello }}-->
 
-	{{ pageLayout }} 
+	{{ #if currentUser }}
+		{{> pageLayout }}
+	{{ else }}
+		{{> loginForm }}
+	{{ /if }}
 
 	<!-- {{> userForm }}
 	<hr />
