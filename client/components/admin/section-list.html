@@ -24,7 +24,33 @@
 								<td>{{semester.name}}</td>
 								<td>
 									{{#each day}}
-										{{this}},
+										{{#if equals this 1}}
+											Sun
+										{{/if}}
+
+										{{#if equals this 2}}
+											M
+										{{/if}}
+
+										{{#if equals this 3}}
+											T
+										{{/if}}
+
+										{{#if equals this 4}}
+											W
+										{{/if}}
+
+										{{#if equals this 5}}
+											Th
+										{{/if}}
+										
+										{{#if equals this 6}}
+											F
+										{{/if}}
+
+										{{#if equals this 7}}
+											S
+										{{/if}}
 									{{/each}}
 								</td>
 								<td>{{hour}}:{{minute}}</td>

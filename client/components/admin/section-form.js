@@ -125,7 +125,15 @@ Template.sectionForm.events
 									duration: duration
 							  };
 
-				Meteor.call('addSection', section);
+				if (id == 'new')
+				{
+					Meteor.call('addSection', section);
+				}
+				else
+				{
+					Meteor.call('updateSection', id, section);
+				}
+
 				Session.set('course', null);
 				Session.set('semester', null);
 				FlowRouter.go('/admin/section/');
