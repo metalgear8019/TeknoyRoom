@@ -3,11 +3,19 @@ Template.sectionList.helpers
 	{
 		sections: function ()
 		{
-			var result = Sections.find({});
-			//result.course = course;
-			console.log("course: " + result.course);
-			//result.course = Courses.findOne(result.course).title || '';
-			//result.semester = Semesters.findOne(result.semester).name || '';
+			var result = [];
+			Sections.find({}).forEach(function (item) {
+				//result.course = course;
+				console.log("course id: " + item.course);
+				item.course = Courses.findOne(item.course).title || '';
+				item.semester = Semesters.findOne(item.semester).name || '';
+				console.log("course: " + item.course);
+				//result.course = Courses.findOne(result.course).title || '';
+				//result.semester = Semesters.findOne(result.semester).name || '';
+				console.log("item: " + JSON.stringify(item));
+				result.push(item);
+			});
+			console.log("results: " + JSON.stringify(result));
 			return result;
 		},
 
