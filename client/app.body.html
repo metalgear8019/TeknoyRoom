@@ -1,44 +1,15 @@
 <body style="background-color:#ffffe5;">
-	<!--{{> hello }}-->
+	{{> pageLayout }}
 
-	{{ #if currentUser }}
-		{{> pageLayout }}
+	<!--{{ #if currentUser }}
+		{{ #if isInRole 'admin' }}
+			{{> pageLayout }}
+		{{ /if }}
 	{{ else }}
-		{{> loginForm }}
-	{{ /if }}
-
-	<!-- {{> userForm }}
-	<hr />
-	{{> userList}}
-	<hr/>
-	{{>courseForm}}
-	<hr/>
-	{{> courseList}}
-	<hr />
-	{{> semesterForm}}
-	<hr />
-	{{> semesterList}}
-	<hr />
-	{{> sectionForm}}
-	<hr />
-	{{> sectionList}}-->
-
-	<!-- start: JavaScript-->
-	
-	<!--<script src="/js/materialize.min.js"></script>-->
-	<!--<script src="/js/bootstrap.min.js"></script>-->
-	<!-- <script src="/js/jquery-ui.js"></script> -->
-
-	<!-- Menu Toggle Script -->
-	<script>
-	/*$("#menu-toggle").click(function(e) {
-		e.preventDefault();
-		$("#wrapper").toggleClass("toggled");
-	});*/
-
-	/*$("input[type='image']").click(function() {
-	    $("input[id='my_file']").click();
-	});*/
-	</script>
-	<!-- end: JavaScript-->
+		{{ #if loggingIn }}
+			Loading...
+		{{ else }}
+			{{> loginForm }}
+		{{/if}}
+	{{ /if }}-->
 </body>

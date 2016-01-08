@@ -18,7 +18,8 @@ Template.loginForm.events
 		'submit #frmLogin' : function (event)
 		{
 			event.preventDefault();
-			Meteor.loginWithPassword(event.target.username.value, event.target.username.value);
+			Meteor.loginWithPassword(event.target.username.value, event.target.password.value);
+			alert(Meteor.userId());
 		}
 	}
 );
