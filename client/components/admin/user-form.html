@@ -1,23 +1,4 @@
 <template name="userForm">
-	<!-- <h1> - USER FORM - </h1>
-	<form id="frmUser">
-		<label for="username">Username: </label> <input id="username" name="username" type="text" /><br/>
-		<label for="password">Password: </label> <input id="password" name="password" type="password" /><br/>
-		<label for="first_name">First Name: </label> <input id="first_name" name="first_name" type="text" /><br/>
-		<label for="last_name">Middle Name: </label> <input id="middle_name" name="middle_name" type="text" /><br/>
-		<label for="last_name">Last Name: </label> <input  id="last_name" name="last_name" type="text" /><br/>
-		<label for="user_type">User Type: </label>
-		<select id="user_type" name="user_type">
-			<option value="1">Instructor</option>
-			<option value="2">Students</option>
-		</select> <br/>
-		<label for="department">Department: </label> <input id="department" name="department" type="text" /><br/>
-		<label for="program">Program: </label> <input id="program" name="program" type="text" /><br/>
-		<label for="year">Year: </label> <input id="year" name="year" type="number" /><br/>
-
-		<input id="addUser" type="submit" value="ADD USER" />
-	</form> -->
-
 	<!-- Add Student -->
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
@@ -71,8 +52,8 @@
 
 							<label>Degree Program</label>
 							<select class="browser-default" id="program" name="program">
-								<option value="1" selected>BSIT</option>
-								<option value="2">BSCS</option>
+								<option value="BSIT" selected>BSIT</option>
+								<option value="BSCS">BSCS</option>
 							</select>
 						{{ else }}
 							<div class="input-field">
@@ -82,11 +63,11 @@
 
 				  		<label>Gender</label>
 					  	<p>
-							<input name="gender" type="radio" id="male" value="male" checked>
+							<input name="gender" type="radio" id="male" value="Male" checked>
 							<label for="male" style="font-size:14px;">Male</label>
 					    </p>
 					    <p>
-							<input name="gender" type="radio" id="female" value="female">
+							<input name="gender" type="radio" id="female" value="Female">
 							<label for="female" style="font-size:14px;">Female</label>
 					    </p>
 

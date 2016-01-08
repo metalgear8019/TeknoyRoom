@@ -8,12 +8,26 @@ Template.userList.helpers
 		users: function()
 		{
 			var ses = Session.get('searchTerm');
-		 	var results = Users.find({
-		 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
-		 		first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}
-		 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
-		 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
-		 	});
+
+			if (ses == undefined || ses == '')
+			{
+			 	var results = Users.find({
+			 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
+			 		//first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}
+			 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
+			 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
+			 	});
+		 	}
+		 	else
+		 	{
+		 		var results = Users.find({
+			 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
+			 		username: {$regex: '.*' + ses + '.*'}
+			 		//first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}
+			 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
+			 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
+			 	});
+		 	}
 			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
 
 			return results;  
@@ -48,11 +62,16 @@ Template.userList.events
 			Meteor.call('deleteUser', this._id);
 		},
 
-		"keyup #search": function(event)
+		'keyup #search': function(event)
 		{
 			event.preventDefault();
 			 var value = event.target.value;
 			 Session.set("searchTerm", value);
+		},
+
+		'submit form': function (event)
+		{
+			event.preventDefault();
 		}
 	}
 );
