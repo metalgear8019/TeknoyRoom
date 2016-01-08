@@ -5,23 +5,12 @@ Template.sectionList.helpers
 		{
 			var result = [];
 			Sections.find({}).forEach(function (item) {
-				//result.course = course;
-				console.log("course id: " + item.course);
-				item.course = Courses.findOne(item.course).title || '';
-				item.semester = Semesters.findOne(item.semester).name || '';
-				console.log("course: " + item.course);
-				//result.course = Courses.findOne(result.course).title || '';
-				//result.semester = Semesters.findOne(result.semester).name || '';
-				console.log("item: " + JSON.stringify(item));
+				item.course = Courses.findOne(item.course) || '';
+				item.semester = Semesters.findOne(item.semester) || '';
 				result.push(item);
 			});
-			console.log("results: " + JSON.stringify(result));
+			//console.log("results: " + JSON.stringify(result));
 			return result;
-		},
-
-		courseInSection: function ()
-		{
-
 		}
 	}
 );
@@ -29,18 +18,12 @@ Template.sectionList.helpers
 Template.sectionList.events
 (
 	{
-		'click #edit': function (event)
+		'click .pointer-hover': function (event)
 		{
 			event.preventDefault();
-
-			var section = {
-								name: 'name',
-								course: 'course',
-								semester: 'semester',
-								schedule: 'schedule'
-						  };
-
-			Meteor.call('updateSection', this._id, section);			
+			Session.set('course', this.course);
+			Session.set('semester', this.semester);
+			FlowRouter.go('/admin/section/' + this._id);
 		},
 
 		'click #delete': function (event)

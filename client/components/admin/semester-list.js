@@ -19,7 +19,7 @@ Template.semesterList.events
 
 		'click .pointer-hover': function (event)
 		{
-			FlowRouter.go('/admin/semester/' + this._id);
+			FlowRouter.go('/admin/section/' + this._id);
 		}
 	}
 );
