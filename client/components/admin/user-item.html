@@ -6,10 +6,10 @@
 			</a>
 		</div>
 		<div class="media-body">
-			<h6 class="media-heading">{{ id_number }}</h6>
-			<p class="media-heading">{{ first_name }} {{ middle_name }} {{ last_name }}</p>
-			{{ gender }}
-			{{ program }}
+			<h6 class="media-heading">{{ profile.id_number }}</h6>
+			<p class="media-heading">{{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}</p>
+			{{ profile.gender }}
+			{{ profile.program }}
 		</div>
 	</div>
 </template>
