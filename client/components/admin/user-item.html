@@ -1,24 +1,32 @@
 <template name="userItem">
+
 	<div class="well well-sm media col-xs-3" style="margin-top:15px;margin-right:25px;">
-		<div class="media-left">
-			<a href="#">
-				{{#if equals profile.gender 'Male'}}
-					<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
-				{{else}}
-					<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
-				{{/if}}
-			</a>
-		</div>
-		<div class="media-body container-fluid">
-			<h6 class="media-heading">{{ profile.id_number }}</h6>
-			<p class="media-heading">
-				<div>{{ profile.first_name }}</div>
-				<div>{{ profile.middle_name }}</div>
-				<div>{{ profile.last_name }}</div>
-			</p>
-			<div>
-				{{ profile.program }} - {{ profile.year }}
+		<input id="lists[Users]" type="checkbox" name="lists[Users]"/>
+		<label for="lists[Users]" style="display:block;
+border:none;
+height:120px;
+-webkit-font-smoothing: antialiased;
+color:gray;">
+			<div class="media-left">
+				<a href="#">
+					{{#if equals profile.gender 'Male'}}
+						<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+					{{else}}
+						<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+					{{/if}}
+				</a>
 			</div>
-		</div>
+			<div class="media-body container-fluid">
+				<h6 class="media-heading">{{ profile.id_number }}</h6>
+				<p class="media-heading">
+					<div>{{ profile.first_name }}</div>
+					<div>{{ profile.middle_name }}</div>
+					<div>{{ profile.last_name }}</div>
+				</p>
+				<div>
+					{{ profile.program }} - {{ profile.year }}
+				</div>
+			</div>
+		</label>
 	</div>
 </template>
