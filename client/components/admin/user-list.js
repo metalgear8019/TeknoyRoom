@@ -1,5 +1,9 @@
 Template.userList.onCreated = function () {
 	Session.set('searchTerm', '');
+	var self = this;
+	self.autorun(function () {
+		self.subscribe('users');
+	});
 };
 
 Template.userList.helpers
@@ -8,8 +12,21 @@ Template.userList.helpers
 		users: function()
 		{
 			var ses = Session.get('searchTerm');
-			var results = Users.find({});/*first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}*/
-			console.log(ses + ' >> ' + JSON.stringify(results));
+			if (ses == undefined || ses == '')
+			{
+			 	var results = Users.find({});
+		 	}
+		 	else
+		 	{
+		 		var results = Users.find({
+			 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
+			 		username: {$regex: '.*' + ses + '.*'}
+			 		//first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}
+			 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
+			 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
+			 	});
+		 	}
+			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
 			return results;  
 		}
 	}
@@ -42,11 +59,16 @@ Template.userList.events
 			Meteor.call('deleteUser', this._id);
 		},
 
-		"keyup #search": function(event)
+		'keyup #search': function(event)
 		{
 			event.preventDefault();
 			 var value = event.target.value;
 			 Session.set("searchTerm", value);
+		},
+
+		'submit form': function (event)
+		{
+			event.preventDefault();
 		}
 	}
 );

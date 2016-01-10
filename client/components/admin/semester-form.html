@@ -28,14 +28,16 @@
 					<label>End Date</label>
 					<input id="end_date" name="end_date" type="date" class="datepicker" value="{{ item.end_date }}">
 				</div>
-		
-				<button class="btn btn-default" style="background-color:#89343b;color:#fff;margin-top:20px;">
-					{{ #if item.isNew }}
-						ADD
-					{{ else }}
-						EDIT
-					{{ /if }} SEMESTER
-				</button>
+				
+				<div class="form-row">
+					<button class="btn btn-default form-control" style="background-color:#89343b;color:#fff;margin-top:20px;">
+						{{ #if item.isNew }}
+							ADD
+						{{ else }}
+							EDIT
+						{{ /if }} SEMESTER
+					</button>
+				</div>
 			</form>
 		</div>
 	</div>

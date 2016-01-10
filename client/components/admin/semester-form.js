@@ -1,8 +1,18 @@
+Template.courseForm.onCreated(function () {
+	{
+		var self = this;
+		self.autorun(function() {
+			var id = FlowRouter.getParam('id');
+			self.subscribe('singleSemester', id);
+		});
+	}
+});
+
 Template.semesterForm.helpers
 (
 	{
 		item: function() {
-			id = FlowRouter.getParam('id');
+			var id = FlowRouter.getParam('id');
 			return Semesters.findOne(id) || { _id: 'new', isNew: true };
 		}
 	}
@@ -17,8 +27,10 @@ Template.semesterForm.events
 
 			var id = event.target._id.value;
 			var school_year = event.target.school_year.value;
-			var start_date = event.target.start_date.value;
-			var end_date = event.target.end_date.value;
+			//var start_date = event.target.start_date.value;
+			//var end_date = event.target.end_date.value;
+			var start_date = new Date();
+			var end_date = new Date();
 			var name = event.target.name.value;
 
 			if (school_year != '' && name != '' && start_date != "" && end_date != "")

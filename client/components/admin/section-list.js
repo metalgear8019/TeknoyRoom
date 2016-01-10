@@ -1,3 +1,12 @@
+Template.courseList.onCreated(function () {
+	var self = this;
+	self.autorun(function () {
+		self.subscribe('sections');
+		self.subscribe('courses');
+		self.subscribe('semesters');
+	});
+});
+
 Template.sectionList.helpers
 (
 	{
