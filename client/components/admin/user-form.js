@@ -47,6 +47,7 @@ Template.userForm.events
 								   };
 						
 						Meteor.call('addUser', user);
+						FlowRouter.go('/admin/user/');
 					}
 				} 
 				else if (user_type == 2) 
@@ -69,7 +70,8 @@ Template.userForm.events
 										year: year
 								   };
 						
-						Meteor.call('addUser', user)
+						Meteor.call('addUser', user);
+						FlowRouter.go('/admin/user/');
 					}
 				}
 				else

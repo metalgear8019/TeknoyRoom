@@ -8,14 +8,8 @@ Template.userList.helpers
 		users: function()
 		{
 			var ses = Session.get('searchTerm');
-		 	var results = Users.find({
-		 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
-		 		first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}
-		 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
-		 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
-		 	});
-			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
-
+			var results = Users.find({});/*first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}*/
+			console.log(ses + ' >> ' + JSON.stringify(results));
 			return results;  
 		}
 	}
