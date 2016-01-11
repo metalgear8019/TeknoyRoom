@@ -4,8 +4,8 @@ Meteor.methods
 		addUser: function (user) 
 		{
 			try {
-				var id = Accounts.createUser(user);
-				Roles.addUserInRoles(id, user.roles);
+				Accounts.createUser(user);
+				// Roles.addUserInRoles(id, user.roles);
 			} 
 			catch(e)
 			{

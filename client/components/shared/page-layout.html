@@ -1,6 +1,6 @@
 <template name="pageLayout">
-	<!--{{ #if currentUser }}
-		{{ #if isInRole 'admin' }}-->
+	{{ #if currentUser }}
+		<!-- {{ #if isInRole 'admin' }} -->
 			{{> Template.dynamic template=header }}
 			<div class="container" style="margin-top:25px;padding-right:0px;">
 				<div id="wrapper">
@@ -10,14 +10,14 @@
 			</div>
 		<!--{{ else }}
 			{{> unauthorized }}
-		{{ /if }}
+		{{ /if }}-->
 	{{ else }}
 		{{ #if loggingIn }}
 			{{> loading }}
 		{{ else }}
 			{{> loginForm }}
 		{{ /if }}
-	{{ /if }}-->
+	{{ /if }}
 	
 	<!-- {{> Template.dynamic template=footer }} -->
 </template>
