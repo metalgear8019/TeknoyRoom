@@ -70,6 +70,8 @@ Template.userForm.events
 						user.roles[0] = Role.Group.STUDENT;
 						user.program = program;
 						user.year = year;
+						console.log("program: " + user.program);
+						console.log("year: " + user.year);
 						Meteor.call('addUser', user);
 						FlowRouter.go('/admin/user/');
 					}
