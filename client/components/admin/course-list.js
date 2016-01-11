@@ -1,7 +1,7 @@
 Template.courseList.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
-		self.subscribe('courses');
+		self.subscribe(CollectionName.COURSES);
 	});
 });
 

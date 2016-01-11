@@ -27,10 +27,8 @@ Template.semesterForm.events
 
 			var id = event.target._id.value;
 			var school_year = event.target.school_year.value;
-			//var start_date = event.target.start_date.value;
-			//var end_date = event.target.end_date.value;
-			var start_date = new Date();
-			var end_date = new Date();
+			var start_date = event.target.start_date.value;
+			var end_date = event.target.end_date.value;
 			var name = event.target.name.value;
 
 			if (school_year != '' && name != '' && start_date != "" && end_date != "")

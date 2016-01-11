@@ -1,10 +1,23 @@
 <template name="pageLayout">
-	{{> Template.dynamic template=header }}
-	<div class="container" style="margin-top:25px;padding-right:0px;">
-		<div id="wrapper">
-			{{> Template.dynamic template=sidebar }}
-			{{> Template.dynamic template=main }}
-		</div>
-	</div>
+	{{ #if currentUser }}
+		{{ #if isInRole 'admin' }}
+			{{> Template.dynamic template=header }}
+			<div class="container" style="margin-top:25px;padding-right:0px;">
+				<div id="wrapper">
+					{{> Template.dynamic template=sidebar }}
+					{{> Template.dynamic template=main }}
+				</div>
+			</div>
+		{{ else }}
+			{{> unauthorized }}
+		{{ /if }}
+	{{ else }}
+		{{ #if loggingIn }}
+			Loading...
+		{{ else }}
+			{{> loginForm }}
+		{{ /if }}
+	{{ /if }}
+	
 	<!-- {{> Template.dynamic template=footer }} -->
 </template>

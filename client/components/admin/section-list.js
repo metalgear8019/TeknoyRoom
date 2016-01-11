@@ -1,9 +1,9 @@
 Template.courseList.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
-		self.subscribe('sections');
-		self.subscribe('courses');
-		self.subscribe('semesters');
+		self.subscribe(CollectionName.SECTIONS);
+		self.subscribe(CollectionName.COURSES);
+		self.subscribe(CollectionName.SEMESTERS);
 	});
 });
 

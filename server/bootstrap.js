@@ -1,12 +1,12 @@
 Meteor.startup(function () {
 	// code to run on server at startup
-	/*Meteor.users.find({}).forEach(function (userData) {
+	Meteor.users.find({}).forEach(function (userData) {
 		console.log(userData);
-		Roles.addUsersToRoles(userData.id, userData.roles);
-	});*/
+		// Roles.addUsersToRoles(userData.id, userData.roles);
+	});
 });
 
-Meteor.publish('users', function() {
+Meteor.publish(CollectionName.USERS, function() {
 	return Users.find({});
 });
 
@@ -15,7 +15,7 @@ Meteor.publish('users', function() {
 	return Users.find(id);
 });*/
 
-Meteor.publish('courses', function() {
+Meteor.publish(CollectionName.COURSES, function() {
 	return Courses.find({});
 });
 
@@ -24,7 +24,7 @@ Meteor.publish('singleCourse', function(id) {
 	return Courses.find(id);
 });
 
-Meteor.publish('semesters', function() {
+Meteor.publish(CollectionName.SEMESTERS, function() {
 	return Semesters.find({});
 });
 
@@ -33,7 +33,7 @@ Meteor.publish('singleSemester', function(id) {
 	return Semesters.find(id);
 });
 
-Meteor.publish('sections', function() {
+Meteor.publish(CollectionName.SECTIONS, function() {
 	return Sections.find({});
 });
 
