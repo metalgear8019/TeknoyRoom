@@ -1,9 +1,9 @@
-Template.courseForm.onCreated(function () {
+Template.semesterForm.onCreated(function () {
 	{
 		var self = this;
 		self.autorun(function() {
 			var id = FlowRouter.getParam('id');
-			self.subscribe('singleSemester', id);
+			self.subscribe(SubscriptionTag.ONE_SEMESTER, id);
 		});
 	}
 });

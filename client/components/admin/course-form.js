@@ -2,7 +2,7 @@ Template.courseForm.onCreated(function () {
 	var self = this;
 	self.autorun(function() {
 		var id = FlowRouter.getParam('id');
-		self.subscribe('singleCourse', id);
+		self.subscribe(SubscriptionTag.ONE_COURSE, id);
 	});
 });
 

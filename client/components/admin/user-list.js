@@ -2,7 +2,7 @@ Template.userList.onCreated(function () {
 	Session.set('searchTerm', '');
 	var self = this;
 	self.autorun(function () {
-		self.subscribe(CollectionName.USERS);
+		self.subscribe(SubscriptionTag.ALL_USERS);
 	});
 });
 
@@ -18,7 +18,7 @@ Template.userList.helpers
 		 	}
 		 	else
 		 	{
-		 		var results = Users.find(/*{
+		 		var results = Users.find({
 			 		$or: {
 				 		username: {$regex: '.*' + ses + '.*'},
 				 		profile: { $or: {
@@ -28,7 +28,7 @@ Template.userList.helpers
 					 		last_name: {$regex: '.*' + ses + '.*'}
 					 	}}
 			 		}
-			 	}*/);
+			 	});
 		 	}
 			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
 			return results;  

@@ -1,7 +1,7 @@
-Template.courseList.onCreated(function () {
+Template.semesterList.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
-		self.subscribe(CollectionName.SEMESTERS);
+		self.subscribe(SubscriptionTag.ALL_SEMESTERS);
 	});
 });
 

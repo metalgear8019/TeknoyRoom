@@ -1,11 +1,11 @@
-Template.courseForm.onCreated(function () {
+Template.sectionForm.onCreated(function () {
 	{
 		var self = this;
 		self.autorun(function() {
 			var id = FlowRouter.getParam('id');
-			self.subscribe('singleSection', id);
-			self.subscribe('courses');
-			self.subscribe('semesters');
+			self.subscribe(SubscriptionTag.ONE_SECTION, id);
+			self.subscribe(SubscriptionTag.ALL_COURSES);
+			self.subscribe(SubscriptionTag.ALL_SEMESTERS);
 		});
 	}
 });
