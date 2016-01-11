@@ -25,7 +25,6 @@ Template.userForm.events
 			var last_name = event.target.last_name.value;
 			var user_type = event.target.user_type.value;
 			var gender = event.target.gender.value;
-			console.log('Gender: ' + gender);
 
 			if (id_number != ''  && first_name != '' && middle_name != '' && last_name != '') 
 			{
@@ -43,6 +42,7 @@ Template.userForm.events
 										middle_name: middle_name,
 										last_name: last_name,
 										user_type: user_type,
+										gender: gender,
 										department: department
 								   };
 						
@@ -65,6 +65,7 @@ Template.userForm.events
 										middle_name: middle_name,
 										last_name: last_name,
 										user_type: user_type,
+										gender: gender,
 										program: program,
 										year: year
 								   };
