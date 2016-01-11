@@ -19,15 +19,15 @@ Template.userList.helpers
 		 	else
 		 	{
 		 		var results = Users.find({
-			 		$or: {
+			 		/*$or: {*/
 				 		username: {$regex: '.*' + ses + '.*'},
-				 		profile: { $or: {
+				 		/*profile: { $or: {
 				 			id_number: {$regex: '.*' + ses + '.*'},
 					 		first_name: {$regex: '.*' + ses + '.*'},
 					 		middle_name: {$regex: '.*' + ses + '.*'},
 					 		last_name: {$regex: '.*' + ses + '.*'}
 					 	}}
-			 		}
+			 		}*/
 			 	});
 		 	}
 			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
@@ -70,9 +70,13 @@ Template.userList.events
 			 Session.set("searchTerm", value);
 		},
 
-		'submit form': function (event)
+		'submit form': function (event, template)
 		{
 			event.preventDefault();
+			var selected = template.findAll('input[type=checkbox]:checked');
+			selected.forEach(function (user) {
+				Meteor.call('setBanned', user.id, true);
+			});
 		}
 	}
 );

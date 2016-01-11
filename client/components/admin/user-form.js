@@ -35,7 +35,8 @@ Template.userForm.events
 					middle_name: middle_name,
 					last_name: last_name,
 					user_type: user_type,
-					gender: gender
+					gender: gender,
+					banned: false
 				},
 				roles: [
 					'default',
@@ -82,7 +83,8 @@ Template.userForm.events
 						username: id_number,
 						password: id_number,
 						profile: {
-							user_type: user_type
+							user_type: user_type,
+							banned: false
 						},
 						roles: [
 							Role.Group.ADMIN,

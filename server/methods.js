@@ -90,7 +90,9 @@ Meteor.methods
 			(
 				user_id,
 				{
-					$set: { banned: setBan }
+					profile: {
+						$set: { banned: setBan }
+					}
 				}
 			);
 		},
