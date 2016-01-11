@@ -1,12 +1,8 @@
 <template name="userItem">
 
 	<div class="well well-sm media col-xs-3" style="margin-top:15px;margin-right:25px;">
-		<input id="lists[Users]" type="checkbox" name="lists[Users]"/>
-		<label for="lists[Users]" style="display:block;
-border:none;
-height:120px;
--webkit-font-smoothing: antialiased;
-color:gray;">
+		<input id="userlists[Users]" type="checkbox" name="userlists[Users]"/>
+		<label for="userlists[Users]" style="display:block; border:none; height:120px; -webkit-font-smoothing: antialiased; color:gray;">
 			<div class="media-left">
 				<a href="#">
 					{{#if equals profile.gender 'Male'}}

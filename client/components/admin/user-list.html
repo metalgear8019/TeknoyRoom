@@ -37,9 +37,11 @@
 			<!-- /#row for search bar -->
 			
 			<!--This is where the results will be displayed-->
-			{{ #each users}}
-				{{> userItem}}
-			{{/each}}
+			<form id="frmUsers">
+				{{ #each users}}
+					{{> userItem}}
+				{{/each}}
+			</form>
 
 			<!--<div class="row" style="margin-top:20px;margin-left:2px;">
 				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
