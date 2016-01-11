@@ -6,3 +6,13 @@ Template.userItem.helpers
 		}
 	}
 );
+
+Template.userItem.events
+(
+	{
+		'check .user': function(event)
+		{
+			console.log("hel");
+		}
+	}
+);
