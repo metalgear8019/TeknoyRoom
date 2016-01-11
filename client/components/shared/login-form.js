@@ -20,7 +20,6 @@ Template.loginForm.events
 			event.preventDefault();
 			Session.set('isCredentialsCorrect', true);
 			Meteor.loginWithPassword(event.target.username.value, event.target.password.value);
-			alert(Meteor.userId());
 			Session.set('isCredentialsCorrect', Meteor.userId() !== null);
 		}
 	}
