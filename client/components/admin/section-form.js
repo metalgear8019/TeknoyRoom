@@ -1,4 +1,14 @@
-
+Template.sectionForm.onCreated(function () {
+	{
+		var self = this;
+		self.autorun(function() {
+			var id = FlowRouter.getParam('id');
+			self.subscribe(SubscriptionTag.ONE_SECTION, id);
+			self.subscribe(SubscriptionTag.ALL_COURSES);
+			self.subscribe(SubscriptionTag.ALL_SEMESTERS);
+		});
+	}
+});
 
 Template.sectionForm.helpers
 (
@@ -25,7 +35,7 @@ Template.sectionForm.helpers
 
 		item: function() 
 		{
-			id = FlowRouter.getParam('id');
+			var id = FlowRouter.getParam('id');
 			if (id == undefined)
 			{
 				Session.set('course', null);

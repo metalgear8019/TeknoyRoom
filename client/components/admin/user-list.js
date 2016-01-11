@@ -1,6 +1,10 @@
-Template.userList.onCreated = function () {
+Template.userList.onCreated(function () {
 	Session.set('searchTerm', '');
-};
+	var self = this;
+	self.autorun(function () {
+		self.subscribe(SubscriptionTag.ALL_USERS);
+	});
+});
 
 Template.userList.helpers
 (
@@ -8,28 +12,25 @@ Template.userList.helpers
 		users: function()
 		{
 			var ses = Session.get('searchTerm');
-
 			if (ses == undefined || ses == '')
 			{
-			 	var results = Users.find({
-			 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
-			 		//first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}
-			 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
-			 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
-			 	});
+			 	var results = Users.find({});
 		 	}
 		 	else
 		 	{
 		 		var results = Users.find({
-			 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
-			 		username: {$regex: '.*' + ses + '.*'}
-			 		//first_name: {$regex: new RegExp('^'+ ses + '$', 'i')}
-			 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
-			 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
+			 		$or: {
+				 		username: {$regex: '.*' + ses + '.*'},
+				 		profile: { $or: {
+				 			id_number: {$regex: '.*' + ses + '.*'},
+					 		first_name: {$regex: '.*' + ses + '.*'},
+					 		middle_name: {$regex: '.*' + ses + '.*'},
+					 		last_name: {$regex: '.*' + ses + '.*'}
+					 	}}
+			 		}
 			 	});
 		 	}
 			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
-
 			return results;  
 		}
 	}

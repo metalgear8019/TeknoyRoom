@@ -1,8 +1,18 @@
+Template.semesterForm.onCreated(function () {
+	{
+		var self = this;
+		self.autorun(function() {
+			var id = FlowRouter.getParam('id');
+			self.subscribe(SubscriptionTag.ONE_SEMESTER, id);
+		});
+	}
+});
+
 Template.semesterForm.helpers
 (
 	{
 		item: function() {
-			id = FlowRouter.getParam('id');
+			var id = FlowRouter.getParam('id');
 			return Semesters.findOne(id) || { _id: 'new', isNew: true };
 		}
 	}

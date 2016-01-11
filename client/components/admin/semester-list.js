@@ -1,3 +1,10 @@
+Template.semesterList.onCreated(function () {
+	var self = this;
+	self.autorun(function () {
+		self.subscribe(SubscriptionTag.ALL_SEMESTERS);
+	});
+});
+
 Template.semesterList.helpers
 (
 	{
