@@ -70,14 +70,13 @@ Template.registerHelper
 	}
 );
 
-Template.body.events
+/*Template.body.events
 (
 	{
-		'click .menu-toggle': function (event)
+		'click #menu-toggle': function (event)
 		{
-			// event.preventDefault();
-			// $("#wrapper").toggleClass("toggled");
-			alert('toggle class');
+			event.preventDefault();
+			$("#wrapper").toggleClass("active");
 		}
 	}
-);
+);*/

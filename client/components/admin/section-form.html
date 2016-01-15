@@ -1,156 +1,139 @@
 <template name="sectionForm">
 	<!-- Page Content -->
 	<div id="page-content-wrapper">
-		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
-			<div class="row" style="margin-left:-15px;">
-				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;margin-right">
-					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
-				</div>
-			</div>
-
+		<div class="container-fluid" style="padding-right:0px;">
 			<!--<div class="alert alert-warning" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
-			
-			<form id="frmSection">
-				<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
+			<div class="row" style="margin-top:30px;">
+				<form id="frmSection">
+					<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
 
-	        	<div class="input-field">
-			      <input id="name" name="name" class="form-contol" type="text" placeholder="Section Name" value="{{item.name}}">
-			    </div>
+					<div class="form-group">
+				      <input type="text" id="semester" name="semester" class="form-control"  value="{{#if notEquals semester null}}{{semester.school_year}} {{semester.name}}{{/if}}" placeholder="Choose Semester...">
+				      <!-- Modal Semester -->
+						<div class="modal fade" id="semester_modal" tabindex="-1" role="dialog" aria-labelledby="semester_modal">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+							     <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
+						        	<h5 class="modal-title" id="semester_modal">Choose a semester</h5>
+							    </div>
+							    <div class="modal-body">
+							        <table class="table table-striped">
+								        <thead>
+								          <tr>
+								              <th data-field="courseNumber">School Year</th>
+								              <th data-field="descTitle">Semester</th>
+								          </tr>
+								        </thead>
 
-			    <hr style="border-color:#f8c400;">
-			    
-			    <p>
-			    	<label>Schedule</label>
-				</p>
-
-	      		<input name="days" type="checkbox" class="filled-in" id="filled-in-box1" value="2" checked="{{#each item.day}}{{#if equals this 2}}true{{/if}}{{/each}}" />
-		      	<label for="filled-in-box1">Monday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box2" value="3" checked="{{#each item.day}}{{#if equals this 3}}true{{/if}}{{/each}}" />
-		      	<label for="filled-in-box2">Tuesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box3" value="4" checked="{{#each item.day}}{{#if equals this 4}}true{{/if}}{{/each}}" />
-		      	<label for="filled-in-box3">Wednesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box4" value="5" checked="{{#each item.day}}{{#if equals this 5}}true{{/if}}{{/each}}" />
-		      	<label for="filled-in-box4">Thursday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box5" value="6" checked="{{#each item.day}}{{#if equals this 6}}true{{/if}}{{/each}}" />
-		      	<label for="filled-in-box5">Friday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box6" value="7" checked="{{#each item.day}}{{#if equals this 7}}true{{/if}}{{/each}}" />
-		      	<label for="filled-in-box6">Saturday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box7" value="1" checked="{{#each item.day}}{{#if equals this 1}}true{{/if}}{{/each}}" />
-		      	<label for="filled-in-box7">Sunday</label>&nbsp;&nbsp;&nbsp;&nbsp;
-
-		      	<div class="input-group">
-			      	<div class="form-row" style="float:left;">
-			      		<label for="start_time">Start time</label>
-						<input id="start_time" name="start_time" class="timepicker" type="text" value="{{#if item.isNew }}7:30 AM{{else}}{{#if greaterThan item.hour 12}}{{minusTwelve item.hour}}:{{item.minute}} PM{{else}}{{item.hour}}:{{item.minute}} AM{{/if}}{{/if}}">
-					</div>
-
-					<div style="float:left;margin-left:60px;margin-right:60px;margin-top:30px;"><label>TO</label></div>
-
-					<div class="form-row" style="float:left;">
-						<label for="end_time">End time</label>
-						<input id="end_time" name="end_time" class="timepicker" type="text"  value="{{#if item.isNew }}7:30 AM{{else}}{{#if greaterThan (computeTimeEndHour item.hour item.duration) 12}}{{minusTwelve (computeTimeEndHour item.hour item.duration)}}:{{computeTimeEndMinute item.minute item.duration}} PM{{else}}{{computeTimeEndHour item.hour item.duration}}:{{computeTimeEndMinute item.minute item.duration}} AM{{/if}}{{/if}}">
-					</div>
-				</div>
-
-			    <hr style="border-color:#f8c400;">
-
-		        <div class="input-field">
-			      <input id="semester" name="semester" class="form-contol" type="text" value="{{semester.school_year}} {{semester.name}}" placeholder="Choose Semester...">
-
-			      <!-- Modal -->
-					<div class="modal fade" id="semester_modal" tabindex="-1" role="dialog" aria-labelledby="semester_modal">
-					  <div class="modal-dialog">
-					    <div class="modal-content">
-						     <div class="modal-header">
-						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
-					        	<h5 class="modal-title" id="semester_modal">Choose a semester</h5>
+								        <tbody>
+								        	{{#each semesters}}
+								        		<tr class="semester pointer-hover">
+								        			<td>{{ school_year }}</td>
+								        			<td>{{ name }}</td>
+								        		</tr>
+								        	{{/each}}
+								        </tbody>
+								    </table>
+							    </div>
 						    </div>
-						    <div class="modal-body">
-						        <table class="highlight">
-							        <thead>
-							          <tr>
-							              <th data-field="courseNumber">School Year</th>
-							              <th data-field="descTitle">Semester</th>
-							          </tr>
-							        </thead>
+						  </div>
+						</div>
+				    </div>
 
-							        <tbody>
-							        	{{#each semesters}}
-							        		<tr class="semester pointer-hover">
-							        			<td>{{ school_year }}</td>
-							        			<td>{{ name }}</td>
-							        		</tr>
-							        	{{/each}}
-							        </tbody>
-							    </table>
+				    <div class="form-group">
+					  	<div class="form-row">
+					  		<input type="text" id="course" name="course" class="form-control" value="{{#if notEquals course null}}{{course.subject_number}}: {{course.title}}{{/if}}" placeholder="Choose Course...">
+						</div>
+						<!-- Modal Course -->
+						<div class="modal fade" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="course_modal">
+						  <div class="modal-dialog">
+						    <div class="modal-content">
+							     <div class="modal-header">
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
+						        	<h5 class="modal-title" id="course_modal">Choose a course</h5>
+							    </div>
+							    <div class="modal-body">
+							        <table class="table table-striped">
+								        <thead>
+								          <tr>
+								              <th data-field="courseNumber">Course Number</th>
+								              <th data-field="descTitle">Descriptive Title</th>
+								              <th data-field="units">Units</th>
+								          </tr>
+								        </thead>
+
+								        <tbody>
+								        	{{#each courses}}
+								        		<tr class="course pointer-hover">
+								        			<td>{{ subject_number }}</td>
+								        			<td>{{ title }}</td>
+								        			<td>{{ unit }}</td>
+								        		</tr>
+								        	{{/each}}
+								        </tbody>
+								    </table>
+							    </div>
 						    </div>
-					    </div>
-					  </div>
+						  </div>
+						</div>
 					</div>
-			    </div>
 
-			    <div class="input-group">
-				  	<div class="form-row" style="float:left;">
-				  		<input id="course" name= "course" type="text" value="{{course.subject_number}} {{course.title}}" placeholder="Choose Course..."/>
-					</div>
-					<div class="form-row" style="float:left;margin-top:2px;">
-						<!-- Button trigger modal -->
-						<button class="btn btn-default open-modal" type="button">
-					    	<i class="fa fa-sticky-note-o"></i>
+				    <hr style="border-color:#f8c400;">
+
+				    <div class="form-group">
+				      <input type="text" id="name" name="name" class="form-control" placeholder="Section Name" value="{{item.name}}">
+				    </div>
+				    
+				    <div class="form-group">
+					    <p>
+					    	<label>Schedule</label>
+						</p>
+			      		<input name="days" type="checkbox" class="filled-in" id="filled-in-box1" value="2" checked="{{#each item.day}}{{#if equals this 2}}true{{/if}}{{/each}}" />
+				      	<label for="filled-in-box1">Monday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+				      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box2" value="3" checked="{{#each item.day}}{{#if equals this 3}}true{{/if}}{{/each}}" />
+				      	<label for="filled-in-box2">Tuesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+				      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box3" value="4" checked="{{#each item.day}}{{#if equals this 4}}true{{/if}}{{/each}}" />
+				      	<label for="filled-in-box3">Wednesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+				      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box4" value="5" checked="{{#each item.day}}{{#if equals this 5}}true{{/if}}{{/each}}" />
+				      	<label for="filled-in-box4">Thursday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+				      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box5" value="6" checked="{{#each item.day}}{{#if equals this 6}}true{{/if}}{{/each}}" />
+				      	<label for="filled-in-box5">Friday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+				      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box6" value="7" checked="{{#each item.day}}{{#if equals this 7}}true{{/if}}{{/each}}" />
+				      	<label for="filled-in-box6">Saturday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+				      	<input name="days" type="checkbox" class="filled-in" id="filled-in-box7" value="1" checked="{{#each item.day}}{{#if equals this 1}}true{{/if}}{{/each}}" />
+				      	<label for="filled-in-box7">Sunday</label>&nbsp;&nbsp;&nbsp;&nbsp;
+
+			      	</div>
+				      	<div class="form-group">
+				      		<label>Start Time</label>
+							<input id="start_time" name="start_time" class="timepicker form-control" type="text" value="{{#if item.isNew }}7:30 AM{{else}}{{#if greaterThan item.hour 12}}{{minusTwelve item.hour}}:{{item.minute}} PM{{else}}{{item.hour}}:{{item.minute}} AM{{/if}}{{/if}}">
+						</div>
+						<div class="form-group">
+							<label>End Time</label>
+							<input id="end_time" name="end_time" class="timepicker form-control" type="text"  value="{{#if item.isNew }}7:30 AM{{else}}{{#if greaterThan (computeTimeEndHour item.hour item.duration) 12}}{{minusTwelve (computeTimeEndHour item.hour item.duration)}}:{{computeTimeEndMinute item.minute item.duration}} PM{{else}}{{computeTimeEndHour item.hour item.duration}}:{{computeTimeEndMinute item.minute item.duration}} AM{{/if}}{{/if}}">
+						</div>
+				    <hr style="border-color:#f8c400;">
+
+				    <div class="form-group">
+						<button type="submit" class="btn btn-success form-control">
+							{{#if item.isNew}}
+								ADD
+							{{else}}
+								EDIT 
+							{{/if}}
+							SECTION
 						</button>
 					</div>
-				</div>
-
-				<!-- Modal -->
-				<div class="modal fade" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="course_modal">
-				  <div class="modal-dialog">
-				    <div class="modal-content">
-					     <div class="modal-header">
-					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
-				        	<h5 class="modal-title" id="course_modal">Choose a course</h5>
-					    </div>
-					    <div class="modal-body">
-					        <table class="highlight">
-						        <thead>
-						          <tr>
-						              <th data-field="courseNumber">Course Number</th>
-						              <th data-field="descTitle">Descriptive Title</th>
-						              <th data-field="units">Units</th>
-						          </tr>
-						        </thead>
-
-						        <tbody>
-						        	{{#each courses}}
-						        		<tr class="course pointer-hover">
-						        			<td>{{ subject_number }}</td>
-						        			<td>{{ title }}</td>
-						        			<td>{{ unit }}</td>
-						        		</tr>
-						        	{{/each}}
-						        </tbody>
-						    </table>
-					    </div>
-				    </div>
-				  </div>
-				</div>
-
-				<div class="form-row">
-					<button type="submit" class="btn btn-default form-control" style="background-color:#89343b;color:#fff;">
-						{{#if item.isNew}}
-							ADD
-						{{else}}
-							EDIT 
-						{{/if}}
-						SECTION
-					</button>
-				</div>
-			</form>
+			        
+				</form>
+			</div>
 		</div>
 	</div>
 	<!-- /#page-content-wrapper -->

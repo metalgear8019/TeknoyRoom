@@ -2,34 +2,31 @@
 	<!-- Page Content -->
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
-			<div class="row">
-				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;">
-					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><i class="fa fa-th-large"></i></a>
-				</div>
-			</div>
-			<div class="row" style="margin-top:20px;">
+			<div class="row" style="margin-top:30px;">
 				<div class="input-group">
-					<span class="input-group-addon" style="background:#FFFFCC;border-color:#ffffe5;">
+					<span class="input-group-addon">
 						<i class="fa fa-search"></i>
 					</span>
-					<input type="text" id="search" name="firstname" class="form-control" style="background:#FFFFCC;border-color:#ffffe5;box-shadow:none;">
+					<input type="text" id="search" name="firstname" class="form-control">
 				</div>
-				<table>
-					<tr>
-						<th>Subject Number</th>
-						<th>Title</th>
-						<th>Unit/s</th>
-						<th></th>
-					</tr>
-					{{#each courses}}
-						<tr class="pointer-hover">
-							<td>{{subject_number}}</td>
-							<td>{{title}}</td>
-							<td>{{unit}}</td>
-							<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
+				<div class="table" style="margin-top:20px;">
+					<table class="table table-striped">
+						<tr>
+							<th>Subject Number</th>
+							<th>Title</th>
+							<th>Unit/s</th>
+							<th></th>
 						</tr>
-					{{/each}}
-				</table>
+						{{#each courses}}
+							<tr class="pointer-hover">
+								<td>{{subject_number}}</td>
+								<td>{{title}}</td>
+								<td>{{unit}}</td>
+								<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
+							</tr>
+						{{/each}}
+					</table>
+				</div>
 			</div>
 			<!-- /#row for tiled searches -->
 		</div>

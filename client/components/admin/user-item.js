@@ -13,6 +13,9 @@ Template.userItem.helpers
 				return 'SELECTED';
 			else
 				return 'CLICK TO SELECT';
+		},
+		users: function(){
+			return Users.find({});
 		}
 	}
 );

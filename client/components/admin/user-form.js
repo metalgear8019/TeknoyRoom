@@ -8,6 +8,13 @@ Template.userForm.helpers
 		isStudent: function () 
 		{
 			return Session.get('isStudent');
+		},
+
+		isGenderMale: function()
+		{
+			if (Session.get('gender') == undefined)
+				Session.set('gender', true);
+			return Session.get('gender');
 		}
 	}
 );
@@ -103,18 +110,25 @@ Template.userForm.events
 				}
 				else
 				{
-					alert('Necessary fields must be filled..');
+					//alert('Necessary fields must be filled..');
 				}
 			}
 			else
 			{
-				alert('Necessary fields must be filled..');
+				//alert('Necessary fields must be filled..');
 			}
 		},
 
 		'change #user_type': function (event) 
 		{
+			event.preventDefault();
 			Session.set('isStudent', (event.target.value == 2));
-		}
+		},
+
+		'change .gender': function (event)
+		{
+			event.preventDefault();
+			Session.set('gender', (event.target.value == 'Male'));
+		},
 	}
 );

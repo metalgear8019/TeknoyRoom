@@ -1,84 +1,91 @@
 <template name="userForm">
 	<!-- Add Student -->
 	<div id="page-content-wrapper">
-		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
-			<div class="row">
-				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;">
-					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
-				</div>
-			</div>
+		<div class="page-content inset">
 
-			<div class="alert alert-warning" role="alert" style="margin-top:10px;">(Display warning here)</div>
+			<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
 
-			<div class="media" style="margin-top:30px;">
-				<form class="navbar-form navbar-left" role="search" id="frmUser">
-					<div class="media left" style="margin-right:30px;">
-				    	<input class = "media-object" type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:270px;">
-					    <input type="file" id="my_file" style="display: none;">
-				    </div>
+				<!--<div class="alert alert-danger" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
 
-			        <div class="media-body">
-						<div class="input-field">
-							<input id="id_number" name="id_number" class="form-contol" type="text" placeholder="ID Number">
-						</div>
-
-						<div class="input-field">
-							<input id="first_name" name="first_name" class="form-contol" type="text" placeholder="First Name">
-						</div>
-
-						<div class="input-field">
-							<input id="middle_name" name="middle_name" class="form-contol" type="text" placeholder="Middle Name">
-						</div>
-
-						<div class="input-field">
-							<input id="last_name" name="last_name" class="form-contol" type="text" placeholder="Last Name">
-						</div>
-
-				        <label>Profession</label>
-					  	<select class="browser-default" id="user_type" name="user_type">
-					    	<option value="2" selected>Student</option>
-					    	<option value="1">Instructor</option>
-					    	<option value="0">Admin</option>
-					  	</select>
-
-					  	{{ #if isStudent }}
-							<label>Year</label>
-							<select class="browser-default" id="year" name="year">
-								<option value="1" selected>1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
-								<option value="5">5</option>
-							</select>
-
-							<label>Degree Program</label>
-							<select class="browser-default" id="program" name="program">
-								<option value="BSIT" selected>BSIT</option>
-								<option value="BSCS">BSCS</option>
-							</select>
-						{{ else }}
-							<div class="input-field">
-								<input id="department" name="department" class="form-contol" type="text" placeholder="Department">
-							</div>
-						{{ /if }}
-
-				  		<label>Gender</label>
-					  	<p>
-							<input name="gender" type="radio" id="male" value="Male" checked>
-							<label for="male" style="font-size:14px;">Male</label>
-					    </p>
-					    <p>
-							<input name="gender" type="radio" id="female" value="Female">
-							<label for="female" style="font-size:14px;">Female</label>
-					    </p>
-
-					    <div class="form-row">
-					    	<button type="submit" class="btn btn-default form-control" style="background-color:#89343b;color:#fff;">ADD USER</button>
+				<div class="row" style="margin-top:30px;">
+					<form role="form" id="frmUser">
+						<div style="margin-right:30px;">
+					    	{{#if isGenderMale}}
+					    		<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:270px; float:left;">
+						    {{else}}
+						    	<input type="image" alt="Profile Picture" src="/assets/profile-picture2.png" style="height:270px; float:left;">
+						    {{/if}}
+						    <input type="file" id="my_file" style="display: none; float:left;">
 					    </div>
-				    </div>
-			    </form>
-			</div> <!-- /#media-->
+					    <div class="col-md-offset-4">
+						    <div class="form-group">
+								<input type="text" class="form-control" id="id_number" name="id_number" placeholder="Id Number">
+							</div>
+
+							<div class="form-group">
+								<input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
+							</div>
+
+							<div class="form-group">
+								<input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Middle Name">
+							</div>
+
+							<div class="form-group">
+								<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
+							</div>
+
+							<div class="form-group">
+					        	<label>Profession</label>
+							  	<select id="user_type" name="user_type" class="form-control">
+							    	<option value="2" selected>Student</option>
+							    	<option value="1">Instructor</option>
+							    	<option value="0">Admin</option>
+							  	</select>
+						  	</div>
+
+						  	{{ #if isStudent }}
+						  		<div class="form-group">
+									<label>Year</label>
+									<select id="year" name="year" class="form-control">
+										<option value="1" selected>1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label>Degree Program</label>
+									<select id="program" name="program" class="form-control">
+										<option value="BSIT" selected>BSIT</option>
+										<option value="BSCS">BSCS</option>
+									</select>
+								</div>
+							{{ else }}
+									<input id="department" name="department" class="form-contol" type="text" placeholder="Department">
+							{{ /if }}
+							<div class="form-group">
+					  		<label>Gender</label>
+						  	<p>
+								<input class="gender" name="gender" type="radio" id="male" value="Male" checked>
+								<label for="male" style="font-size:14px;">Male</label>
+						    </p>
+						    <p>
+								<input class="gender" name="gender" type="radio" id="female" value="Female">
+								<label for="female" style="font-size:14px;">Female</label>
+						    </p>
+						    </div>
+						    <div class="form-row">
+						    	<button type="submit" class="btn btn-success form-control" >ADD USER</button>
+						    </div>
+						    <div>
+						    	&nbsp;
+						    </div>
+					    </div>
+				    </form>
+				</div> <!-- /#row -->
+			</div>
 		</div>
 	</div>
-	<!-- /#page-content-wrapper -->
+	<!-- /#page-content-wrapper style="background-color:#89343b;color:#fff;" -->
 </template>

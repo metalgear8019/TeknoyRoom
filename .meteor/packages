@@ -19,10 +19,11 @@ ecmascript              # Enable ECMAScript2015+ syntax in app code
 insecure                # Allow all DB writes from clients (for prototyping)
 kadira:flow-router
 kadira:blaze-layout
-mizzao:jquery-ui
-twbs:bootstrap
 jplack:bootstrap-timepicker
 accounts-base
 accounts-password
 aldeed:collection2
 alanning:roles
+bootswatch:paper
+fortawesome:fontawesome
+twbs:bootstrap

@@ -49,16 +49,15 @@ Template.sectionForm.helpers
 Template.sectionForm.events
 (
 	{
-		'click .open-modal': function (event)
-		{
-	        event.preventDefault();
-	        $('#course_modal').modal('show');
-		},
-
-		'click .course': function (event)
+		'click #course': function (event)
 		{
 			event.preventDefault();
+			$('#course_modal').modal('show');
+		},
 
+		'click .course':  function (event)
+		{
+			event.preventDefault();
 			Session.set('course', this);
 			$('#course_modal').modal('hide');
 		},
@@ -72,7 +71,6 @@ Template.sectionForm.events
 		'click .semester': function (event)
 		{
 			event.preventDefault();
-
 			Session.set('semester', this);
 			$('#semester_modal').modal('hide');
 		},

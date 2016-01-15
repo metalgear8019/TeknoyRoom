@@ -1,22 +1,17 @@
 <template name="userList">
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
-			<div class="row">
-				<div class="col-lg-12" style="padding-left:0px;padding-right:0px;">
-					<a href="#menu-toggle" class="btn btn-sm btn-default" id="menu-toggle"><span class="glyphicon glyphicon-th"></span></a>
-				</div>
-			</div>
 
-			<div class="alert alert-warning" role="alert" style="margin-top:10px;">Mark users to ban.</div>
+			<!--<div class="alert alert-warning" role="alert" style="margin-top:10px;">Mark users to ban.</div>-->
 
-			<div class="row">
+			<div class="row" style="margin-top:30px;">
 				<form class="navbar-form navbar-left" role="search">
 				  	<div class="form-group">
 						<div class="input-group">
-							<span class="input-group-addon" style="background:#FFFFCC;border-color:#ffffe5;">
+							<span class="input-group-addon" style="">
 								<i class="fa fa-search"></i>
 							</span>
-							<input type="text" id="search" name="firstname" class="form-control" style="background:#FFFFCC;border-color:#ffffe5;box-shadow:none;">
+							<input type="text" id="search" name="firstname" class="form-control" style="">
 						</div>
 					  	<div class="input-group dropdown" style="margin-left:20px;">
 						  <button class="btn btn-default dropdown-toggle form-control" type="button" style="width:200px;text-align:left;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -31,7 +26,7 @@
 						  </ul>
 						</div>
 					</div>
-				  	<button type="submit" class="btn btn-default" style="margin-left:20px;background-color:#89343b;color:#fff;width:150px;">BAN SELECTED</button>
+				  	<button type="submit" class="btn btn-success">BAN SELECTED</button>
 				</form>
 			</div> 
 			<!-- /#row for search bar -->
@@ -41,6 +36,22 @@
 				{{ #each users}}
 					{{> userItem}}
 				{{/each}}
+				<!--<div class="container-fluid">
+					<table>
+						<tr>
+							<th>Id Number</th>
+							<th>Name</th>
+							<th>Gender</th>
+							<th>User Type</th>
+							<th></th>
+						</tr>
+						<tr>
+						{{ #each users}}
+							<td>{{profile.username}}</td>
+						{{/each}}
+						</tr>
+					</table>
+				</div>-->
 			</form>
 
 			<!--<div class="row" style="margin-top:20px;margin-left:2px;">
