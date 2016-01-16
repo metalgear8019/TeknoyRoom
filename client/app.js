@@ -1,5 +1,82 @@
 Session.setDefault('counter', 0);
 
+hotKey = new Hotkeys();
+
+//for the sidebar parts
+hotKey.add({
+	combo : "shift+q",
+	callback : function()
+	{
+		FlowRouter.go("/admin/user/new");
+	}
+})
+
+hotKey.add({
+	combo : "shift+w",
+	callback : function()
+	{
+		FlowRouter.go("/admin/user/");
+	}
+})
+
+hotKey.add({
+	combo : "shift+f",
+	callback : function()
+	{
+		FlowRouter.go("/admin/section/new");
+	}
+})
+
+hotKey.add({
+	combo : "shift+p",
+	callback : function()
+	{
+		FlowRouter.go("/admin/section");
+	}
+})
+
+hotKey.add({
+	combo : "shift+g",
+	callback : function()
+	{
+		FlowRouter.go("/admin/section/enroll");
+	}
+})
+
+hotKey.add({
+	combo : "shift+j",
+	callback : function()
+	{
+		FlowRouter.go("/admin/course/new");
+	}
+})
+
+hotKey.add({
+	combo : "shift+l",
+	callback : function()
+	{
+		FlowRouter.go("/admin/course/");
+	}
+})
+
+hotKey.add({
+	combo : "shift+u",
+	callback : function()
+	{
+		FlowRouter.go("/admin/semester/new");
+	}
+})
+
+hotKey.add({
+	combo : "shift+y",
+	callback : function()
+	{
+		FlowRouter.go("/admin/semester/");
+	}
+})
+
+
+
 Template.registerHelper
 (
 	'equals', function (a, b)
