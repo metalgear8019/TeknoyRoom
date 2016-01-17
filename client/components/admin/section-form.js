@@ -22,6 +22,13 @@ var newSection = {
 };
 
 var sections = [newSection];
+var sectionsDependency = new Tracker.Dependency();
+
+/*Template.sectionForm.sections = function() {
+  sectionsDependency.depend();
+  return sections;
+};*/
+
 
 Template.sectionForm.helpers
 (
@@ -48,7 +55,8 @@ Template.sectionForm.helpers
 
 		sections: function()
 		{
-			return sections;
+			sectionsDependency.depend();
+  			return sections;
 		},
 
 		item: function() 
@@ -180,11 +188,11 @@ Template.sectionForm.events
 		'click #addSection': function(event)
 		{
 			event.preventDefault();
-			console.log('before add: ' + JSON.stringify(sections));
+			//console.log('before add: ' + JSON.stringify(sections));
 			sections.push(newSection);
+			sectionsDependency.changed();
 			console.log('after add: ' + JSON.stringify(sections));
 			// Blaze.renderWithData(Template.addSection, $( '#addSection' )[0], $( '#content' )[0]);
-			console.log("insert");
 		}
 	}
 );
