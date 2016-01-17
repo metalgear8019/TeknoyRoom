@@ -10,7 +10,18 @@ Template.sectionForm.onCreated(function () {
 	}
 });
 
-var sections = [];
+var newSection = {
+	_id: '',
+	name: '',
+	course: '',
+	semester: '',
+	day: [],
+	hour: '',
+	minute: '',
+	duration: 0
+};
+
+var sections = [newSection];
 
 Template.sectionForm.helpers
 (
@@ -33,6 +44,11 @@ Template.sectionForm.helpers
 		semester: function()
 		{
 			return Session.get('semester');
+		},
+
+		sections: function()
+		{
+			return sections;
 		},
 
 		item: function() 
@@ -164,7 +180,10 @@ Template.sectionForm.events
 		'click #addSection': function(event)
 		{
 			event.preventDefault();
-			Blaze.renderWithData(Template.addSection, $( '#addSection' )[0], $( '#content' )[0]);
+			console.log('before add: ' + JSON.stringify(sections));
+			sections.push(newSection);
+			console.log('after add: ' + JSON.stringify(sections));
+			// Blaze.renderWithData(Template.addSection, $( '#addSection' )[0], $( '#content' )[0]);
 			console.log("insert");
 		}
 	}

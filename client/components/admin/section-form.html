@@ -82,6 +82,9 @@
 					<hr style="border-color:#f8c400;">
 					
 					<div id="content">
+						{{ #each sections }}
+							{{> addSection }}
+						{{ /each }}
 				    </div>
 				    
 				    <a href="#" id="addSection" class="round-button"><i class="fa fa-plus"></i></a>
