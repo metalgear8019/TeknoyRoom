@@ -1,5 +1,5 @@
 <template name="pageLayout">
-	{{ #if currentUser }}
+	<!--{{ #if currentUser }}-->
 		<!-- {{ #if isInRole 'admin' }} -->
 			{{> Template.dynamic template=header }}
 			<div class="container">  <!--style="margin-top:25px;padding-right:0px;"-->
@@ -11,13 +11,13 @@
 		<!--{{ else }}
 			{{> unauthorized }}
 		{{ /if }}-->
-	{{ else }}
+	<!--{{ else }}
 		{{ #if loggingIn }}
 			{{> loading }}
 		{{ else }}
 			{{> loginForm }}
 		{{ /if }}
-	{{ /if }}
+	{{ /if }}-->
 	
 	<!-- {{> Template.dynamic template=footer }} -->
 </template>
