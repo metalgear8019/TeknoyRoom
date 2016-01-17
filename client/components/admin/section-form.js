@@ -10,6 +10,8 @@ Template.sectionForm.onCreated(function () {
 	}
 });
 
+var sections = [];
+
 Template.sectionForm.helpers
 (
 	{
@@ -157,6 +159,13 @@ Template.sectionForm.events
 				console.log(start_minutes);
 				console.log(duration);
 			}
+		},
+
+		'click #addSection': function(event)
+		{
+			event.preventDefault();
+			Blaze.renderWithData(Template.addSection, $( '#addSection' )[0], $( '#content' )[0]);
+			console.log("insert");
 		}
 	}
 );

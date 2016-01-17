@@ -1,5 +1,5 @@
 <template name="loginForm">
-	<div class="row" style="margin-top:50px;margin-left:0;">
+	<div class="container-fluid background_image noselect" style="margin-top:50px;margin-left:0;">
 		<div class="row">
 			<div class="col-xs-12 col-sm-12 col-md-12" align="center">
 				<a href="#"><img style="width:235px" src="/assets/teknoyroom.png"></a>
@@ -7,10 +7,10 @@
 		</div>
 		
 		{{ #if isCredentialsCorrect }}
-		<div class="alert alert-danger col-xs-offset-4 col-md-4">
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			<strong>Failed to login!</strong> Username or password is incorrect.
-		</div>
+			<div class="alert alert-danger col-xs-offset-4 col-md-4">
+				<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+				<strong>Failed to login!</strong> Username or password is incorrect.
+			</div>
 		{{/if}}
 
 		<form id="frmLogin" class="form-horizontal" role="form" method="post">
@@ -34,11 +34,11 @@
 					</div>
 				</div>
 
-				<div class="formrow">
-					<input type="submit" value="SIGN IN" class="btn btn-danger waves-effect waves-red form-control">
+				<div class="form-row" style="margin-top:50px;">
+					<input type="submit" value="SIGN IN" class="btn btn-primary form-control">
 				</div>
 
-				<div class="text-center">
+				<div class="text-center" style="margin-top:50px;">
 					<small><p><a href="#" style="text-decoration:none;">Forgot password?</a></p></small>
 				</div>
 			</div>
