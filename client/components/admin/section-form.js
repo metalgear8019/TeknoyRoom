@@ -106,83 +106,160 @@ Template.sectionForm.events
 			event.preventDefault();
 
 			var id = event.target._id.value;
-			var name = event.target.name.value;
 			var course = Session.get('course')._id;
-			var semester = Session.get('semester')._id;;
-			var days = event.target.days;
-			var start_time = event.target.start_time.value;
-			var end_time = event.target.end_time.value;
+			var semester = Session.get('semester')._id;
+			var j = 1;
 
-			var getHour = start_time.split(':')[0];
-			var getMinutes = start_time.split(':')[1].split(' ')[0];
-			var getMeridiem = start_time.split(' ')[1];
 
-			var start_hour = parseInt(getHour);
-			var start_minutes = getMinutes;
-
-			if (getMeridiem == 'PM')
+			if (sections.length != 1)
 			{
-				start_hour += 12;
-			}
 
-			getHour = end_time.split(':')[0];
-			getMinutes = end_time.split(':')[1].split(' ')[0];
-			getMeridiem = end_time.split(' ')[1];
-
-			var end_hour = parseInt(getHour);
-			var end_minutes = parseInt(getMinutes);
-
-			if (getMeridiem == 'PM')
-			{
-				end_hour += 12;
-			}
-
-			var duration = ((end_hour - start_hour) * 60) + end_minutes - start_minutes;
-			var day = [];
-
-			for (i = 0; i < days.length; i++) { 
-				if (days[i].checked){
-					day.push(days[i].value); 
-				}
-			}
-
-
-			if (name != '' && course != '' && semester != '' && day != '' && start_hour != '' && start_minutes != '')
-			{
-				var section = {
-									name: name,
-									course: course,
-									semester: semester,
-									day: day,
-									hour: start_hour,
-									minute: start_minutes,
-									duration: duration
-							  };
-
-				if (id == 'new')
+				for (i = 0; i < sections.length; i++)
 				{
-					Meteor.call('addSection', section);
-				}
-				else
-				{
-					Meteor.call('updateSection', id, section);
-				}
 
-				Session.set('course', null);
-				Session.set('semester', null);
-				FlowRouter.go('/admin/section/');
+					var name = event.target.name[i].value;
+					var days = event.target.days;
+					var start_time = event.target.start_time[i].value;
+					var end_time = event.target.end_time[i].value;
+
+					var getHour = start_time.split(':')[0];
+					var getMinutes = start_time.split(':')[1].split(' ')[0];
+					var getMeridiem = start_time.split(' ')[1];
+
+					var start_hour = parseInt(getHour);
+					var start_minutes = getMinutes;
+
+					if (getMeridiem == 'PM')
+					{
+						start_hour += 12;
+					}
+
+					getHour = end_time.split(':')[0];
+					getMinutes = end_time.split(':')[1].split(' ')[0];
+					getMeridiem = end_time.split(' ')[1];
+
+					var end_hour = parseInt(getHour);
+					var end_minutes = parseInt(getMinutes);
+
+					if (getMeridiem == 'PM')
+					{
+						end_hour += 12;
+					}
+
+					var duration = ((end_hour - start_hour) * 60) + end_minutes - start_minutes;
+					var day = [];
+
+					/*for (i = 0; i < days.length; i++) { 
+						if (days[i].checked){
+							day.push(days[i].value); 
+						}
+					}*/
+
+					for (;j <= days.length; j++)
+					{
+						if (j % 7 == 0)
+						{
+							j+=1;
+							break;
+						}
+
+						if (days[j].checked)
+						{
+							day.push(days[j].value);
+						}
+					}
+
+					if (name != '' && course != '' && semester != '' && day != '' && start_hour != '' && start_minutes != '')
+					{
+						var section = {
+											name: name,
+											course: course,
+											semester: semester,
+											day: day,
+											hour: start_hour,
+											minute: start_minutes,
+											duration: duration
+									  };
+
+						if (id == 'new')
+						{
+							Meteor.call('addSection', section);
+						}
+						else
+						{
+							Meteor.call('updateSection', id, section);
+						}
+					}
+				}
 			}
 			else
 			{
-				//alert('Necessary fields must be filled..');
-				console.log(name);
-				console.log(course);
-				console.log(semester);
-				console.log(day);
-				console.log(start_hour);
-				console.log(start_minutes);
-				console.log(duration);
+
+				var name = event.target.name.value;
+				var days = event.target.days;
+				var start_time = event.target.start_time.value;
+				var end_time = event.target.end_time.value;
+
+				var getHour = start_time.split(':')[0];
+				var getMinutes = start_time.split(':')[1].split(' ')[0];
+				var getMeridiem = start_time.split(' ')[1];
+
+				var start_hour = parseInt(getHour);
+				var start_minutes = getMinutes;
+
+				if (getMeridiem == 'PM')
+				{
+					start_hour += 12;
+				}
+
+				getHour = end_time.split(':')[0];
+				getMinutes = end_time.split(':')[1].split(' ')[0];
+				getMeridiem = end_time.split(' ')[1];
+
+				var end_hour = parseInt(getHour);
+				var end_minutes = parseInt(getMinutes);
+
+				if (getMeridiem == 'PM')
+				{
+					end_hour += 12;
+				}
+
+				var duration = ((end_hour - start_hour) * 60) + end_minutes - start_minutes;
+				var day = [];
+
+				for (i = 0; i < days.length; i++)
+				{ 
+					if (days[i].checked){
+						day.push(days[i].value); 
+					}
+				}
+
+				if (name != '' && course != '' && semester != '' && day != '' && start_hour != '' && start_minutes != '')
+				{
+					var section = {
+										name: name,
+										course: course,
+										semester: semester,
+										day: day,
+										hour: start_hour,
+										minute: start_minutes,
+										duration: duration
+								  };
+
+					if (id == 'new')
+					{
+						Meteor.call('addSection', section);
+					}
+					else
+					{
+						Meteor.call('updateSection', id, section);
+					}
+				}
 			}
+
+			Session.set('course', null);
+			Session.set('semester', null);
+			FlowRouter.go('/admin/section/');
 		},
 
 		'click #addSection': function(event)
@@ -191,7 +268,7 @@ Template.sectionForm.events
 			//console.log('before add: ' + JSON.stringify(sections));
 			sections.push(newSection);
 			sectionsDependency.changed();
-			console.log('after add: ' + JSON.stringify(sections));
+			//console.log('after add: ' + JSON.stringify(sections));
 			// Blaze.renderWithData(Template.addSection, $( '#addSection' )[0], $( '#content' )[0]);
 		}
 	}
