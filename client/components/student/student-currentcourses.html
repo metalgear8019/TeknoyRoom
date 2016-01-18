@@ -20,18 +20,24 @@
 							    </tr>
 						  	</thead>
 							<tbody>	
+								{{#each courses}}
 							    <tr>
-								    <td><a href="/student/currentcourses/ccs123/">CCS123</a></td>
+								    <td>
+								    	<a href="/student/currentcourses/ccs123/">
+								    		{{subject_number}}
+								    	</a>
+								    </td>
 								    <td>MWF 7:30 AM - 8:30 AM</td>
 							    </tr>
-							    <tr>
+							    {{/each}}
+							    <!--<tr>
 								    <td>CCS120</td>
 								    <td>TTH 7:30 AM - 9:00 AM</td>
 							    </tr>
 							    <tr>
 								    <td>CCS121</td>
 								    <td>MWF 4:30 PM - 5:30 PM</td>
-							    </tr>
+							    </tr>-->
 							</tbody>
 						</table> 
 						<div>
