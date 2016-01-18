@@ -20,11 +20,19 @@
 							    </tr>
 						  	</thead>
 							<tbody>	
+								{{#each semesters}}
 							    <tr>
-								    <td><a href="/student/previouscourses/allcourses/">1st semester</a></td>
-								    <td>2015-2016</td>
+								    <td>
+								    	<a href="/student/previouscourses/allcourses/">
+								    		{{name}}
+								    	</a>
+								    </td>
+								    <td>
+								    	{{school_year}}
+								    </td>
 							    </tr>
-							    <tr>
+							    {{/each}}
+							    <!--<tr>
 								    <td>2nd semester</td>
 								    <td>2015-2016</td>
 							    </tr>
@@ -51,7 +59,7 @@
 							    <tr>
 								    <td>2nd semester</td>
 								    <td>2012-2013</td>
-							    </tr>
+							    </tr>-->
 							</tbody>
 						</table> 
 					</div>

@@ -21,12 +21,16 @@
 							    </tr>
 						  	</thead>
 							<tbody>	
+								{{#each courses}}
 							    <tr>
-								    <td>CCS210</td>
+								    <td>
+								    	{{subject_number}}
+								    </td>
 								    <td>MWF 7:30 AM - 8:30 AM</td>
 								    <td>Passed</td>
 							    </tr>
-							    <tr>
+							    {{/each}}
+							    <!--<tr>
 								    <td>CCS121</td>
 								    <td>TTH 7:30 AM - 8:30 AM</td>
 								    <td>Passed</td>
@@ -40,7 +44,7 @@
 								    <td>CCS123</td>
 								    <td>MWF 1:30 PM - 2:30 PM</td>
 								    <td>Passed</td>
-							    </tr>
+							    </tr>-->
 							</tbody>
 						</table> 
 					</div>

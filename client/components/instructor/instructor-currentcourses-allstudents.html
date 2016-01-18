@@ -24,51 +24,19 @@
 							    </tr>
 						  	</thead>
 							<tbody>	
+								{{ #each users}}
 							    <tr>
-								    <td><a href="/instructor/currentcourses/jacque/">Jacquelyn Amaya</a></td>
+									<td>
+										<a href="/instructor/currentcourses/jacque/">
+										{{ profile.first_name }}
+										{{ profile.middle_name }}
+										{{ profile.last_name }}
+										</a>
+									</td>
 								    <td style="text-align:center;">0</td>
 								    <td style="text-align:center;">1</td>
 							    </tr>
-							    <tr>
-								    <td>Coreen Smith</td>
-								    <td style="text-align:center;">5</td>
-								    <td style="text-align:center;">1</td>
-							    </tr>
-							    <tr>
-								    <td>Beatrice Knowles</td>
-								    <td style="text-align:center;">0</td>
-								    <td style="text-align:center;">1</td>
-							    </tr>
-							    <tr>
-								    <td>Jacquelyn Amaya</td>
-								    <td style="text-align:center;">0</td>
-								    <td style="text-align:center;">1</td>
-							    </tr>
-							    <tr>
-								    <td>Coreen Smith</td>
-								    <td style="text-align:center;">5</td>
-								    <td style="text-align:center;">1</td>
-							    </tr>
-							    <tr>
-								    <td>Beatrice Knowles</td>
-								    <td style="text-align:center;">0</td>
-								    <td style="text-align:center;">1</td>
-							    </tr>
-							    <tr>
-								    <td>Jacquelyn Amaya</td>
-								    <td style="text-align:center;">0</td>
-								    <td style="text-align:center;">1</td>
-							    </tr>
-							    <tr>
-								    <td>Coreen Smith</td>
-								    <td style="text-align:center;">5</td>
-								    <td style="text-align:center;">1</td>
-							    </tr>
-							    <tr>
-								    <td>Beatrice Knowles</td>
-								    <td style="text-align:center;">0</td>
-								    <td style="text-align:center;">1</td>
-							    </tr>
+							    {{/each}}
 							</tbody>
 						</table> 
 					</div>
