@@ -265,11 +265,20 @@ Template.sectionForm.events
 		'click #addSection': function(event)
 		{
 			event.preventDefault();
-			//console.log('before add: ' + JSON.stringify(sections));
 			sections.push(newSection);
 			sectionsDependency.changed();
-			//console.log('after add: ' + JSON.stringify(sections));
 			// Blaze.renderWithData(Template.addSection, $( '#addSection' )[0], $( '#content' )[0]);
+		},
+
+		'click #removeSection': function(event)
+		{
+			event.preventDefault();
+			console.log("remove");
+			if (sections.length  != 1)
+			{
+				sections.pop();
+				sectionsDependency.changed();
+			}
 		}
 	}
 );
