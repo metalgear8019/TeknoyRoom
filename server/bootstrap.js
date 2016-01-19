@@ -10,6 +10,10 @@ Meteor.startup(function () {
 	});
 });
 
+Meteor.publish(SubscriptionTag.PRESENCES, function() {
+	return Meteor.users.find({ 'status.online': true });
+});
+
 Meteor.publish(SubscriptionTag.ALL_USERS, function() {
 	return Users.find({});
 });
