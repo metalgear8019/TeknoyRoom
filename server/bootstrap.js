@@ -1,6 +1,6 @@
 Meteor.startup(function () {
 	// code to run on server at startup
-	Meteor.users.find({}).forEach(function (userData) {
+	/*Meteor.users.find({}).forEach(function (userData) {
 		console.log(userData);
 		Meteor.users.update(userData.id, {
 			$set: {
@@ -8,6 +8,18 @@ Meteor.startup(function () {
 			}
 		});
 		// Roles.addUsersToRoles(userData.id, Role.generatePermissions(userData.profile.user_type));
+	});*/
+	Accounts.onCreateUser(function (options, user) {
+		if (options.profile) {
+			// include the user profile
+			user.profile = options.profile
+			Roles.setRolesOnUserObj(user, Role.generatePermissions(user.profile.user_type));
+		}
+
+		// other user object changes...
+		// ...
+
+		return user;
 	});
 });
 
