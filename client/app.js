@@ -224,10 +224,10 @@ Template.registerHelper
 /*Template.body.events
 (
 	{
-		'click #menu-toggle': function (event)
+		'keypress #body': function (event)
 		{
 			event.preventDefault();
-			$("#wrapper").toggleClass("active");
+			console.log("hey");
 		}
 	}
 );*/
