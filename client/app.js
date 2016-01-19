@@ -4,6 +4,8 @@ hotKey = new Hotkeys();
 
 //for the sidebar parts
 hotKey.add({
+
+	autoLoad : false,
 	combo : "shift+q",
 	callback : function()
 	{
@@ -78,7 +80,7 @@ hotKey.add({
 hotKey.add({
 	combo : "shift+x",
 	callback : function()
-	{
+	{	
 		$('#course_modal').modal('show');
 	}
 })
