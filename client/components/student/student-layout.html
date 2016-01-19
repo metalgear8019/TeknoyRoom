@@ -1,0 +1,21 @@
+<template name="studentLayout">
+	{{ #if currentUser }}
+		{{ #if isInRole 'student' }}
+			{{> Template.dynamic template=header }}
+			<div class="container">
+				<div id="wrapper" class="active">
+					{{> Template.dynamic template=sidebar }}
+					{{> Template.dynamic template=main }}
+				</div>
+			</div>
+		{{ else }}
+			{{> unauthorized }}
+		{{ /if }}
+	{{ else }}
+		{{ #if loggingIn }}
+			{{> loading }}
+		{{ else }}
+			{{> loginForm }}
+		{{ /if }}
+	{{ /if }}
+</template>

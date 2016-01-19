@@ -1,8 +1,8 @@
-/*Template.adminBanner.events
+Template.instructorLayout.events
 (
 	{
 		'click #logout': function () {
 			Meteor.logout();
 		}
 	}
-);*/
+);

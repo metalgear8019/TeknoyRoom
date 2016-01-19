@@ -1,8 +1,8 @@
-Template.unauthorized.events
+/*Template.unauthorized.events
 (
 	{
 		'click #logout': function () {
 			Meteor.logout();
 		}
 	}
-);
+);*/

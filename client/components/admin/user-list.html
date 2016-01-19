@@ -33,25 +33,37 @@
 			
 			<!--This is where the results will be displayed-->
 			<form id="frmUsers">
-				{{ #each users}}
+				<!--{{ #each users}}
 					{{> userItem}}
-				{{/each}}
-				<!--<div class="container-fluid">
-					<table>
+				{{/each}}-->
+				<!--<div class="container-fluid">-->
+					<table class="table">
 						<tr>
+							<th></th>
+							<th></th>
 							<th>Id Number</th>
 							<th>Name</th>
-							<th>Gender</th>
 							<th>User Type</th>
 							<th></th>
 						</tr>
 						<tr>
 						{{ #each users}}
-							<td>{{profile.username}}</td>
+							<td><input id="{{ _id }}" type="checkbox" name="users"/></td>
+							<td>
+								{{#if equals profile.gender 'Male'}}
+									<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+								{{else}}
+									<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+								{{/if}}
+							</td>
+							<td>{{ profile.id_number }}</td>
+							<td>{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
+							<td>not yet implemented..</td>
+							<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
 						{{/each}}
 						</tr>
 					</table>
-				</div>-->
+				<!--</div>-->
 			</form>
 
 			<!--<div class="row" style="margin-top:20px;margin-left:2px;">

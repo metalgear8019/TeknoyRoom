@@ -1,71 +1,30 @@
-<template name="adminSidebar">
+<template name="adminSidebar">      
 	<!-- Sidebar -->
-	<!--<div id="sidebar-wrapper">
-		<ul class="sidebar-nav">
-			<li class="sidebar-brand">
-				USERS
-			</li>
-			
-			<li><a href="/admin/user/new"><span></span>&nbsp;&nbsp; Add User</a></li>
-			<li><a href="/admin/user/"><span></span>&nbsp;&nbsp; Ban User</a></li>
-
-			<li><hr style="border-color:#f8c400;"></li>
-
-			<li class="sidebar-brand">
-				SECTIONS
-			</li>
-			
-			<li><a href="/admin/section/new"><span></span>&nbsp;&nbsp; Add Section</a></li>
-			<li><a href="/admin/section/"><span></span>&nbsp;&nbsp; Edit Section</a></li>
-			<li><a href="/admin/section/enroll"><span></span>&nbsp;&nbsp; Enrol Students</a></li>
-
-			<li><hr style="border-color:#f8c400;"></li>
-
-			<li class="sidebar-brand">
-				COURSES
-			</li>
-			
-			<li><a href="/admin/course/new"><span></span>&nbsp;&nbsp; Add Course</a></li>
-			<li><a href="/admin/course/"><span></span>&nbsp;&nbsp; Edit Course</a></li>
-
-			<li><hr style="border-color:#f8c400;"></li>
-
-			<li class="sidebar-brand">
-				SEMESTERS
-			</li>
-			
-			<li><a href="/admin/semester/new"><span></span>&nbsp;&nbsp; Add Semester</a></li>
-			<li><a href="/admin/semester/"><span></span>&nbsp;&nbsp; Edit Semester</a></li>
-
+	<div id="sidebar-wrapper">
+		<ul id="sidebar_menu" class="sidebar-nav">
+			<li class="sidebar-brand"><a id="menu-toggle" href="#">MENU<i id="main_icon" class="fa fa-bars"></i></a></li>
 		</ul>
-	</div>-->
-      
-      <!-- Sidebar -->
-      <div id="sidebar-wrapper">
-			<ul id="sidebar_menu" class="sidebar-nav">
-			   <li class="sidebar-brand"><a id="menu-toggle" href="#">MENU<i id="main_icon" class="fa fa-bars"></i></a></li>
-			</ul>
-			<ul class="sidebar-nav">
-			  <h5 class="sidebar-brand">USERS</h5>     
-			  <li><a href="/admin/user/new">ADD USER<i class="sub_icon fa fa-user-plus"></i></a></li>
-			  <li><a href="/admin/user/">MANAGE USERS<i class="sub_icon fa fa-users"></i></a></li>
-			</ul>
-			<ul class="sidebar-nav">
-			  <h5 class="sidebar-brand">SECTIONS</h5>     
-			  <li><a href="/admin/section/new">ADD SECTION<i class="sub_icon fa fa-cubes"></i></a></li>
-			  <li><a href="/admin/section">MANAGE SECTIONS<i class="sub_icon fa fa-sitemap"></i></a></li>
-			  <li><a href="/admin/section/enroll">ENROLL STUDENTS<i class="sub_icon fa fa-graduation-cap"></i></a></li>
-			</ul>
-			<ul class="sidebar-nav">
-			  <h5 class="sidebar-brand">COURSES</h5>     
-			  <li><a href="/admin/course/new">ADD COURSE<i class="sub_icon fa fa-certificate"></i></a></li>
-			  <li><a href="/admin/course/">MANAGE COURSES<i class="sub_icon fa fa-university"></i></a></li>
-			</ul>
-			<ul class="sidebar-nav">
-			  <h5 class="sidebar-brand">SEMESTERS</h5>     
-			  <li><a href="/admin/semester/new">ADD SEMESTER<i class="sub_icon fa fa-calendar-plus-o"></i></a></li>
-			  <li><a href="/admin/semester/">MANAGE SEMESTERS<i class="sub_icon fa fa-calendar"></i></a></li>
-			</ul>
-      </div>
+		<ul class="sidebar-nav">
+			<h5 class="sidebar-brand">USERS</h5>
+			<li><a href="/admin/user/new">ADD USER<i class="sub_icon fa fa-user-plus"></i></a></li>
+			<li><a href="/admin/user/">MANAGE USERS<i class="sub_icon fa fa-users"></i></a></li>
+		</ul>
+		<ul class="sidebar-nav">
+			<h5 class="sidebar-brand">SECTIONS</h5>
+			<li><a href="/admin/section/new">ADD SECTION<i class="sub_icon fa fa-cubes"></i></a></li>
+			<li><a href="/admin/section">MANAGE SECTIONS<i class="sub_icon fa fa-sitemap"></i></a></li>
+			<li><a href="/admin/section/enroll">ENROLL STUDENTS<i class="sub_icon fa fa-graduation-cap"></i></a></li>
+		</ul>
+		<ul class="sidebar-nav">
+			<h5 class="sidebar-brand">COURSES</h5>
+			<li><a href="/admin/course/new">ADD COURSE<i class="sub_icon fa fa-certificate"></i></a></li>
+			<li><a href="/admin/course/">MANAGE COURSES<i class="sub_icon fa fa-university"></i></a></li>
+		</ul>
+		<ul class="sidebar-nav">
+			<h5 class="sidebar-brand">SEMESTERS</h5>
+			<li><a href="/admin/semester/new">ADD SEMESTER<i class="sub_icon fa fa-calendar-plus-o"></i></a></li>
+			<li><a href="/admin/semester/">MANAGE SEMESTERS<i class="sub_icon fa fa-calendar"></i></a></li>
+		</ul>
+	</div>
 	<!-- /#sidebar-wrapper -->
 </template>
