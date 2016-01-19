@@ -75,6 +75,78 @@ hotKey.add({
 	}
 })
 
+hotKey.add({
+	combo : "shift+x",
+	callback : function()
+	{
+		$('#course_modal').modal('show');
+	}
+})
+
+hotKey.add({
+	combo : "shift+y",
+	callback : function()
+	{
+		$('#semester_modal').modal('show');
+	}
+})
+
+hotKey.add({
+	combo : "shift+m",
+	callback : function()
+	{
+		$("#filled-in-box1").attr("checked", true);
+	}
+})
+
+
+hotKey.add({
+	combo : "shift+t",
+	callback : function()
+	{
+		$("#filled-in-box2").attr("checked", true);
+	}
+})
+
+hotKey.add({
+	combo : "shift+e",
+	callback : function()
+	{
+		$("#filled-in-box3").attr("checked", true);
+	}
+})
+
+hotKey.add({
+	combo : "shift+h",
+	callback : function()
+	{
+		$("#filled-in-box4").attr("checked", true);
+	}
+})
+
+hotKey.add({
+	combo : "shift+i",
+	callback : function()
+	{
+		$("#filled-in-box5").attr("checked", true);
+	}
+})
+
+hotKey.add({
+	combo : "shift+d",
+	callback : function()
+	{
+		$("#filled-in-box6").attr("checked", true);
+	}
+})
+
+hotKey.add({
+	combo : "shift+n",
+	callback : function()
+	{
+		$("#filled-in-box7").attr("checked", true);
+	}
+})
 
 
 Template.registerHelper
