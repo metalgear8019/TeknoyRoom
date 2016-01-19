@@ -1,3 +1,4 @@
+
 Template.sectionForm.onCreated(function () {
 	{
 		var self = this;

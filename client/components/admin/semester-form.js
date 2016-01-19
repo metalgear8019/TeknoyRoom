@@ -1,3 +1,20 @@
+hotKey = new Hotkeys();
+hotKey.add({
+	combo : "shift+x",
+	callback : function()
+	{	
+		$('#course_modal').modal('show');
+	}
+})
+
+hotKey.add({
+	combo : "shift+y",
+	callback : function()
+	{
+		$('#semester_modal').modal('show');
+	}
+})
+
 Template.semesterForm.onCreated(function () {
 	{
 		var self = this;

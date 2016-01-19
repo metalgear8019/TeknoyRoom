@@ -1,9 +1,12 @@
 Session.setDefault('counter', 0);
 
-hotKey = new Hotkeys();
+hotKey = new Hotkeys({
+	autoLoad : false
+});
 
 //for the sidebar parts
 hotKey.add({
+
 	combo : "shift+q",
 	callback : function()
 	{
@@ -75,6 +78,13 @@ hotKey.add({
 	}
 })
 
+hotKey.add({
+	combo : "shift+m",
+	callback : function()
+	{
+		console.log("shift+m was pressed");
+	}
+})
 
 
 Template.registerHelper
