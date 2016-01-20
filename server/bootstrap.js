@@ -28,8 +28,8 @@ Meteor.publish(SubscriptionTag.ALL_COURSES, function() {
 });
 
 Meteor.publish(SubscriptionTag.ONE_COURSE, function(id) {
-	check(id, String);
-	return Courses.find(id);
+	// check(id, String);
+	return Courses.find({ _id: id });
 });
 
 Meteor.publish(SubscriptionTag.ALL_SEMESTERS, function() {
@@ -37,8 +37,8 @@ Meteor.publish(SubscriptionTag.ALL_SEMESTERS, function() {
 });
 
 Meteor.publish(SubscriptionTag.ONE_SEMESTER, function(id) {
-	check(id, String);
-	return Semesters.find(id);
+	// check(id, String);
+	return Semesters.find({ _id: id });
 });
 
 Meteor.publish(SubscriptionTag.ALL_SECTIONS, function() {
@@ -46,6 +46,6 @@ Meteor.publish(SubscriptionTag.ALL_SECTIONS, function() {
 });
 
 Meteor.publish(SubscriptionTag.ONE_SECTION, function(id) {
-	check(id, String);
-	return Sections.find(id);
+	// check(id, String);
+	return Sections.find({ _id: id });
 });

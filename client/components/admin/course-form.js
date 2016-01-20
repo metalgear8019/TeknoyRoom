@@ -10,7 +10,9 @@ Template.courseForm.helpers
 (
 	{
 		item: function() {
-			id = FlowRouter.getParam('id');
+			var id = FlowRouter.getParam('id');
+			/*var res = Courses.findOne({ _id: id });
+			console.log('id >> ' + id + '\ncourse >> ' + JSON.stringify(res));*/
 			return Courses.findOne(id) || { _id: 'new', isNew: true };
 		}
 	}
