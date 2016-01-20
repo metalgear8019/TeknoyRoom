@@ -9,24 +9,28 @@
 					</span>
 					<input type="text" id="search" name="firstname" class="form-control">
 				</div>
-				<div class="table" style="margin-top:20px;">
-					<table class="table table-striped">
-						<tr>
-							<th>School Year</th>
-							<th>Name</th>
-							<th>Start Date</th>
-							<th>End Date</th>
-							<th></th>
-						</tr>
-						{{#each semesters}}
-							<tr class="pointer-hover">
-								<td>{{school_year}}</td>
-								<td>{{name}}</td>
-								<td>{{start_date}}</td>
-								<td>{{end_date}}</td>
-								<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
+				<div style="margin-top:20px;">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>School Year</th>
+								<th>Name</th>
+								<th>Start Date</th>
+								<th>End Date</th>
+								<th></th>
 							</tr>
-						{{/each}}
+						</thead>
+						<tbody>
+							{{#each semesters}}
+								<tr>
+									<td class="pointer-hover">{{school_year}}</td>
+									<td class="pointer-hover">{{name}}</td>
+									<td class="pointer-hover">{{start_date}}</td>
+									<td class="pointer-hover">{{end_date}}</td>
+									<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+								</tr>
+							{{/each}}
+						</tbody>
 					</table>
 				</div>
 			</div>

@@ -274,12 +274,11 @@ Template.sectionForm.events
 		'click #removeSection': function(event)
 		{
 			event.preventDefault();
-			console.log("remove");
-			if (sections.length  != 1)
-			{
+			//if (sections.length  != 1)
+			//{
 				sections.pop();
 				sectionsDependency.changed();
-			}
+			//}
 		}
 	}
 );

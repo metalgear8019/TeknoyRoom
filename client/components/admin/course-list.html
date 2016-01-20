@@ -9,22 +9,26 @@
 					</span>
 					<input type="text" id="search" name="firstname" class="form-control">
 				</div>
-				<div class="table" style="margin-top:20px;">
-					<table class="table table-striped">
-						<tr>
-							<th>Subject Number</th>
-							<th>Title</th>
-							<th>Unit/s</th>
-							<th></th>
-						</tr>
-						{{#each courses}}
-							<tr class="pointer-hover">
-								<td>{{subject_number}}</td>
-								<td>{{title}}</td>
-								<td>{{unit}}</td>
-								<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
+				<div style="margin-top:20px;">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Subject Number</th>
+								<th>Title</th>
+								<th>Unit/s</th>
+								<th></th>
 							</tr>
-						{{/each}}
+						</thead>
+						<tbody>
+							{{#each courses}}
+								<tr>
+									<td class="pointer-hover">{{subject_number}}</td>
+									<td class="pointer-hover">{{title}}</td>
+									<td class="pointer-hover">{{unit}}</td>
+									<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+								</tr>
+							{{/each}}
+						</tbody>
 					</table>
 				</div>
 			</div>

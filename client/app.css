@@ -79,7 +79,7 @@
   color: #fff;
 }
 
-@media (max-width: 500px) {
+@media (max-width: 767px) {
   .navbar-default .navbar-nav .open .dropdown-menu > li > a 
   {
     color: #ecf0f1;
@@ -97,20 +97,21 @@
   }
 }
 
-
-/*.form-control:focus {
-  border-color: #FF0000;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 0, 0, 0.6);
-}*/
-
-.background_image{
-  background-image:url('assets/filesInFolder_black_blur.png');
+/*.background_image
+{
+  background-image:url('assets/cit_darken.jpg');
   background-attachment:fixed;
   background-repeat: no-repeat;
+  color: white;
+}*/
+
+.form-control:focus
+{
+  color: white;
 }
 
 /* round button */
-.round-button {
+/*.round-button {
     display:block;
     width:50px;
     height:50px;
@@ -123,8 +124,12 @@
     background: #464646;
     box-shadow: 0 0 3px gray;
     font-size:20px;
-    font-weight:bold; 
+    font-weight:bold;
+    position: fixed;
+    top: 17%;
+    right: 100px;
+    text-decoration: none;
 }
 .round-button:hover {
     background: #262626;
-}
+}*/

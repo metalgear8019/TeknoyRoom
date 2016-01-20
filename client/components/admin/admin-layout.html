@@ -1,14 +1,14 @@
 <template name="adminLayout">
-	{{ #if currentUser }}
+	<!--{{ #if currentUser }}
 		{{ #if isInRole 'admin' }}
-			{{> Template.dynamic template=header }}
+			{{> Template.dynamic template=header }}-->
 			<div class="container">
 				<div id="wrapper" class="active">
 					{{> Template.dynamic template=sidebar }}
 					{{> Template.dynamic template=main }}
 				</div>
 			</div>
-		{{ else }}
+		<!--{{ else }}
 			{{> unauthorized }}
 		{{ /if }}
 	{{ else }}
@@ -17,5 +17,5 @@
 		{{ else }}
 			{{> loginForm }}
 		{{ /if }}
-	{{ /if }}
+	{{ /if }}-->
 </template>

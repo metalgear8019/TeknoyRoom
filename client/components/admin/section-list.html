@@ -8,58 +8,62 @@
 						</span>
 						<input type="text" id="search" name="firstname" class="form-control">
 					</div>
-					<div class="table" style="margin-top:20px;">
+					<div style="margin-top:20px;">
 						<table class="table">
-							<tr>
-								<th>Name</th>
-								<th>Course</th>
-								<th>Semester</th>
-								<th>Day/s</th>
-								<th>Starting Time</th>
-								<th>Duration</th>
-								<th></th>
-							</tr>
-							{{#each sections}}
-								<tr class="pointer-hover">
-									<td>{{name}}</td>
-									<td>{{course.title}}</td>
-									<td>{{semester.name}}</td>
-									<td>
-										{{#each day}}
-											{{#if equals this 1}}
-												Sun
-											{{/if}}
-
-											{{#if equals this 2}}
-												M
-											{{/if}}
-
-											{{#if equals this 3}}
-												T
-											{{/if}}
-
-											{{#if equals this 4}}
-												W
-											{{/if}}
-
-											{{#if equals this 5}}
-												Th
-											{{/if}}
-											
-											{{#if equals this 6}}
-												F
-											{{/if}}
-
-											{{#if equals this 7}}
-												S
-											{{/if}}
-										{{/each}}
-									</td>
-									<td>{{hour}}:{{minute}}</td>
-									<td>{{duration}}</td>
-									<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
+							<thead>
+								<tr>
+									<th>Name</th>
+									<th>Course</th>
+									<th>Semester</th>
+									<th>Day/s</th>
+									<th>Starting Time</th>
+									<th>Duration</th>
+									<th></th>
 								</tr>
-							{{/each}}
+							</thead>
+							<tbody>
+								{{#each sections}}
+									<tr>
+										<td class="pointer-hover">{{name}}</td>
+										<td class="pointer-hover">{{course.title}}</td>
+										<td class="pointer-hover">{{semester.name}}</td>
+										<td class="pointer-hover">
+											{{#each day}}
+												{{#if equals this 1}}
+													Sun
+												{{/if}}
+
+												{{#if equals this 2}}
+													M
+												{{/if}}
+
+												{{#if equals this 3}}
+													T
+												{{/if}}
+
+												{{#if equals this 4}}
+													W
+												{{/if}}
+
+												{{#if equals this 5}}
+													Th
+												{{/if}}
+												
+												{{#if equals this 6}}
+													F
+												{{/if}}
+
+												{{#if equals this 7}}
+													S
+												{{/if}}
+											{{/each}}
+										</td>
+										<td class="pointer-hover">{{hour}}:{{minute}}</td>
+										<td class="pointer-hover">{{duration}}</td>
+										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+									</tr>
+								{{/each}}
+							</tbody>
 						</table>
 					</div>
 				</div>

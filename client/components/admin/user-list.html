@@ -38,30 +38,34 @@
 				{{/each}}-->
 				<!--<div class="container-fluid">-->
 					<table class="table">
-						<tr>
-							<th></th>
-							<th></th>
-							<th>Id Number</th>
-							<th>Name</th>
-							<th>User Type</th>
-							<th></th>
-						</tr>
-						<tr>
-						{{ #each users}}
-							<td><input id="{{ _id }}" type="checkbox" name="users"/></td>
-							<td>
-								{{#if equals profile.gender 'Male'}}
-									<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
-								{{else}}
-									<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
-								{{/if}}
-							</td>
-							<td>{{ profile.id_number }}</td>
-							<td>{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
-							<td>not yet implemented..</td>
-							<td id="delete"><h5><i class="fa fa-trash"></i></h5></td>
-						{{/each}}
-						</tr>
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th>Id Number</th>
+								<th>Name</th>
+								<th>User Type</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							{{ #each users}}
+								<tr>
+									<td class="pointer-hover"><input id="{{ _id }}" type="checkbox" name="users"/></td>
+									<td class="pointer-hover">
+										{{#if equals profile.gender 'Male'}}
+											<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+										{{else}}
+											<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+										{{/if}}
+									</td>
+									<td class="pointer-hover">{{ profile.id_number }}</td>
+									<td class="pointer-hover">{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
+									<td class="pointer-hover">not yet implemented..</td>
+									<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+								</tr>
+							{{/each}}
+						</tbody>
 					</table>
 				<!--</div>-->
 			</form>
