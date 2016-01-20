@@ -37,7 +37,7 @@ Template.instructorEnterClass.onCreated(function () {
 			incomingCall.answer(window.localStream);
 			incomingCall.on('stream', function (remoteStream) {
 				window.remoteStream = remoteStream;
-				var video = document.getElementById("theirVideo")
+				var video = document.getElementById("myVideo")
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		});
@@ -94,7 +94,7 @@ Template.instructorEnterClass.events
 			outgoingCall.on('stream', function (remoteStream) {
 				window.remoteStream = remoteStream;
 				alert('receiving stream...');
-				var video = document.getElementById("theirVideo")
+				var video = document.getElementById("myVideo")
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		},
