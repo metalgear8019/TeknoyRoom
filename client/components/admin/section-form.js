@@ -1,4 +1,16 @@
+hotKey = new Hotkeys({
+	autoLoad : true
+});
 
+hotKey.add({
+	combo : "shift+c",
+	callback: function()
+	{
+		sections.push(newSection);
+		sectionsDependency.changed();
+		console.log("h");
+	}
+})
 Template.sectionForm.onCreated(function () {
 	{
 		var self = this;
@@ -282,3 +294,4 @@ Template.sectionForm.events
 		}
 	}
 );
+
