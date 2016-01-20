@@ -97,13 +97,13 @@
   }
 }
 
-/*.background_image
+.background_image
 {
   background-image:url('assets/cit_darken.jpg');
   background-attachment:fixed;
   background-repeat: no-repeat;
   color: white;
-}*/
+}
 
 .form-control:focus
 {
@@ -111,7 +111,7 @@
 }
 
 /* round button */
-/*.round-button {
+.round-button {
     display:block;
     width:50px;
     height:50px;
@@ -132,4 +132,4 @@
 }
 .round-button:hover {
     background: #262626;
-}*/
+}
