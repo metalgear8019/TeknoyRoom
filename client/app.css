@@ -105,10 +105,33 @@
   color: white;
 }
 
-.form-control:focus
+.form-control:focus, .fa
 {
   color: white;
+  box-shadow: #f00; 
 }
+
+/* all */
+::-webkit-input-placeholder 
+{ 
+  color:#ff0; 
+}
+/*::-moz-placeholder 
+{ 
+  color:#ff0; 
+} /* firefox 19+ */
+
+/*:-ms-input-placeholder 
+{
+ color:#ff0; 
+} /* ie */
+
+/*input:-moz-placeholder 
+{ 
+  color:#ff0; 
+}*/
+
+
 
 /* round button */
 .round-button {
