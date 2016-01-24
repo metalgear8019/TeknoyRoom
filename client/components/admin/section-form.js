@@ -286,11 +286,8 @@ Template.sectionForm.events
 		'click #removeSection': function(event)
 		{
 			event.preventDefault();
-			//if (sections.length  != 1)
-			//{
-				sections.pop();
-				sectionsDependency.changed();
-			//}
+			sections.pop();
+			sectionsDependency.changed();
 		}
 	}
 );

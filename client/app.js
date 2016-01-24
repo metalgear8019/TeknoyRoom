@@ -157,6 +157,16 @@ Template.registerHelper
 	}
 );
 
+Template.registerHelper
+(
+	'currentPage', function()
+	{
+		var routeName = FlowRouter.getRouteName();
+		console.log(routeName);
+		return routeName;
+	}
+);
+
 /*Template.body.events
 (
 	{
