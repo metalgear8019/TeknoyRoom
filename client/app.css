@@ -99,13 +99,12 @@
 
 .background_image
 {
-  background-image:url('assets/cit_darken.jpg');
+  background-image:url('assets/cit_bg.jpg');
   background-attachment:fixed;
   background-repeat: no-repeat;
-  color: white;
 }
 
-.form-control:focus, .fa
+/*.form-control:focus, .fa
 {
   color: white;
 }
@@ -123,13 +122,16 @@ select option
 .modal
 {
   color:black;
-}
+}*/
 
-.timepicker .form-control
+.form-whitebg
 {
-  color: black;
+  background-color: white;
+  margin-bottom: 50px;
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px; 
 }
-
 
 /* round button */
 .round-button 

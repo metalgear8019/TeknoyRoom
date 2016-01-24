@@ -1,4 +1,4 @@
-.row
+  .row
 {
   margin-left:0px;
   margin-right:0px;
@@ -17,7 +17,7 @@
   margin-top: 1px;
   left: 70px;
   width: 250px;
-  background: #222;
+  background:  #ae0001;
   position: fixed;
   height: 100%;
   z-index: 10000;
@@ -37,7 +37,7 @@
 #page-content-wrapper 
 {
   padding-left: 0;
-  margin-left: 0;
+  margin-left: 50px;
   width: 100%;
   height: auto;
 }
@@ -65,7 +65,7 @@
     float: left;
     text-decoration: none;
     width: 250px;
-    background: #252525;
+    background: #ae0001;
     border-top: 1px solid #373737;
     border-bottom: 1px solid #1A1A1A;
     -webkit-transition: background .5s;
