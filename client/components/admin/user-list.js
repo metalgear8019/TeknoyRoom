@@ -39,24 +39,6 @@ Template.userList.helpers
 Template.userList.events
 (
 	{
-		'click #edit': function (event)
-		{
-			event.preventDefault();
-			var user = {
-							username: 'username',
-							password: 'password',
-							first_name: 'first_name',
-							middle_name: 'middle_name',
-							last_name: 'last_name',
-							user_type: 1,
-							department: 'department',
-							program: 'program',
-							year: 1
-					   };
-			Meteor.call('updateUser', this._id, user);
-			console.log('update');
-		},
-
 		'click #delete': function (event)
 		{
 			event.preventDefault();
@@ -77,6 +59,17 @@ Template.userList.events
 			selected.forEach(function (user) {
 				Meteor.call('setBanned', user.id, true);
 			});
+		},
+
+		'click #addUser': function (event)
+		{
+			FlowRouter.go('/admin/user/new');
+		},
+
+		'click #addUserCSV': function (event)
+		{
+			event.preventDefault();
+			$('#userCSV_modal').modal('show');
 		}
 	}
 );
