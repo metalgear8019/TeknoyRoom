@@ -162,7 +162,13 @@ Template.registerHelper
 	'currentPage', function()
 	{
 		var routeName = FlowRouter.getRouteName();
+		/*var routeId = FlowRouter.getParam('id');
 		//console.log(routeName);
+		if (routeId != undefined)
+		{
+			routeName += '/' + routeId;	
+		}*/
+		console.log(routeName);
 		return routeName;
 	}
 );

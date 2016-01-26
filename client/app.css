@@ -4,6 +4,7 @@
 {
   background-color: #6b161d;
   border-color: rgba(255,255,255,0.2);
+  z-index: 10000;
 }
 
 .navbar-default .navbar-brand 
@@ -94,9 +95,13 @@
 
 .background_image
 {
-  background-image:url('assets/cit_darken.jpg');
-  background-attachment:fixed;
-  background-repeat: no-repeat;
+  background: url(assets/cit_darken_2.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  /*background-attachment:fixed;
+  background-repeat: no-repeat;*/
 }
 
 .form-whitebg
@@ -109,30 +114,9 @@
 }
 
 /* round button */
-.round-button 
+.modal
 {
-  display:block;
-  width:50px;
-  height:50px;
-  line-height:50px;
-  border: 2px solid #f5f5f5;
-  border-radius: 50%;
-  color:#f5f5f5;
-  text-align:center;
-  text-decoration:none;
-  background: #464646;
-  box-shadow: 0 0 3px gray;
-  font-size:20px;
-  font-weight:bold;
-  position: fixed;
-  top: 27%;
-  right: 100px;
-  text-decoration: none;
-}
-
-.round-button:hover 
-{
-    background: #262626;
+  z-index: 100000;
 }
 
 

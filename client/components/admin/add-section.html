@@ -1,47 +1,49 @@
 <template name="addSection">
+	{{#if equals currentPage 'adminAddSection'}}
 		<div class="form-group" style="text-align:right;">
 			<a href="#" id="removeSection">
 				X
 			</a>		
 		</div>
+	{{/if}}
 
 	<div class="form-group">
-	  <input type="text" id="name" name="name" class="form-control" placeholder="Section Name" >
+	  <input type="text" id="name" name="name" class="form-control" placeholder="Section Name" value="{{item.name}}" >
 	</div>
 
 	<div class="form-group">
 	    <p>
 	    	<label>Schedule</label>
 		</p>
-		<input name="days" type="checkbox" class="filled-in" id="filled-in-box1" value="2" />
+		<input name="days" type="checkbox" class="filled-in" id="filled-in-box1" value="2" checked="{{#each item.day}}{{#if equals this 2}}true{{/if}}{{/each}}" />
 	  	<label for="filled-in-box1">Monday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box2" value="3" />
+	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box2" value="3" checked="{{#each item.day}}{{#if equals this 3}}true{{/if}}{{/each}}" />
 	  	<label for="filled-in-box2">Tuesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box3" value="4" />
+	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box3" value="4" checked="{{#each item.day}}{{#if equals this 4}}true{{/if}}{{/each}}" />
 	  	<label for="filled-in-box3">Wednesday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box4" value="5" />
+	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box4" value="5" checked="{{#each item.day}}{{#if equals this 5}}true{{/if}}{{/each}}" />
 	  	<label for="filled-in-box4">Thursday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box5" value="6" />
+	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box5" value="6" checked="{{#each item.day}}{{#if equals this 6}}true{{/if}}{{/each}}" />
 	  	<label for="filled-in-box5">Friday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box6" value="7" />
+	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box6" value="7" checked="{{#each item.day}}{{#if equals this 7}}true{{/if}}{{/each}}" />
 	  	<label for="filled-in-box6">Saturday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
-	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box7" value="1" />
+	  	<input name="days" type="checkbox" class="filled-in" id="filled-in-box7" value="1" checked="{{#each item.day}}{{#if equals this 1}}true{{/if}}{{/each}}" />
 	  	<label for="filled-in-box7">Sunday</label>&nbsp;&nbsp;&nbsp;&nbsp;
 
 		</div>
 		<div class="form-group">
 			<label>Start Time</label>
-		<input id="start_time" name="start_time" class="timepicker form-control" type="text">
+		<input id="start_time" name="start_time" class="timepicker form-control" type="text" value="{{#if item.isNew }}7:30 AM{{else}}{{#if greaterThan item.hour 12}}{{minusTwelve item.hour}}:{{item.minute}} PM{{else}}{{item.hour}}:{{item.minute}} AM{{/if}}{{/if}}">
 	</div>
 	<div class="form-group">
 		<label>End Time</label>
-		<input id="end_time" name="end_time" class="timepicker form-control" type="text" >
+		<input id="end_time" name="end_time" class="timepicker form-control" type="text" value="{{#if item.isNew }}7:30 AM{{else}}{{#if greaterThan (computeTimeEndHour item.hour item.duration) 12}}{{minusTwelve (computeTimeEndHour item.hour item.duration)}}:{{computeTimeEndMinute item.minute item.duration}} PM{{else}}{{computeTimeEndHour item.hour item.duration}}:{{computeTimeEndMinute item.minute item.duration}} AM{{/if}}{{/if}}">
 	</div>
 
 	<hr style="border-color:#f8c400;">
