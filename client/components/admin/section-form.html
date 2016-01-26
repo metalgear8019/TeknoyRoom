@@ -78,10 +78,12 @@
 						  </div>
 						</div>
 					</div>
+					{{#if equals currentPage 'adminAddSection'}}
+						<div class="form-group">
+					    	<button type="button" id="addSection" class="btn btn-primary"><i class="fa fa-plus"></i> &nbsp;&nbsp;&nbsp;ADD SCHEDULE SECTION</button>
+					    </div>
+				    {{/if}}
 
-					<div class="form-group">
-				    	<button type="button" id="addSection" class="btn btn-primary"><i class="fa fa-plus"></i> &nbsp;&nbsp;&nbsp;ADD SCHEDULE SECTION</button>
-				    </div>
 					<hr style="border-color:#f8c400;">
 					
 					<div id="content">
