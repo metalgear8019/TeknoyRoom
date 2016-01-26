@@ -47,11 +47,22 @@ Template.courseList.events
 			FlowRouter.go('/admin/course/' + this._id);
 		},
 
-		"keyup #search": function(event)
+		'keyup #search': function(event)
 		{
 			event.preventDefault();
-			 var value = event.target.value;
-			 Session.set('searchTerm', value);
+			var value = event.target.value;
+			Session.set('searchTerm', value);
+		},
+
+		'click #addCourse': function (event)
+		{
+			FlowRouter.go('/admin/course/new');
+		},
+
+		'click #addCourseCSV': function (event)
+		{
+			event.preventDefault();
+			$('#courseCSV_modal').modal('show');
 		}
 	}
 );

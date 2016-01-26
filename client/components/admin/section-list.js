@@ -85,6 +85,21 @@ Template.sectionList.helpers
 	}
 );
 
+Template.sectionList.helpers
+(
+	{
+		courses: function ()
+		{
+			return Courses.find({});
+		},
+
+		semesters: function ()
+		{
+			return Semesters.find({});
+		}
+	}
+);
+
 Template.sectionList.events
 (
 	{
@@ -100,6 +115,17 @@ Template.sectionList.events
 		{
 			event.preventDefault();
 			Meteor.call('deleteSection', this._id);
+		},
+
+		'click #addSection': function (event)
+		{
+			FlowRouter.go('/admin/section/new');
+		},
+
+		'click #addSectionCSV': function (event)
+		{
+			event.preventDefault();
+			$('#sectionCSV_modal').modal('show');
 		}
 	}
 );

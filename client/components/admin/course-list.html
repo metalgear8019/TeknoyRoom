@@ -1,4 +1,15 @@
 <template name="courseList">
+	{{#if currentPage adminViewCourses}}
+		<div id='ss_menu'>
+			<div id="addCourse"><i class="fa fa-certificate" style="color:black;"></i></div>
+			<div id="addCourseCSV"><i class="fa fa-upload" style="color:black;"></i></div>
+			<div class='menu'>
+		 		<div class='share' id='ss_toggle' data-rot='180'>
+					<div class='bar'></div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
 	<!-- Page Content -->
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
@@ -16,7 +27,9 @@
 								<th>Subject Number</th>
 								<th>Title</th>
 								<th>Unit/s</th>
-								<th></th>
+								{{#if currentPage adminViewCourses}}
+									<th></th>
+								{{/if}}
 							</tr>
 						</thead>
 						<tbody>
@@ -25,11 +38,35 @@
 									<td class="pointer-hover">{{subject_number}}</td>
 									<td class="pointer-hover">{{title}}</td>
 									<td class="pointer-hover">{{unit}}</td>
-									<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+									{{#if currentPage adminViewCourses}}
+										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+									{{/if}}
 								</tr>
 							{{/each}}
 						</tbody>
 					</table>
+				</div>
+				<!-- Modal Import CSV -->
+				<div class="modal fade" id="courseCSV_modal" role="dialog" aria-labelledby="courseCSV_modal">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+					     <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
+				        	<h5 class="modal-title" id="courseCSV_modal">COURSES - IMPORT CSV FILE</h5>
+					    </div>
+					    <form id="frmImportCSV">
+						    <div class="modal-body">
+						    	<div class="form-group">
+						    		<label>Choose file to upload: </label>
+						    		<input type="file" class="form-control">
+						    	</div>
+						    </div>
+						    <div class="modal-footer">
+						        <button type="submit" class="btn btn-success">IMPORT CSV</button>
+						    </div>
+					    </form>
+				    </div>
+				  </div>
 				</div>
 			</div>
 			<!-- /#row for tiled searches -->
@@ -37,4 +74,48 @@
 		<!-- /#container-fluid -->
 	</div>
 	<!-- /#page-content-wrapper -->
+	{{#if currentPage adminViewCourses}}
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-36251023-1']);
+			_gaq.push(['_setDomainName', 'jqueryscript.net']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+			$(document).ready(function(ev) {
+				var toggle = $('#ss_toggle');
+				var menu = $('#ss_menu');
+				var rot;
+
+				$('#ss_toggle').on('click', function(ev) {
+					rot = parseInt($(this).data('rot')) - 180;
+					menu.css('transform', 'rotate(' + rot + 'deg)');
+					menu.css('webkitTransform', 'rotate(' + rot + 'deg)');
+					if ((rot / 180) % 2 == 0) {
+					  //Moving in
+					  toggle.parent().addClass('ss_active');
+					  toggle.addClass('close');
+					} else {
+					  //Moving Out
+					  toggle.parent().removeClass('ss_active');
+					  toggle.removeClass('close');
+					}
+					$(this).data('rot', rot);
+				});
+
+				menu.on('transitionend webkitTransitionEnd oTransitionEnd', function() {
+					if ((rot / 180) % 2 == 0) {
+					  $('#ss_menu div i').addClass('ss_animate');
+					} else {
+					  $('#ss_menu div i').removeClass('ss_animate');
+					}
+				});
+			});
+		</script>
+	{{/if}}
 </template>

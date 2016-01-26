@@ -6,7 +6,7 @@
 
 #wrapper 
 {
-  padding-left: 70px;
+  padding-left: 0px;
   transition: all .4s ease 0s;
   height: 100%
 }
@@ -14,13 +14,12 @@
 #sidebar-wrapper 
 {
   margin-left: -250px;
-  margin-top: 1px;
   left: 70px;
   width: 250px;
-  background:  #ae0001;
+  background:  #6b161d;
   position: fixed;
   height: 100%;
-  z-index: 10000;
+  /*z-index: 10000;*/
   transition: all .4s ease 0s;
 }
 
@@ -31,13 +30,14 @@
   width: 150px;
   list-style: none;
   margin: 0;
+  margin-top: -23px; 
   padding: 0;
 }
 
 #page-content-wrapper 
 {
-  padding-left: 0;
-  margin-left: 50px;
+  padding-left: 50px;
+  margin-left: 0px;
   width: 100%;
   height: auto;
 }
@@ -60,14 +60,16 @@
     
 #sidebar_menu li a, .sidebar-nav li a 
 {
-    color: #999;
+    color: white;
     display: block;
     float: left;
     text-decoration: none;
     width: 250px;
-    background: #ae0001;
-    border-top: 1px solid #373737;
-    border-bottom: 1px solid #1A1A1A;
+    background: #6b161d;
+    /*border-top: 1px solid #373737;
+    border-bottom: 1px solid #1A1A1A;*/
+    /*border-top: 1px solid #fff;
+    border-bottom: 1px solid #fff;*/
     -webkit-transition: background .5s;
     -moz-transition: background .5s;
     -o-transition: background .5s;
@@ -90,15 +92,16 @@
 
 .sidebar-nav li a 
 {
-  color: #999999;
+  color: white;
   display: block;
   text-decoration: none;
 }
 
 .sidebar-nav li a:hover 
 {
-  color: #fff;
-  background: rgba(255,255,255,0.2);
+  color: black;
+  /*background: rgba(255,255,255,0.2);*/
+  background: #fac601;
   text-decoration: none;
 }
 
@@ -108,9 +111,24 @@
   text-decoration: none;
 }
 
+.sidebar-title
+{
+  padding-left: 10px;
+  font-size: 18px;
+  color: #fff;
+}
+
+.sidebar-border
+{
+  margin-top: 30px;
+  border-bottom: 1px solid #fac601;
+  /*margin-left: 10px;*/
+  width: 250px;
+}
+
 .sidebar-nav > .sidebar-brand 
 {
-  font-size: 15px;
+  font-size: 12px;
   color: #fff;
 }
 
@@ -164,9 +182,10 @@
   {
     left: 70px;
   }
+
   #wrapper.active 
   {
-    padding-left: 150px;
+    padding-left: 50px;
   }
 
   #wrapper.active #sidebar-wrapper 
@@ -174,5 +193,10 @@
     left: 150px;
     width: 250px;
     transition: all .4s ease 0s;
+  }
+
+  #page-content-wrapper
+  {
+    padding-left:10px;
   }
 }

@@ -1,9 +1,20 @@
 <template name="userList">
+	{{#if currentPage adminViewUsers}}
+		<div id='ss_menu'>
+			<div id="addUser"><i class="fa fa-user" style="color:black;"></i></div>
+			<div id="addUserCSV"><i class="fa fa-upload" style="color:black;"></i></div>
+			<div class='menu'>
+		 		<div class='share' id='ss_toggle' data-rot='180'>
+					<div class='bar'></div>
+				</div>
+			</div>
+		</div>
+	{{/if}}
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
-
 			<!--<div class="alert alert-warning" role="alert" style="margin-top:10px;">Mark users to ban.</div>-->
 			<div class="row" style="margin-top:30px;">
+
 				<form class="navbar-form navbar-left" role="search">
 				  	<div class="form-group">
 						<div class="input-group">
@@ -44,7 +55,9 @@
 								<th>Id Number</th>
 								<th>Name</th>
 								<th>User Type</th>
-								<th></th>
+								{{#if currentPage adminViewUsers}}
+									<th></th>
+								{{/if}}
 							</tr>
 						</thead>
 						<tbody>
@@ -61,77 +74,84 @@
 									<td class="pointer-hover">{{ profile.id_number }}</td>
 									<td class="pointer-hover">{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
 									<td class="pointer-hover">not yet implemented..</td>
-									<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+									{{#if currentPage adminViewUsers}}
+										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+									{{/if}}
 								</tr>
 							{{/each}}
 						</tbody>
 					</table>
 				</div>
 			</form>
-
-			<!--<div class="row" style="margin-top:20px;margin-left:2px;">
-				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
-				  	<div class="media-left">
-				    	<a href="#">
-				      		<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
-				    	</a>
-				  	</div>
-				  	<div class="media-body">
-				    	<h4 class="media-heading">Tomas Santella</h4>
-				    	BSCS-2
-				  	</div>
-				</div>
-				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
-				  	<div class="media-left">
-				    	<a href="#">
-				      		<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
-				    	</a>
-				  	</div>
-				  	<div class="media-body">
-				    	<h4 class="media-heading">Ralph Laviste</h4>
-				    	CS Department
-				  	</div>
-				</div>
+			<!-- Modal Import CSV -->
+			<div class="modal fade" id="userCSV_modal" role="dialog" aria-labelledby="userCSV_modal">
+			  <div class="modal-dialog">
+			    <div class="modal-content">
+				     <div class="modal-header">
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
+			        	<h5 class="modal-title" id="userCSV_modal">USERS - IMPORT CSV FILE</h5>
+				    </div>
+				    <form id="frmImportCSV">
+					    <div class="modal-body">
+					    	<div class="form-group">
+					    		<label>Choose file to upload: </label>
+					    		<input type="file" class="form-control">
+					    	</div>
+					    </div>
+					    <div class="modal-footer">
+					        <button type="submit" class="btn btn-success">IMPORT CSV</button>
+					    </div>
+				    </form>
+			    </div>
+			  </div>
 			</div>
-			<div class="row" style="margin-top:10px;margin-left:2px;">
-				<div class="well well-sm media col-xs-3" style="margin-top:15px;margin-right:25px;">
-				  	<div class="media-left">
-				    	<a href="#">
-				      		<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
-				    	</a>
-				  	</div>
-				  	<div class="media-body">
-				    	<h4 class="media-heading">Larmie Santos</h4>
-				    	IT Department
-				  	</div>
-				</div>
-				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
-				  	<div class="media-left">
-				    	<a href="#">
-				      		<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
-				    	</a>
-				  	</div>
-				  	<div class="media-body">
-				    	<h4 class="media-heading">Rex Seadino</h4>
-				    	IT Department
-				  	</div>
-				</div>
-				<div class="well well-sm media col-xs-3" style="margin-right:25px;">
-				  	<div class="media-left">
-				    	<a href="#">
-				      		<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
-				    	</a>
-				  	</div>
-				  	<div class="media-body">
-				    	<h4 class="media-heading">Kim Agustin</h4>
-				    	BSIT-3
-				  	</div>
-				</div>
-			</div>-->
-			
 			<!-- /#row for tiled searches -->
 		</div> 
 		<!-- /#container-fluid -->
 	</div> 
 	<!-- /#page-content-wrapper -->
+	{{#if currentPage adminViewUsers}}
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-36251023-1']);
+			_gaq.push(['_setDomainName', 'jqueryscript.net']);
+			_gaq.push(['_trackPageview']);
+
+			(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+
+			$(document).ready(function(ev) {
+				var toggle = $('#ss_toggle');
+				var menu = $('#ss_menu');
+				var rot;
+
+				$('#ss_toggle').on('click', function(ev) {
+					rot = parseInt($(this).data('rot')) - 180;
+					menu.css('transform', 'rotate(' + rot + 'deg)');
+					menu.css('webkitTransform', 'rotate(' + rot + 'deg)');
+					if ((rot / 180) % 2 == 0) {
+					  //Moving in
+					  toggle.parent().addClass('ss_active');
+					  toggle.addClass('close');
+					} else {
+					  //Moving Out
+					  toggle.parent().removeClass('ss_active');
+					  toggle.removeClass('close');
+					}
+					$(this).data('rot', rot);
+				});
+
+				menu.on('transitionend webkitTransitionEnd oTransitionEnd', function() {
+					if ((rot / 180) % 2 == 0) {
+					  $('#ss_menu div i').addClass('ss_animate');
+					} else {
+					  $('#ss_menu div i').removeClass('ss_animate');
+					}
+				});
+			});
+		</script>
+	{{/if}}
 </template>
