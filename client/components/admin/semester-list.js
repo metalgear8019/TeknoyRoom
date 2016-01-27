@@ -26,7 +26,7 @@ Template.semesterList.events
 
 		'click .pointer-hover': function (event)
 		{
-			FlowRouter.go('/admin/section/' + this._id);
+			FlowRouter.go('/admin/semester/' + this._id);
 		},
 
 		'click #addSemester': function (event)
