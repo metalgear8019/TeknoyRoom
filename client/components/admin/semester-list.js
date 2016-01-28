@@ -1,4 +1,5 @@
 Template.semesterList.onCreated(function () {
+	Session.set('searchTerm', '');
 	var self = this;
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_SEMESTERS);
@@ -10,7 +11,22 @@ Template.semesterList.helpers
 	{
 		semesters: function ()
 		{
-			return Semesters.find({});
+			var ses = Session.get('searchTerm');
+
+			if (ses == undefined || ses == '')
+			{
+			 	var results = Semesters.find({});
+		 	}
+		 	else
+		 	{
+		 		var results = Semesters.find({
+			 		'$or': [
+			 			{ 'school_year': { $regex: '.*' + ses + '.*' } }
+				 	]
+			 	});
+		 	}
+
+			return results;
 		}
 	}
 );
@@ -18,6 +34,13 @@ Template.semesterList.helpers
 Template.semesterList.events
 (
 	{
+		'keyup #search': function(event)
+		{
+			event.preventDefault();
+			var value = event.target.value;
+			Session.set("searchTerm", value);
+		},
+
 		'click #delete': function (event)
 		{
 			event.preventDefault();

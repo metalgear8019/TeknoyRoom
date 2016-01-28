@@ -1,4 +1,5 @@
 Template.courseList.onCreated(function () {
+	Session.set('searchTerm', '');
 	var self = this;
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_COURSES);
@@ -12,22 +13,20 @@ Template.courseList.helpers
 		{
 			var ses = Session.get('searchTerm');
 
-			if (ses == undefined || ses == ''){
-			 	var results = Courses.find({
-			 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
-			 		//subject_number: {$regex: new RegExp('^'+ ses + '$', 'i')}
-			 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
-			 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
-			 	});
-		 	} else {
+			if (ses == undefined || ses == '')
+			{
+			 	var results = Courses.find({});
+		 	} 
+		 	else 
+		 	{
 		 		var results = Courses.find({
-			 		//username: {$regex: new RegExp('^'+ searchTerm + '$', 'i')},
-			 		subject_number: {$regex: new RegExp('^'+ ses + '$', 'i')}
-			 		/*middle_name: { $regex:  new RegExp('^' + searchTerm + '$', 'i')},
-			 		last_name: {$regex: new RegExp('^'+ searchTerm + '$', 'i')}*/
+			 		'$or': [
+			 			{ 'subject_number': { $regex: '.*' + ses + '.*' } },
+			 			{ 'title': { $regex: '.*' + ses + '.*' } }
+				 	]
 			 	});
 		 	}
-			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
+
 			return results;  
 		}
 	}
