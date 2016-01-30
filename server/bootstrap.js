@@ -18,10 +18,10 @@ Meteor.publish(SubscriptionTag.ALL_USERS, function() {
 	return Users.find({});
 });
 
-/*Meteor.publish(SubscriptionTag.ONE_USER, function(id) {
-	check(id, String);
+Meteor.publish(SubscriptionTag.ONE_USER, function(id) {
+	//check(id, String);
 	return Users.find(id);
-});*/
+});
 
 Meteor.publish(SubscriptionTag.ALL_COURSES, function() {
 	return Courses.find({});

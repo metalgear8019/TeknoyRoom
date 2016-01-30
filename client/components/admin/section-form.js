@@ -11,6 +11,7 @@ hotKey.add({
 		console.log("h");
 	}
 })
+
 Template.sectionForm.onCreated(function () {
 	{
 		var self = this;

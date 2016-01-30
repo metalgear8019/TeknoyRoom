@@ -9,10 +9,9 @@ Template.courseForm.onCreated(function () {
 Template.courseForm.helpers
 (
 	{
-		item: function() {
+		item: function() 
+		{
 			var id = FlowRouter.getParam('id');
-			/*var res = Courses.findOne({ _id: id });
-			console.log('id >> ' + id + '\ncourse >> ' + JSON.stringify(res));*/
 			return Courses.findOne(id) || { _id: 'new', isNew: true };
 		}
 	}

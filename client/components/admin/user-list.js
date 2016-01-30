@@ -61,6 +61,11 @@ Template.userList.events
 			});
 		},
 
+		'click .pointer-hover': function (event)
+		{
+			FlowRouter.go('/admin/user/' + this._id);
+		},
+
 		'click #addUser': function (event)
 		{
 			FlowRouter.go('/admin/user/new');

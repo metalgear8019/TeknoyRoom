@@ -8,79 +8,114 @@
 				<!--<div class="alert alert-danger" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
 				<div class="row form-whitebg" style="margin-top:30px;">
 					<form role="form" id="frmUser">
-						<div style="margin-right:30px;">
-					    	{{#if isGenderMale}}
-					    		<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:270px; float:left;">
-						    {{else}}
-						    	<input type="image" alt="Profile Picture" src="/assets/profile-picture2.png" style="height:270px; float:left;">
-						    {{/if}}
-						    <input type="file" id="my_file" style="display: none; float:left;">
-					    </div>
-					    <div class="col-md-offset-4 ">
-						    <div class="form-group">
-								<input type="text" class="form-control" id="id_number" name="id_number" placeholder="Id Number">
-							</div>
-
-							<div class="form-group">
-								<input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name">
-							</div>
-
-							<div class="form-group">
-								<input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Middle Name">
-							</div>
-
-							<div class="form-group">
-								<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name">
-							</div>
-
-							<div class="form-group">
-					        	<label>Profession</label>
-							  	<select id="user_type" name="user_type" class="form-control">
-							    	<option value="2" selected>Student</option>
-							    	<option value="1">Instructor</option>
-							    	<option value="0">Admin</option>
-							  	</select>
-						  	</div>
-
-						  	{{ #if isStudent }}
-						  		<div class="form-group">
-									<label>Year</label>
-									<select id="year" name="year" class="form-control">
-										<option value="1" selected>1</option>
-										<option value="2">2</option>
-										<option value="3">3</option>
-										<option value="4">4</option>
-										<option value="5">5</option>
-									</select>
+						{{ #if Template.subscriptionsReady }}
+							<input id="_id" name="_id" type="hidden" value="{{_id}}">
+							<div style="margin-right:30px;">
+						    	{{#if isGenderMale}}
+						    		<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:270px; float:left;">
+							    {{else}}
+							    	<input type="image" alt="Profile Picture" src="/assets/profile-picture2.png" style="height:270px; float:left;">
+							    {{/if}}
+							    <input type="file" id="my_file" style="display: none; float:left;">
+						    </div>
+						    <div class="col-md-offset-4 ">
+							    <div class="form-group">
+									<input type="text" class="form-control" id="id_number" name="id_number" placeholder="Id Number" value="{{item.profile.id_number}}">
 								</div>
+
 								<div class="form-group">
-									<label>Degree Program</label>
-									<select id="program" name="program" class="form-control">
-										<option value="BSIT" selected>BSIT</option>
-										<option value="BSCS">BSCS</option>
-									</select>
+									<input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{item.profile.first_name}}">
 								</div>
-							{{ else }}
-									<input type="text" id="department" name="department" class="form-control" placeholder="Department">
-							{{ /if }}
-							<div class="form-group">
-					  		<label>Gender</label>
-						  	<p>
-								<input class="gender" name="gender" type="radio" id="male" value="Male" checked>
-								<label for="male" style="font-size:14px;">Male</label>
-						    </p>
-						    <p>
-								<input class="gender" name="gender" type="radio" id="female" value="Female">
-								<label for="female" style="font-size:14px;">Female</label>
-						    </p>
+
+								<div class="form-group">
+									<input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Middle Name" value="{{item.profile.middle_name}}">
+								</div>
+
+								<div class="form-group">
+									<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="{{item.profile.last_name}}">
+								</div>
+
+								<div class="form-group">
+						        	<label>Profession</label>
+								  	<!--<select id="user_type" name="user_type" class="form-control">
+								    	<option value="2" selected="{{#if item.isNew}}selected{{else}}{{#if equals item.profile.user_type 2}}selected{{else}}{{/if}}{{/if}}">Student</option>
+								    	<option value="1" selected="{{#if equals item.profile.user_type 1}}selected{{else}}{{/if}}">Instructor</option>
+								    	<option value="0" selected="{{#if equals item.profile.user_type 0}}selected{{else}}{{/if}}">Admin</option>
+								  	</select>-->
+								  	<select id="user_type" name="user_type" class="form-control">
+								  		{{#each userTypes}}
+								  			<option value="{{this.value}}" {{this.selected}}>{{this.name}}</option>
+								  		{{/each}}
+								  	</select>
+							  	</div>
+
+							  	{{ #if isStudent }}
+							  		<div class="form-group">
+										<label>Degree Program</label>
+										<!--<select id="program" name="program" class="form-control">
+											<option value="BSIT" selected>BSIT</option>
+											<option value="BSCS">BSCS</option>
+										</select>-->
+										<select id="program" name="program" class="form-control">
+											{{#each Programs}}
+												<option value="{{this.value}}" {{this.selected}}>{{this.value}}</option>
+											{{/each}}
+										</select>
+									</div>
+							  		<div class="form-group">
+										<label>Year</label>
+										<!--<select id="year" name="year" class="form-control">
+											<option value="1" selected="{{#if item.isNew}}selected{{else}}{{/if}}">1</option>
+											<option value="2">2</option>
+											<option value="3">3</option>
+											<option value="4">4</option>
+											<option value="5">5</option>
+										</select>-->
+										<select id="year" name="year" class="form-control">
+											{{#each Years}}
+												<option value="{{this.value}}" {{this.selected}}>{{this.value}}</option>
+											{{/each}}
+										</select>
+									</div>
+								{{ else }}
+										<label>Department</label>
+										<!--<select id="department" name="department" class="form-control">
+											<option value="IT Department" selected>Information Technology</option>
+											<option value="CS Department">Computer Science</option>
+										</select>-->
+										<select id="department" name="department" class="form-control">
+											{{#each Departments}}
+												<option value="{{this.value}}" {{this.selected}}>{{this.value}}</option>
+											{{/each}}
+										</select>
+								{{ /if }}
+								<div class="form-group">
+						  		<label>Gender</label>
+							  	<p>
+									<input class="gender" name="gender" type="radio" id="male" value="Male" checked="{{#if item.isNew}}true{{else}}{{#if equals item.profile.gender 'Male'}}true{{else}}{{/if}}{{/if}}">
+									<label for="male" style="font-size:14px;">Male</label>
+							    </p>
+							    <p>
+									<input class="gender" name="gender" type="radio" id="female" value="Female" checked="{{#if equals item.profile.gender 'Female'}}true{{else}}{{/if}}">
+									<label for="female" style="font-size:14px;">Female</label>
+							    </p>
+							    </div>
+							    <div class="form-row">
+							    	<button type="submit" class="btn-gold form-control" >
+							    		{{#if item.isNew }}
+							    			ADD 
+							    		{{else}}
+							    			EDIT
+							    		{{/if}} USER
+							    	</button>
+							    </div>
+							    <div>
+							    	&nbsp;
+							    </div>
 						    </div>
-						    <div class="form-row">
-						    	<button type="submit" class="btn-gold form-control" >ADD USER</button>
-						    </div>
-						    <div>
-						    	&nbsp;
-						    </div>
-					    </div>
+						{{else}}
+							{{> loading }}
+						{{/if}}
 				    </form>
 				</div> <!-- /#row -->
 			</div>

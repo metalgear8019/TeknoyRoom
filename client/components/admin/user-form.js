@@ -1,6 +1,13 @@
-Template.userForm.created = function () {
+Template.userForm.onCreated(function () {
+	Session.set('gender', true);
 	Session.set('isStudent', true);
-};
+
+	var self = this;
+	self.autorun(function() {
+		var id = FlowRouter.getParam('id');
+		self.subscribe(SubscriptionTag.ONE_USER, id);
+	});
+});
 
 Template.userForm.helpers
 (
@@ -12,9 +19,165 @@ Template.userForm.helpers
 
 		isGenderMale: function()
 		{
-			if (Session.get('gender') == undefined)
-				Session.set('gender', true);
+			//console.log(Session.get('gender'));
 			return Session.get('gender');
+		},
+
+		item: function() 
+		{
+			var id = FlowRouter.getParam('id');
+			var user = Users.findOne(id) || { _id: 'new', isNew: true };
+
+			if (id != 'new')
+			{
+				Session.set('gender', user.profile.gender  == 'Male');
+				Session.set('isStudent', user.profile.user_type  == 2);
+			}
+
+			return user;
+		},
+
+		userTypes: function()
+		{
+			var id = FlowRouter.getParam('id');
+			var user = Users.findOne(id, {'profile.id_number': 0, 'profile.first_name': 0, 'profile.middle_name': 0, 'profile.last_name': 0, 'profile.user_type': 1, 'profile.year': 0, 'profile.program': 0, 'profile.department': 0, 'profile.gender': 0 }) || { _id: 'new', isNew: true };
+			var userTypes = [
+				{ 
+					name: 'Student',
+					value: 2,
+					selected: 'selected'
+				},
+				
+				{
+					name: 'Instructor',
+					value: 1,
+					selected: ''
+				},
+
+				{
+					name: 'Admin',
+					value: 0,
+					selected: ''
+				}
+			];
+
+			if (id != 'new')
+			{
+				for (var i = 0; i < userTypes.length; i++)
+				{
+					if (userTypes[i].value == user.profile.user_type)
+					{
+						userTypes[i].selected = 'selected';
+					}
+				}
+			}
+
+			return userTypes;
+		},
+
+		Programs: function()
+		{
+			var id = FlowRouter.getParam('id');
+			var user = Users.findOne(id) || { _id: 'new', isNew: true };
+			var programs = [
+				{
+					value: 'BSIT',
+					selected: 'selected'
+				},
+
+				{
+					value: 'BSCS',
+					selected: ''
+				}
+			];
+
+			if (id != 'new')
+			{
+				for (var i = 0; i < programs.length; i++)
+				{
+					if (programs[i].value == user.profile.program)
+					{
+						programs[i].selected = 'selected';
+					}
+				}
+			}
+
+			return programs;
+		},
+
+		Years: function()
+		{
+			var id = FlowRouter.getParam('id');
+			var user = Users.findOne(id) || { _id: 'new', isNew: true };
+			var years = [
+				{
+					value: 1,
+					selected: 'selected'
+				},
+
+				{
+					value: 2,
+					selected: ''
+				},
+
+				{
+					value: 3,
+					selected: ''
+				},
+
+				{
+					value: 4,
+					selected: ''
+				},
+
+				{
+					value: 5,
+					selected: ''
+				}
+			];
+
+			if (id != 'new')
+			{
+				for (var i = 0; i < years.length; i++)
+				{
+					if (years[i].value == user.profile.year)
+					{
+						years[i].selected = 'selected';
+					}
+				}
+			}
+
+			return years;
+		},
+
+		Departments: function()
+		{
+			var id = FlowRouter.getParam('id');
+			var user = Users.findOne(id) || { _id: 'new', isNew: true };
+			var departments = [
+				{
+					value: 'Information Technology',
+					selected: 'selected'
+				},
+
+				{
+					value: 'Computer Science',
+					selected: ''
+				}
+			];
+
+			if (id != 'new')
+			{
+				for (var i = 0; i < departments.length; i++)
+				{
+					if (departments[i].value == user.profile.department)
+					{
+						departments[i].selected = 'selected';
+					}
+				}
+			}
+
+			return departments;
 		}
 	}
 );
@@ -63,7 +226,7 @@ Template.userForm.events
 					if (department != '')
 					{
 						user.roles[0] = Role.Group.INSTRUCTOR;
-						user.department = department;
+						user.profile.department = department;
 						Meteor.call('addUser', user);
 						FlowRouter.go('/admin/user/');
 					}
@@ -76,8 +239,8 @@ Template.userForm.events
 					if (program != '' && year != '')
 					{
 						user.roles[0] = Role.Group.STUDENT;
-						user.program = program;
-						user.year = year;
+						user.profile.program = program;
+						user.profile.year = year;
 						console.log("program: " + user.program);
 						console.log("year: " + user.year);
 						Meteor.call('addUser', user);

@@ -55,6 +55,8 @@
 								<th>Id Number</th>
 								<th>Name</th>
 								<th>User Type</th>
+								<th>Department</th>
+								<th>Degree Program/Year</th>
 								{{#if currentPage adminViewUsers}}
 									<th></th>
 								{{/if}}
@@ -73,7 +75,19 @@
 									</td>
 									<td class="pointer-hover">{{ profile.id_number }}</td>
 									<td class="pointer-hover">{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
-									<td class="pointer-hover">not yet implemented..</td>
+									<td class="pointer-hover">
+										{{#if equals profile.user_type 1}}
+											Instructor
+										{{else}}
+											{{#if equals profile.user_type 2}}
+												Student
+											{{else}}
+												Admin
+											{{/if}}
+										{{/if}}
+									</td>
+									<td>{{profile.department}}</td>
+									<td>{{#if equals profile.user_type 2}}{{profile.program}} - {{profile.year}}{{/if}}</td>
 									{{#if currentPage adminViewUsers}}
 										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
 									{{/if}}
