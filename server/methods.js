@@ -433,3 +433,26 @@ Meteor.methods
 	}
 );
 
+Meteor.methods
+({
+	parseUpload( data ) {
+	    check( data, Array );
+
+
+	    for(let i = 0; i < data.length; i++)
+	    {
+	    	let item = data[i],
+	    		exists = Users.findOne({id_number : item.id_number});
+
+	    	if(! exists)
+	    	{
+	    		Accounts.createUser(item);
+	    	}
+	    	else
+	    	{
+	    		console.log("Rejected, account is already in used");
+	    	}
+	    }
+	}
+});
+

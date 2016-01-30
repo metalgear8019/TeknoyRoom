@@ -126,6 +126,28 @@ Template.sectionList.events
 		{
 			event.preventDefault();
 			$('#sectionCSV_modal').modal('show');
+		},
+		'change [name="uploadCSV"]'(event, template)
+		{
+			Papa.parse(event.target.files[0], 
+				{
+					header : true,
+					complete(results, file)
+					{
+						Meteor.call('parseUpload', results.data, (error, response) => {
+							if(error)
+							{
+								console.log(error.reason);
+							}
+							else
+							{
+								Bert.alert('Upload complete', 'success', 'growl-top-right');
+							}
+						});
+					}
+				}
+			);
 		}
+
 	}
 );
