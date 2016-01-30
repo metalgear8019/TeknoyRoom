@@ -4,6 +4,7 @@ Template.userList.onCreated(function () {
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_USERS);
 	});
+	Template.instance().uploading = new ReactiveVar(false);
 });
 
 Template.userList.helpers
@@ -32,6 +33,10 @@ Template.userList.helpers
 		 	}
 			//console.log(searchTerm + ' >> ' + JSON.stringify(results));
 			return results;  
+		},
+		uploading()
+		{
+			return  Template.instance().uploading.get();
 		}
 	}
 );
@@ -75,6 +80,23 @@ Template.userList.events
 		{
 			event.preventDefault();
 			$('#userCSV_modal').modal('show');
-		}
+		},
+		'change [name="uploadCSV"]' (event){
+		    //template.uploading.set(true);
+
+		    Papa.parse(event.target.files[0],{
+		      header : true,
+		      complete(results, file ){
+		        Meteor.call('parseUpload', results.data, (error, response) => {
+		          if(error){
+		            console.log(error.reason);
+		          }else{
+		            //template.uploading.set(false);
+		            Bert.alert('Upload complete', 'success', 'growl-top-right');
+		          }
+		        });
+		      }
+		    });
+		  }
 	}
 );
