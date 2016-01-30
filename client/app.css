@@ -40,8 +40,8 @@
 
 .navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus 
 {
-  color: #999999;
-  background-color: rgba(255,255,255,0.2);
+  color: #000;
+  background-color: #fac601;
 }
 
 .navbar-default .navbar-toggle 
@@ -68,7 +68,7 @@
 .navbar-default .navbar-link 
 {
   color: #ecf0f1;
-}
+} 
 
 .navbar-default .navbar-link:hover 
 {
@@ -113,12 +113,57 @@
   padding-right: 20px; 
 }
 
-/* round button */
 .modal
 {
   z-index: 100000;
 }
 
+/******************************************************/
+
+.btn-gold {
+  position: relative;
+  border: none;
+  outline: none;
+  background: #dca800;
+  color: #000;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border-radius: 5px;
+}
+
+
+.ripple {
+  position: absolute;
+  background: rgba(0,0,0,.25);
+  border-radius: 100%;
+  -webkit-transform: scale(0);
+  -ms-transform: scale(0);
+  transform: scale(0);
+  pointer-events: none;
+}
+
+.ripple.show {
+  -webkit-animation: ripple .75s ease-out;
+  animation: ripple .75s ease-out;
+}
+@-webkit-keyframes 
+ripple { to {
+ -webkit-transform: scale(2);
+ transform: scale(2);
+ opacity: 0;
+}
+}
+@keyframes 
+ripple { to {
+   -webkit-transform: scale(2);
+   transform: scale(2);
+   opacity: 0;
+  }
+}
 
 /******************************************************/
 @-webkit-keyframes 
