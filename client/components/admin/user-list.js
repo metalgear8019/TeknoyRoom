@@ -90,10 +90,10 @@ Template.userList.events
 		        Meteor.call('parseUpload', results.data, (error, response) => {
 		          if(error){
 		            console.log(error.reason);
-		          }else{
+		          }//else{
 		            //template.uploading.set(false);
-		            Bert.alert('Upload complete', 'success', 'growl-top-right');
-		          }
+		            //Bert.alert('Upload complete', 'success', 'growl-top-right');
+		          //}
 		        });
 		      }
 		    });
