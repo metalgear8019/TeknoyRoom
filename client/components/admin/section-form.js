@@ -24,7 +24,7 @@ var newSection = {
 };
 
 var course = {
-			_id: '',
+			_id: 'new',
 			subject_number: '',
 			title: ''
 		};
@@ -34,11 +34,11 @@ var semesterCounter  = 0;
 var courseDependency = new Tracker.Dependency();
 
 var semester ={
-			_id: '',
+			_id: 'new',
 			name: '',
 			school_year: ''
 		};
-		
+
 var semesterDependency = new Tracker.Dependency();
 
 var sections = [newSection];
@@ -56,7 +56,6 @@ Template.sectionForm.onCreated(function () {
 	}
 });
 
-
 Tracker.autorun(function(){
 	var id = FlowRouter.getParam('id');
 	if (id == 'new')
@@ -73,20 +72,17 @@ Tracker.autorun(function(){
 				duration: 0
 			}
 		];
-		course = [
-			{
-				_id: '',
+		course = {
+				_id: 'new',
 				subject_number: '',
 				title: ''
-			}
-		];
-		semester = [
-			{
-				_id: '',
+			};
+			
+		semester = {
+				_id: 'new',
 				name: '',
 				school_year: ''
-			}
-		];
+			};
 	}
 });
 

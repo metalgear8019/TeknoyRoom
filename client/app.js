@@ -153,6 +153,11 @@ Template.registerHelper
 			end_minute += 60;
 		}
 
+		if (end_minute == 0)
+		{
+			end_minute += '0';
+		}
+
 		return end_minute;
 	}
 );

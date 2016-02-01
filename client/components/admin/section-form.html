@@ -9,7 +9,7 @@
 						<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
 
 						<div class="form-group">
-					      <input type="text" id="semester" name="semester" class="form-control"  value="{{#if notEquals semester._id null}}{{semester.school_year}} {{semester.name}}{{/if}}" placeholder="Choose Semester...">
+					      <input type="text" id="semester" name="semester" class="form-control"  value="{{#if notEquals semester._id 'new'}}{{semester.school_year}} {{semester.name}}{{/if}}" placeholder="Choose Semester...">
 					      <input type="hidden" id="semesterId" name="semesterId" value="{{semester._id}}">
 					      <!-- Modal Semester -->
 							<div class="modal fade" id="semester_modal" tabindex="-1" role="dialog" aria-labelledby="semester_modal">
@@ -45,7 +45,7 @@
 
 					    <div class="form-group">
 						  	<div class="form-row">
-						  		<input type="text" id="course" name="course" class="form-control" value="{{#if notEquals course._id null}}{{course.subject_number}}: {{course.title}}{{/if}}" placeholder="Choose Course...">
+						  		<input type="text" id="course" name="course" class="form-control" value="{{#if notEquals course._id 'new'}}{{course.subject_number}}: {{course.title}}{{/if}}" placeholder="Choose Course...">
 								<input type="hidden" id="courseId" name="courseId" value="{{course._id}}">
 							</div>
 							<!-- Modal Course -->

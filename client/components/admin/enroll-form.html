@@ -9,7 +9,7 @@
 						<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
 						<div class="form-group">
 							<label>Section</label>
-					      	<input type="text" id="section" name="section" class="form-control"  value="{{#if notEquals section._id null}} {{section.name}} {{/if}}" placeholder="Choose Section...">
+					      	<input type="text" id="section" name="section" class="form-control"  value="{{#if notEquals section._id 'new'}} {{section.name}} {{/if}}" placeholder="Choose Section...">
 					      	<input type="hidden" id="sectionId" name="semesterId" value="{{section._id}}">
 					      	<!-- Modal Semester -->
 							<div class="modal fade" id="section_modal" tabindex="-1" role="dialog" aria-labelledby="section_modal">
@@ -58,6 +58,8 @@
 																	Sat
 																{{/if}}
 															{{/each}}
+															{{#if greaterThan hour 12}}{{minusTwelve hour}}:{{minute}} PM{{else}}{{hour}}:{{minute}} AM{{/if}}
+															{{#if greaterThan (computeTimeEndHour hour duration) 12}}{{minusTwelve (computeTimeEndHour hour duration)}}:{{computeTimeEndMinute minute duration}} PM{{else}}{{computeTimeEndHour hour duration}}:{{computeTimeEndMinute minute duration}} AM{{/if}}
 									        			</td>
 									        			<td>{{course.title}}</td>
 									        			<td>{{semester.school_year}} {{semester.name}}</td>
@@ -74,7 +76,7 @@
 					    <div class="form-group">
 						  	<div class="form-row">
 						  		<label>Assigned Instructor</label>
-						  		<input type="text" id="instructor" name="instructor" class="form-control" value="{{#if notEquals instructor._id null}}{{instructor.subject_number}}: {{instructor.title}}{{/if}}" placeholder="Choose Instructor...">
+						  		<input type="text" id="instructor" name="instructor" class="form-control" value="{{#if notEquals instructor._id 'new'}}[{{instructor.profile.id_number}}] {{instructor.profile.last_name}}, {{instructor.profile.first_name}} {{instructor.profile.middle_name}}{{/if}}" placeholder="Choose Instructor...">
 								<input type="hidden" id="instructorId" name="instructorId" value="{{instructor._id}}">
 							</div>
 							<!-- Modal Course -->
@@ -116,8 +118,8 @@
 						<div class="container-fluid">
 							{{#each students}}
 								<div class="well well-sm col-xs-4" style="background:#E0E0E0;margin-right:0.02px;margin-top:1px;">
-									<input  name="students" type="checkbox" style="float:left;" />
-									<label for="{{ _id }}" style="display:block; border:none; height:100px; -webkit-font-smoothing: antialiased; color:black;">
+									<input  name="students" class="students" type="checkbox" style="float:left;" value="{{_id}}" />
+									<label style="display:block; border:none; height:100px; -webkit-font-smoothing: antialiased; color:black;">
 										<div style="padding-top:20px;float:left;">
 											{{#if equals profile.gender 'Male'}}
 												<img class="media-object" src="/assets/profile-picture3.png" style="width:50px;" align="left">
@@ -151,4 +153,5 @@
 			</div>
 		</div>
 	</div>
+	<script src="/js/button-gold.js"></script>
 </template>

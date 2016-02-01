@@ -300,19 +300,14 @@ Meteor.methods
 			}
 		},
 
-		addEnrollee: function (enrollee)
+		addEnrollee: function (enrollees)
 		{
-			check(enrollee, Object);
+			check(enrollees, Array);
 			try
 			{
-				Enrollees.insert
-				(
-					{
-						user: enrollee.user,
-						section: enrollee.section,
-						attendance: enrollee.attendance
-					}
-				);
+				_.each(enrollees, function(enrollees){
+					Enrollees.insert(enrollees);
+				});
 			} 
 			catch(e)
 			{
