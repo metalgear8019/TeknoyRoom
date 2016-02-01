@@ -456,3 +456,36 @@ Meteor.methods
 	}
 });
 
+Meteor.methods
+({
+	parseSectionUpload(data){
+		check( data, Array );
+
+		for(let i = 0; i < data.length; i++)
+		{
+			let item = data[i];
+				exists = Sections.findOne({semester: item.semester, course: item.course});
+
+			if( ! exists)
+			{
+				Sections.insert
+				(
+					{
+						section_name: item.name,
+						course: item.course,
+						semester: item.semester,
+						day: item.day,
+						hour: item.hour,
+						minute: item.minute,
+						duration: item.duration
+					}
+				);
+			}
+			else
+			{
+				console.log("Rejected!");
+			}
+		}
+	}
+});
+
