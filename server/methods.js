@@ -3,6 +3,7 @@ Meteor.methods
 	{
 		addUser: function (user) 
 		{
+			check(user, Object);
 			try {
 				Accounts.createUser(user);
 				// Roles.addUserInRoles(id, user.roles);
@@ -16,47 +17,54 @@ Meteor.methods
 
 		updateUser: function (user_id, user) 
 		{
+			check(user_id, String);
+			check(user, Object);
 			try
 			{
-				var cursor = Users.findOne(user_id);
-				
-				if (user.user_type === 1) {
+				console.log(user.profile.user_type);
+				if (user.profile.user_type == 1) {
 					Users.update
 					(
 						user_id,
 						{
 							$set: 
-							{ 
-								username: user.username,
-								password: user.password,
-								first_name: user.first_name,
-								last_name: user.last_name,
-								middle_name: user.middle_name,
-								gender: user.gender,
-								user_type: user.user_type,
-								department: user.department 
-							}
+							{
+								profile:  
+                            	{ 
+                            		id_number: user.profile.id_number,
+	                                first_name: user.profile.first_name,
+	                                last_name: user.profile.last_name,
+	                                middle_name: user.profile.middle_name,
+	                                user_type: user.profile.user_type,
+	                                gender: user.profile.gender,
+	                                banned: user.profile.banned,
+	                                department: user.profile.department
+                            	}
+                        	}
 					 	}
 					);
 				} 
-				else if (user.user_type === 2) 
+				else if (user.profile.user_type == 2) 
 				{
 					Users.update
 					(
 						user_id, 
 						{ 
 							$set: 
-							{ 
-								username: user.username, 
-								password: user.password,
-								first_name: user.first_name,
-								last_name: user.last_name,
-								middle_name: user.middle_name,
-								gender: user.gender,
-								user_type: user.user_type,
-								program: user.program,
-								year: user.year
-							}
+							{
+								profile:  
+                            	{ 
+                            		id_number: user.profile.id_number,
+	                                first_name: user.profile.first_name,
+	                                last_name: user.profile.last_name,
+	                                middle_name: user.profile.middle_name,
+	                                banned: user.profile.banned,
+	                                gender: user.profile.gender,
+	                                user_type: user.profile.user_type,
+	                                program: user.profile.program,
+	                                year: user.profile.year
+                            	}
+                        	}
 						 }
 					);
 				}
@@ -65,11 +73,12 @@ Meteor.methods
 			{
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in update user', e);
-			}	
+			}
 		},
 
 		deleteUser: function (user_id)
 		{
+			check(user_id, String);
 			try
 			{
 				var cursor = Users.findOne(user_id);
@@ -84,6 +93,7 @@ Meteor.methods
 
 		setBanned: function (user_id, setBan)
 		{
+			check(user_id, String);
 			var cursor = Users.findOne(user_id);
 
 			Users.update
@@ -97,26 +107,9 @@ Meteor.methods
 			);
 		},
 
-		setState: function (user_id, setState)
-		{
-			var cursor = Users.findOne(user_id);
-
-			Users.update
-			(
-				user_id,
-				{
-					$set: { state: setState }
-				}
-			);
-		}
-	}
-);
-
-Meteor.methods
-(
-	{
 		addCourse: function(course)
 		{
+			check(course, Object);
 			try
 			{
 				Courses.insert
@@ -137,6 +130,8 @@ Meteor.methods
 
 		updateCourse: function(course_id, course)
 		{
+			check(course_id, String);
+			check(course, Object);
 			try
 			{
 				Courses.update
@@ -161,6 +156,7 @@ Meteor.methods
 
 		deleteCourse: function(course_id)
 		{
+			check(course_id, String);
 			try
 			{
 				Courses.remove(course_id);
@@ -170,15 +166,11 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete course', e);
 			}
-		}
-	}
-);
+		},
 
-Meteor.methods
-(
-	{
 		addSection: function (section)
 		{
+			check(section, Object);
 			try
 			{
 				Sections.insert
@@ -203,6 +195,8 @@ Meteor.methods
 
 		updateSection: function (section_id, section)
 		{
+			check(section_id, String);
+			check(section, Object);
 			try
 			{
 				Sections.update
@@ -231,6 +225,7 @@ Meteor.methods
 
 		deleteSection: function (section_id)
 		{
+			check(section_id, String);
 			try
 			{
 				Sections.remove(section_id);
@@ -240,15 +235,11 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete section', e);
 			}
-		}
-	}
-);
+		},
 
-Meteor.methods
-(
-	{
 		addSemester: function (semester)
 		{
+			check(semester, Object);
 			try
 			{
 				Semesters.insert
@@ -270,6 +261,8 @@ Meteor.methods
 
 		updateSemester: function (semester_id, semester)
 		{
+			check(semester_id, String);
+			check(semester, Object);
 			try
 			{
 				Semesters.update
@@ -295,6 +288,7 @@ Meteor.methods
 
 		deleteSemester: function (semester_id)
 		{
+			check(semester_id, String);
 			try
 			{
 				Semesters.remove(semester_id);
@@ -304,16 +298,11 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete semester', e);
 			}
-		}
-	}
-);
+		},
 
-
-Meteor.methods
-(
-	{
 		addEnrollee: function (enrollee)
 		{
+			check(enrollee, Object);
 			try
 			{
 				Enrollees.insert
@@ -334,6 +323,8 @@ Meteor.methods
 
 		updateEnrollee: function (enrollee_id, enrollee)
 		{
+			check(enrollee_id, String);
+			check(enrollee, Object);
 			try
 			{
 				Enrollees.update
@@ -358,6 +349,7 @@ Meteor.methods
 
 		deleteEnrollee: function (enrollee_id)
 		{
+			check(enrollee_id, String);
 			try
 			{
 				Enrollees.remove(enrollee_id);
@@ -367,15 +359,11 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete enrollee', e);
 			}
-		}
-	}
-);
+		},
 
-Meteor.methods
-(
-	{
 		addNote: function (note)
 		{
+			check(note, Object);
 			try
 			{
 				Notes.insert
@@ -396,6 +384,8 @@ Meteor.methods
 
 		updateNote: function (note_id, note)
 		{
+			check(note_id, String);
+			check(note, Object);
 			try
 			{
 				Notes.update
@@ -420,6 +410,7 @@ Meteor.methods
 
 		deleteNote: function (note_id)
 		{
+			check(note_id, String);
 			try
 			{
 				Notes.remove(note_id);
@@ -429,30 +420,28 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete note', e);
 			}
-		}
-	}
-);
+		},
 
-Meteor.methods
-({
-	parseUpload( data ) {
-	    check( data, Array );
+		parseUpload( data ) 
+		{
+	    	check( data, Array );
 
 
-	    for(let i = 0; i < data.length; i++)
-	    {
-	    	let item = data[i],
-	    		exists = Users.findOne({id_number : item.id_number});
+		    for(let i = 0; i < data.length; i++)
+		    {
+		    	let item = data[i],
+		    		exists = Users.findOne({id_number : item.id_number});
 
-	    	if(! exists)
-	    	{
-	    		Accounts.createUser(item);
-	    	}
-	    	else
-	    	{
-	    		console.log("Rejected, account is already in used");
-	    	}
+		    	if(! exists)
+		    	{
+		    		Accounts.createUser(item);
+		    	}
+		    	else
+		    	{
+		    		console.log("Rejected, account is already in used");
+		    	}
+		    }
 	    }
 	}
-});
+);
 

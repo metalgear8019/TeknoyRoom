@@ -9,7 +9,9 @@
 				<div class="row form-whitebg" style="margin-top:30px;">
 					<form role="form" id="frmUser">
 						{{ #if Template.subscriptionsReady }}
-							<input id="_id" name="_id" type="hidden" value="{{_id}}">
+							<input id="_id" name="_id" type="hidden" value="{{item._id}}">
+							<input id="banned" name="banned" type="hidden" value="{{item.profile.banned}}">
+							
 							<div style="margin-right:30px;">
 						    	{{#if isGenderMale}}
 						    		<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:270px; float:left;">
@@ -20,7 +22,7 @@
 						    </div>
 						    <div class="col-md-offset-4 ">
 							    <div class="form-group">
-									<input type="text" class="form-control" id="id_number" name="id_number" placeholder="Id Number" value="{{item.profile.id_number}}">
+									<input type="text" class="form-control" id="id_number" name="id_number" placeholder="Id Number" value="{{item.profile.id_number}}" disabled="{{#if item.isNew}}{{else}}true{{/if}}">
 								</div>
 
 								<div class="form-group">
@@ -42,7 +44,7 @@
 								    	<option value="1" selected="{{#if equals item.profile.user_type 1}}selected{{else}}{{/if}}">Instructor</option>
 								    	<option value="0" selected="{{#if equals item.profile.user_type 0}}selected{{else}}{{/if}}">Admin</option>
 								  	</select>-->
-								  	<select id="user_type" name="user_type" class="form-control">
+								  	<select id="user_type" name="user_type" class="form-control" disabled="{{#if item.isNew}}{{else}}true{{/if}}">
 								  		{{#each userTypes}}
 								  			<option value="{{this.value}}" {{this.selected}}>{{this.name}}</option>
 								  		{{/each}}

@@ -1,5 +1,5 @@
 <template name="sectionList">
-	{{#if equals currentPage 'adminEditSectionSemesterList'}}
+	{{#if equals currentPage 'adminViewSections'}}
 		<div id='ss_menu'>
 			<div id="addSection"><i class="fa fa-cubes" style="color:black;"></i></div>
 			<div id="addSectionCSV"><i class="fa fa-upload" style="color:black;"></i></div>
@@ -29,7 +29,7 @@
 								<th>Day/s</th>
 								<th>Starting Time</th>
 								<th>Duration</th>
-								{{#if equals currentPage 'adminEditSectionSemesterList'}}
+								{{#if equals currentPage 'adminViewSections'}}
 									<th></th>
 								{{/if}}
 							</tr>
@@ -39,41 +39,35 @@
 								<tr>
 									<td class="pointer-hover">{{name}}</td>
 									<td class="pointer-hover">{{course.title}}</td>
-									<td class="pointer-hover">{{semester.name}}</td>
+									<td class="pointer-hover">{{semester.school_year}} {{semester.name}}</td>
 									<td class="pointer-hover">
 										{{#each day}}
 											{{#if equals this 1}}
 												Sun
 											{{/if}}
-
 											{{#if equals this 2}}
 												M
 											{{/if}}
-
 											{{#if equals this 3}}
 												T
 											{{/if}}
-
 											{{#if equals this 4}}
 												W
 											{{/if}}
-
 											{{#if equals this 5}}
 												Th
 											{{/if}}
-											
 											{{#if equals this 6}}
 												F
 											{{/if}}
-
 											{{#if equals this 7}}
-												S
+												Sat
 											{{/if}}
 										{{/each}}
 									</td>
 									<td class="pointer-hover">{{hour}}:{{minute}}</td>
 									<td class="pointer-hover">{{duration}}</td>
-									{{#if equals currentPage 'adminEditSectionSemesterList'}}
+									{{#if equals currentPage 'adminViewSections'}}
 										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
 									{{/if}}
 								</tr>
@@ -122,7 +116,7 @@
 			</div>
 		</div>
 	</div>
-	{{#if equals currentPage 'adminEditSectionSemesterList'}}
+	{{#if equals currentPage 'adminViewSections'}}
 		<script src="/js/round-side-menu.js"></script>
 	{{/if}}
 </template>
