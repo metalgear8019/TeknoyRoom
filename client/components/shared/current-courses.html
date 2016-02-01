@@ -1,4 +1,4 @@
-<template name="studentCurrentCourses">
+<template name="currentCourses">
 	<!-- Instructor Current Courses -->
 	<div id="page-content-wrapper">
 		<div class="page-content inset">
@@ -23,7 +23,7 @@
 							</thead>
 							<tbody>
 								{{ #each sections }}
-									<a href="/student/current/{{ _id }}"><tr>
+									<a href="/{{ type }}/current/{{ _id }}"><tr>
 										<td class="pointer-hover">{{name}}</td>
 										<td class="pointer-hover">{{course.title}}</td>
 										<td class="pointer-hover">{{semester.name}}</td>
@@ -33,7 +33,7 @@
 							</tbody>
 						</table> 
 						<div>
-							<a href="/student/current/enter" class="btn btn-warning" id="enterClass"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Enter Class</a>
+							<a class="btn btn-warning" id="enterClass"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Enter Class</a>
 						</div>
 					</div>
 				</div>

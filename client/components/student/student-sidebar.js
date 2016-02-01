@@ -1,4 +1,3 @@
-
 Template.studentSidebar.events
 (
 	{
@@ -10,7 +9,12 @@ Template.studentSidebar.events
 	}
 );
 
-/*$("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("active");
-});*/
+Template.studentSidebar.helpers
+(
+	{
+		name: function() {
+			var result = Meteor.user();
+			return result.profile.first_name.toUpperCase() + ' ' + result.profile.last_name.toUpperCase();
+		}
+	}
+);

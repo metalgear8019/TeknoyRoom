@@ -1,4 +1,4 @@
-Template.studentCurrentCourses.onCreated(function () {
+Template.currentCourses.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_ENROLLEES);
@@ -8,15 +8,15 @@ Template.studentCurrentCourses.onCreated(function () {
 	});
 });
 
-Template.studentCurrentCourses.helpers
+Template.currentCourses.helpers
 (
 	{
 		sections: function()
 		{
 		 	var result = [];
 		 	var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
-		 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
-			Sections.find({ _id: { $in: enrolledIds } }).forEach(function (item) {
+		 	var enrolledIds = [];//enrolledSubjects.map(function (c) { return c.section; });
+			Sections.find({ /*_id: { $in: enrolledIds }*/ }).forEach(function (item) {
 				item.course = Courses.findOne(item.course) || '';
 				item.semester = Semesters.findOne(item.semester) || '';
 				item.time = Helpers.scheduleToString(item);
@@ -24,21 +24,39 @@ Template.studentCurrentCourses.helpers
 			});
 			console.log("results >> " + JSON.stringify(result));
 			return result;
+		},
+		type: function ()
+		{
+			var result = Meteor.user().profile.user_type;
+			if (result == 0)
+				result = 'admin';
+			else if (result == 1)
+				result = 'instructor';
+			else if (result == 2)
+				result = 'student';
+			return result;
 		}
 	}
 );
 
-Template.studentCurrentCourses.events
+Template.currentCourses.events
 (
 	{
 		'click #enterClass': function (event) {
 			var time = Session.get('time');
+			var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
+		 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
+		 	console.log(Meteor.user());
 			var result = Sections.find({
+				_id: ( $in: enrolledIds ),
+				day: { $in: (time.getDay() + 1) },
 				hour: { $gte: time.getHours() },
 				minute: { $gte: time.getMinutes() }
 			});
 
-			var result = Sections.find({
+			result.sort({ hour: 1, minute: 1 });
+			
+			/*var result = Sections.find({
 				hour: { $gte: time.getHours() },
 				minute: { $gte: time.getMinutes() },
 				$filter: {
@@ -46,13 +64,15 @@ Template.studentCurrentCourses.events
 					as: 'duration',
 					cond: { $gt: time }
 				}
-			});
+			});*/
 
 			console.log("class >> " + JSON.stringify(result));
-			if (result != null || result != undefined)
+			if (result != null || result != undefined || 
+					result[0].duration < Helpers.getDurationPast(time, result[0].hour, result[0].minute)) {
 				FlowRouter.go('/student/current/enter');
-			else
+			} else {
 				alert('No classes currently held.');
+			}
 		}
 	}
 );
