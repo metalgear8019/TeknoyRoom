@@ -1,2 +1,78 @@
 <template name="enrollList">
+	<!--{{#if currentPage adminEnrollList}}
+		<div id='ss_menu'>
+			<div id="addCourse"><i class="fa fa-certificate" style="color:black;"></i></div>
+			<div id="addCourseCSV"><i class="fa fa-upload" style="color:black;"></i></div>
+			<div class='menu'>
+		 		<div class='share' id='ss_toggle' data-rot='180'>
+					<div class='bar'></div>
+				</div>
+			</div>
+		</div>
+	{{/if}}-->
+	<!-- Page Content -->
+	<div id="page-content-wrapper">
+		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
+			<div class="row" style="margin-top:30px;">
+				<div class="input-group">
+					<span class="input-group-addon">
+						<i class="fa fa-search" style="color:white;"></i>
+					</span>
+					<input type="text" id="search" name="firstname" class="form-control" style="color:white;">
+				</div>
+				<div class="table" style="margin-top:20px;">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>Section</th>
+								<th>User</th>
+								{{#if currentPage adminEnrollList}}
+									<th></th>
+								{{/if}}
+							</tr>
+						</thead>
+						<tbody>
+							{{#each enrollees}}
+								<tr>
+									<td class="pointer-hover">{{section.name}}</td>
+									<td class="pointer-hover">{{[user.profile.id]}} {{user.profile.last_name}},  {{user.profile.first_name}}  {{user.profile.middle_name}}</td>
+									{{#if currentPage adminEnrollList}}
+										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+									{{/if}}
+								</tr>
+							{{/each}}
+						</tbody>
+					</table>
+				</div>
+				<!-- Modal Import CSV -->
+				<div class="modal fade" id="courseCSV_modal" role="dialog" aria-labelledby="courseCSV_modal">
+				  <div class="modal-dialog">
+				    <div class="modal-content">
+					     <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o"></i></span></button>
+				        	<h5 class="modal-title" id="courseCSV_modal">COURSES - IMPORT CSV FILE</h5>
+					    </div>
+					    <form id="frmImportCSV">
+						    <div class="modal-body">
+						    	<div class="form-group">
+						    		<label>Choose file to upload: </label>
+						    		<input type="file" class="form-control">
+						    	</div>
+						    </div>
+						    <div class="modal-footer">
+						        <button type="submit" class="btn btn-success">IMPORT CSV</button>
+						    </div>
+					    </form>
+				    </div>
+				  </div>
+				</div>
+			</div>
+			<!-- /#row for tiled searches -->
+		</div>
+		<!-- /#container-fluid -->
+	</div>
+	<!-- /#page-content-wrapper -->
+	<!--{{#if currentPage adminEnrollList}}
+		<script src="/js/round-side-menu.js"></script>
+	{{/if}}-->
 </template>
