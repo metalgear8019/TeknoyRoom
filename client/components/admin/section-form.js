@@ -12,6 +12,38 @@ hotKey.add({
 	}
 })
 
+var newSection = {
+	_id: 'new',
+	name: '',
+	course: '',
+	semester: '',
+	day: [],
+	hour: '',
+	minute: '',
+	duration: 0
+};
+
+var course = {
+			_id: '',
+			subject_number: '',
+			title: ''
+		};
+
+var courseCounter = 0;
+var semesterCounter  = 0;
+var courseDependency = new Tracker.Dependency();
+
+var semester ={
+			_id: '',
+			name: '',
+			school_year: ''
+		};
+		
+var semesterDependency = new Tracker.Dependency();
+
+var sections = [newSection];
+var sectionsDependency = new Tracker.Dependency();
+
 Template.sectionForm.onCreated(function () {
 	{
 		var self = this;
@@ -24,29 +56,62 @@ Template.sectionForm.onCreated(function () {
 	}
 });
 
-var newSection = {
-	_id: '',
-	name: '',
-	course: '',
-	semester: '',
-	day: [],
-	hour: '',
-	minute: '',
-	duration: 0
-};
 
-var sections = [newSection];
-var sectionsDependency = new Tracker.Dependency();
-
-/*Template.sectionForm.sections = function() {
-  sectionsDependency.depend();
-  return sections;
-};*/
-
+Tracker.autorun(function(){
+	var id = FlowRouter.getParam('id');
+	if (id == 'new')
+	{
+		sections = [
+			{
+				_id: 'new',
+				name: '',
+				course: '',
+				semester: '',
+				day: [],
+				hour: '',
+				minute: '',
+				duration: 0
+			}
+		];
+		course = [
+			{
+				_id: '',
+				subject_number: '',
+				title: ''
+			}
+		];
+		semester = [
+			{
+				_id: '',
+				name: '',
+				school_year: ''
+			}
+		];
+	}
+});
 
 Template.sectionForm.helpers
 (
 	{
+		sections: function()
+		{
+			sectionsDependency.depend();
+  			var id = FlowRouter.getParam('id');
+			if (id != 'new')
+			{
+				var section = Sections.findOne(id);
+
+				sections[0]._id = section._id;
+				sections[0].name = section.name;
+				sections[0].day = section.day;
+				sections[0].hour = section.hour;
+				sections[0].minute = section.minute;
+				sections[0].duration = section.duration;
+			}
+
+  			return sections;
+		},
+
 		courses: function ()
 		{
 			return Courses.find({});
@@ -59,28 +124,39 @@ Template.sectionForm.helpers
 
 		course: function()
 		{
-			return Session.get('course');
+			courseDependency.depend();
+			var id = FlowRouter.getParam('id');
+				
+			if (id != 'new' && courseCounter == 0)
+			{
+				var section = Sections.findOne(id);
+				course = Courses.findOne(section.course);
+			}
+
+			return course;
 		},
 
 		semester: function()
 		{
-			return Session.get('semester');
-		},
+			semesterDependency.depend();
+			var id = FlowRouter.getParam('id');
+			if (id != 'new' && semesterCounter == 0)
+			{
+				var section = Sections.findOne(id);
+				semester = Semesters.findOne(section.semester);
+			}
 
-		sections: function()
-		{
-			sectionsDependency.depend();
-  			return sections;
+			return semester;
 		},
 
 		item: function() 
 		{
 			var id = FlowRouter.getParam('id');
-			if (id == undefined)
+			/*if (id == undefined)
 			{
 				Session.set('course', null);
 				Session.set('semester', null);
-			}
+			}*/
 			return Sections.findOne(id) || { _id: 'new', isNew: true };
 		}
 	}
@@ -98,7 +174,9 @@ Template.sectionForm.events
 		'click .course':  function (event)
 		{
 			event.preventDefault();
-			Session.set('course', this);
+			course = this;
+			courseCounter++;
+			courseDependency.changed();
 			$('#course_modal').modal('hide');
 		},
 
@@ -111,7 +189,9 @@ Template.sectionForm.events
 		'click .semester': function (event)
 		{
 			event.preventDefault();
-			Session.set('semester', this);
+			semester = this;
+			semesterCounter++;
+			semesterDependency.changed();
 			$('#semester_modal').modal('hide');
 		},
 
@@ -120,8 +200,8 @@ Template.sectionForm.events
 			event.preventDefault();
 
 			var id = event.target._id.value;
-			var course = Session.get('course')._id;
-			var semester = Session.get('semester')._id;
+			var course = event.target.courseId.value;
+			var semester = event.target.semesterId.value;
 			var j = 1;
 
 
@@ -271,8 +351,8 @@ Template.sectionForm.events
 				}
 			}
 
-			Session.set('course', null);
-			Session.set('semester', null);
+			Tracker.flush();
+
 			FlowRouter.go('/admin/section/');
 		},
 
@@ -292,4 +372,3 @@ Template.sectionForm.events
 		}
 	}
 );
-

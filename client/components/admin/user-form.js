@@ -189,12 +189,19 @@ Template.userForm.events
 		{
 			event.preventDefault();
 
+			var id = event.target._id.value;
 			var id_number = event.target.id_number.value;
 			var first_name = event.target.first_name.value;
 			var middle_name = event.target.middle_name.value;
 			var last_name = event.target.last_name.value;
 			var user_type = event.target.user_type.value;
 			var gender = event.target.gender.value;
+			var banned = event.target.banned.value;
+
+			if (banned == '')
+			{
+				banned = false;
+			}
 
 			var user = {
 				username: "cit" + id_number,
@@ -206,7 +213,7 @@ Template.userForm.events
 					last_name: last_name,
 					user_type: user_type,
 					gender: gender,
-					banned: false
+					banned: banned
 				},
 				roles: [
 					'default',
@@ -227,7 +234,14 @@ Template.userForm.events
 					{
 						user.roles[0] = Role.Group.INSTRUCTOR;
 						user.profile.department = department;
-						Meteor.call('addUser', user);
+						if (id == 'new')
+						{
+							Meteor.call('addUser', user);
+						}
+						else
+						{
+							Meteor.call('updateUser', id, user);
+						}
 						FlowRouter.go('/admin/user/');
 					}
 				} 
@@ -241,9 +255,20 @@ Template.userForm.events
 						user.roles[0] = Role.Group.STUDENT;
 						user.profile.program = program;
 						user.profile.year = year;
-						console.log("program: " + user.program);
-						console.log("year: " + user.year);
-						Meteor.call('addUser', user);
+						//console.log("program: " + user.profile.program);
+						//console.log("year: " + user.profile.year);
+						console.log(id);
+
+						if (id == 'new')
+						{
+							Meteor.call('addUser', user);
+						}
+						else
+						{
+							console.log('updating');
+							Meteor.call('updateUser', id, user);
+						}
+
 						FlowRouter.go('/admin/user/');
 					}
 				}
@@ -268,8 +293,6 @@ Template.userForm.events
 							Role.Permission.WRITE_SEMESTERS
 						]
 					};
-					Meteor.call('addUser', user);
-					FlowRouter.go('/admin/user/');
 				}
 				else
 				{

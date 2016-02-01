@@ -13,6 +13,51 @@ Template.courseForm.helpers
 		{
 			var id = FlowRouter.getParam('id');
 			return Courses.findOne(id) || { _id: 'new', isNew: true };
+		},
+
+		Units: function()
+		{
+			var id = FlowRouter.getParam('id');
+			var course = Courses.findOne(id) || { _id: 'new', isNew: true };
+			var units = [
+				{
+					value: 1,
+					selected: ''
+				},
+
+				{
+					value: 2,
+					selected: ''
+				},
+
+				{
+					value: 3,
+					selected: 'selected'
+				},
+
+				{
+					value: 4,
+					selected: ''
+				},
+
+				{
+					value: 6,
+					selected: ''
+				}
+			];
+
+			if (id != 'new')
+			{
+				for (var i = 0; i < units.length; i++)
+				{
+					if (units[i].value == course.unit)
+					{
+						units[i].selected = 'selected';
+					}
+				}
+			}
+
+			return units;
 		}
 	}
 );
@@ -52,7 +97,7 @@ Template.courseForm.events
 			}
 			else
 			{
-				alert('Necessary fields must be filled..');
+				//alert('Necessary fields must be filled..');
 			}
 		}
 	}

@@ -114,13 +114,14 @@
 .sidebar-title
 {
   padding-left: 10px;
-  font-size: 18px;
+  font-size: 15px;
+  font-style: bold;
   color: #fff;
 }
 
 .sidebar-border
 {
-  margin-top: 30px;
+  margin-top: 25px;
   border-bottom: 1px solid #fac601;
   /*margin-left: 10px;*/
   width: 250px;

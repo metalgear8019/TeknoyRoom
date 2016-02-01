@@ -5,104 +5,109 @@
 			<!--<div class="alert alert-warning" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
 			<div class="row form-whitebg" style="margin-top:30px;">
 				<form id="frmSection">
-					<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
+					{{ #if Template.subscriptionsReady }}
+						<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
 
-					<div class="form-group">
-				      <input type="text" id="semester" name="semester" class="form-control"  value="{{#if notEquals semester null}}{{semester.school_year}} {{semester.name}}{{/if}}" placeholder="Choose Semester...">
-				      <!-- Modal Semester -->
-						<div class="modal fade" id="semester_modal" tabindex="-1" role="dialog" aria-labelledby="semester_modal">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-							     <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
-						        	<h5 class="modal-title" id="semester_modal">Choose a semester</h5>
-							    </div>
-							    <div class="modal-body">
-							        <table class="table table-striped">
-								        <thead>
-								          <tr>
-								              <th data-field="courseNumber">School Year</th>
-								              <th data-field="descTitle">Semester</th>
-								          </tr>
-								        </thead>
-
-								        <tbody>
-								        	{{#each semesters}}
-								        		<tr class="semester pointer-hover">
-								        			<td>{{ school_year }}</td>
-								        			<td>{{ name }}</td>
-								        		</tr>
-								        	{{/each}}
-								        </tbody>
-								    </table>
-							    </div>
-						    </div>
-						  </div>
-						</div>
-				    </div>
-
-				    <div class="form-group">
-					  	<div class="form-row">
-					  		<input type="text" id="course" name="course" class="form-control" value="{{#if notEquals course null}}{{course.subject_number}}: {{course.title}}{{/if}}" placeholder="Choose Course...">
-						</div>
-						<!-- Modal Course -->
-						<div class="modal fade" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="course_modal">
-						  <div class="modal-dialog">
-						    <div class="modal-content">
-							     <div class="modal-header">
-							        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
-						        	<h5 class="modal-title" id="course_modal">Choose a course</h5>
-							    </div>
-							    <div class="modal-body">
-							        <table class="table table-striped">
-								        <thead>
-								          <tr>
-								              <th data-field="courseNumber">Course Number</th>
-								              <th data-field="descTitle">Descriptive Title</th>
-								              <th data-field="units">Units</th>
-								          </tr>
-								        </thead>
-
-								        <tbody>
-								        	{{#each courses}}
-								        		<tr class="course pointer-hover">
-								        			<td>{{ subject_number }}</td>
-								        			<td>{{ title }}</td>
-								        			<td>{{ unit }}</td>
-								        		</tr>
-								        	{{/each}}
-								        </tbody>
-								    </table>
-							    </div>
-						    </div>
-						  </div>
-						</div>
-					</div>
-					{{#if equals currentPage 'adminAddSection'}}
 						<div class="form-group">
-					    	<button type="button" id="addSection" class="btn btn-primary"><i class="fa fa-plus"></i> &nbsp;&nbsp;&nbsp;ADD SCHEDULE SECTION</button>
+					      <input type="text" id="semester" name="semester" class="form-control"  value="{{#if notEquals semester._id null}}{{semester.school_year}} {{semester.name}}{{/if}}" placeholder="Choose Semester...">
+					      <input type="hidden" id="semesterId" name="semesterId" value="{{semester._id}}">
+					      <!-- Modal Semester -->
+							<div class="modal fade" id="semester_modal" tabindex="-1" role="dialog" aria-labelledby="semester_modal">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+								     <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
+							        	<h5 class="modal-title" id="semester_modal">Choose a semester</h5>
+								    </div>
+								    <div class="modal-body">
+								        <table class="table table-striped">
+									        <thead>
+									          <tr>
+									              <th data-field="courseNumber">School Year</th>
+									              <th data-field="descTitle">Semester</th>
+									          </tr>
+									        </thead>
+
+									        <tbody>
+									        	{{#each semesters}}
+									        		<tr class="semester pointer-hover">
+									        			<td>{{ school_year }}</td>
+									        			<td>{{ name }}</td>
+									        		</tr>
+									        	{{/each}}
+									        </tbody>
+									    </table>
+								    </div>
+							    </div>
+							  </div>
+							</div>
 					    </div>
-				    {{/if}}
 
-					<hr style="border-color:#f8c400;">
-					
-					<div id="content">
-						{{ #each sections }}
-							{{> addSection }}
-						{{ /each }}
-				    </div>
+					    <div class="form-group">
+						  	<div class="form-row">
+						  		<input type="text" id="course" name="course" class="form-control" value="{{#if notEquals course._id null}}{{course.subject_number}}: {{course.title}}{{/if}}" placeholder="Choose Course...">
+								<input type="hidden" id="courseId" name="courseId" value="{{course._id}}">
+							</div>
+							<!-- Modal Course -->
+							<div class="modal fade" id="course_modal" tabindex="-1" role="dialog" aria-labelledby="course_modal">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+								     <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
+							        	<h5 class="modal-title" id="course_modal">Choose a course</h5>
+								    </div>
+								    <div class="modal-body">
+								        <table class="table table-striped">
+									        <thead>
+									          <tr>
+									              <th data-field="courseNumber">Course Number</th>
+									              <th data-field="descTitle">Descriptive Title</th>
+									              <th data-field="units">Units</th>
+									          </tr>
+									        </thead>
 
-				    <div class="form-group">
-						<button type="submit" class="btn-gold form-control">
-							{{#if item.isNew}}
-								ADD
-							{{else}}
-								EDIT 
-							{{/if}}
-							SECTION
-						</button>
-					</div>
-			        
+									        <tbody>
+									        	{{#each courses}}
+									        		<tr class="course pointer-hover">
+									        			<td>{{ subject_number }}</td>
+									        			<td>{{ title }}</td>
+									        			<td>{{ unit }}</td>
+									        		</tr>
+									        	{{/each}}
+									        </tbody>
+									    </table>
+								    </div>
+							    </div>
+							  </div>
+							</div>
+						</div>
+						{{#if item.isNew}}
+							<div class="form-group">
+						    	<button type="button" id="addSection" class="btn btn-primary"><i class="fa fa-plus"></i> &nbsp;&nbsp;&nbsp;ADD SCHEDULE SECTION</button>
+						    </div>
+					    {{/if}}
+
+						<hr style="border-color:#f8c400;">
+						
+						<div id="content">
+							{{ #each sections }}
+								{{> addSection }}
+							{{ /each }}
+					    </div>
+
+					    <div class="form-group">
+							<button type="submit" class="btn-gold form-control">
+								{{#if item.isNew}}
+									ADD
+								{{else}}
+									EDIT 
+								{{/if}}
+								SECTION
+							</button>
+						</div>
+			        {{ else }}
+						{{> loading }}
+					{{ /if }}
 				</form>
 			</div>
 		</div>
