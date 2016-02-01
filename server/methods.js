@@ -108,13 +108,8 @@ Meteor.methods
 					$set: { state: setState }
 				}
 			);
-		}
-	}
-);
+		},
 
-Meteor.methods
-(
-	{
 		addCourse: function(course)
 		{
 			try
@@ -170,13 +165,8 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete course', e);
 			}
-		}
-	}
-);
+		},
 
-Meteor.methods
-(
-	{
 		addSection: function (section)
 		{
 			try
@@ -240,13 +230,8 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete section', e);
 			}
-		}
-	}
-);
+		},
 
-Meteor.methods
-(
-	{
 		addSemester: function (semester)
 		{
 			try
@@ -304,14 +289,8 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete semester', e);
 			}
-		}
-	}
-);
+		},
 
-
-Meteor.methods
-(
-	{
 		addEnrollee: function (enrollee)
 		{
 			try
@@ -343,8 +322,11 @@ Meteor.methods
 						$set:
 						{
 							user: enrollee.user,
-							section: enrollee.section,
-							attendance: enrollee.attendance		
+							section: enrollee.section
+						},
+						$addToSet:
+						{
+							attendance: { $each: enrollee.attendance }
 						}
 					}
 				);
@@ -367,13 +349,8 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete enrollee', e);
 			}
-		}
-	}
-);
+		},
 
-Meteor.methods
-(
-	{
 		addNote: function (note)
 		{
 			try
@@ -429,6 +406,12 @@ Meteor.methods
 				console.log(e);
 				throw new Meteor.Error(500, 'exception in delete note', e);
 			}
+		},
+
+		getServerTime: function () {
+			var time = (new Date()).toTimeString();
+			console.log('server time >> ' + time);
+			return time;
 		}
 	}
 );

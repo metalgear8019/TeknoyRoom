@@ -49,3 +49,23 @@ Meteor.publish(SubscriptionTag.ONE_SECTION, function(id) {
 	// check(id, String);
 	return Sections.find({ _id: id });
 });
+
+Meteor.publish(SubscriptionTag.ALL_ENROLLEES, function() {
+	// check(id, String);
+	return Enrollees.find();
+});
+
+Meteor.publish(SubscriptionTag.ONE_ENROLLEE, function(id) {
+	// check(id, String);
+	return Enrollees.find({ _id: id });
+});
+
+Meteor.publish(SubscriptionTag.ALL_NOTES, function() {
+	// check(id, String);
+	return Notes.find();
+});
+
+Meteor.publish(SubscriptionTag.ONE_NOTE, function(id) {
+	// check(id, String);
+	return Notes.find({ _id: id });
+});

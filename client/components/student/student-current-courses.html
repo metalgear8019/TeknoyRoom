@@ -14,34 +14,26 @@
 						</div>
 						<table class="table table-striped table-hover">
 						  	<thead>
-							    <tr>
-							      <th>Course</th>
-							      <th>Schedule</th>
-							    </tr>
-						  	</thead>
-							<tbody>	
-								{{#each courses}}
-							    <tr>
-								    <td>
-								    	<a href="/student/currentcourses/ccs123/">
-								    		{{subject_number}}
-								    	</a>
-								    </td>
-								    <td>MWF 7:30 AM - 8:30 AM</td>
-							    </tr>
-							    {{/each}}
-							    <!--<tr>
-								    <td>CCS120</td>
-								    <td>TTH 7:30 AM - 9:00 AM</td>
-							    </tr>
-							    <tr>
-								    <td>CCS121</td>
-								    <td>MWF 4:30 PM - 5:30 PM</td>
-							    </tr>-->
+								<tr>
+									<th>Name</th>
+									<th>Course</th>
+									<th>Semester</th>
+									<th>Schedule</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{ #each sections }}
+									<a href="/student/current/{{ _id }}"><tr>
+										<td class="pointer-hover">{{name}}</td>
+										<td class="pointer-hover">{{course.title}}</td>
+										<td class="pointer-hover">{{semester.name}}</td>
+										<td class="pointer-hover">{{time}}</td>
+									</tr></a>
+								{{/each}}
 							</tbody>
 						</table> 
 						<div>
-							<a href="/student/currentcourses/enterclass/" class="btn btn-warning"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Enter Class</a>
+							<a href="/student/current/enter" class="btn btn-warning" id="enterClass"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Enter Class</a>
 						</div>
 					</div>
 				</div>
