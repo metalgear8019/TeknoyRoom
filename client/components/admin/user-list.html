@@ -55,8 +55,7 @@
 								<th>Id Number</th>
 								<th>Name</th>
 								<th>User Type</th>
-								<th>Department</th>
-								<th>Degree Program/Year</th>
+								<th>Department/Degree Program</th>
 								{{#if currentPage adminViewUsers}}
 									<th></th>
 								{{/if}}
@@ -86,8 +85,7 @@
 											{{/if}}
 										{{/if}}
 									</td>
-									<td>{{profile.department}}</td>
-									<td>{{#if equals profile.user_type 2}}{{profile.program}} - {{profile.year}}{{/if}}</td>
+									<td>{{#if equals profile.user_type 2}}{{profile.program}} - {{profile.year}} {{else}} {{profile.department}}{{/if}}</td>
 									{{#if currentPage adminViewUsers}}
 										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
 									{{/if}}

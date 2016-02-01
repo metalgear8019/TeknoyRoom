@@ -1,0 +1,154 @@
+<template name="enrollForm">
+<!-- Page Content -->
+	<div id="page-content-wrapper">
+		<div class="container-fluid" style="padding-right:0px;">
+			<!--<div class="alert alert-warning" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
+			<div class="row form-whitebg" style="margin-top:30px;">
+				<form id="frmEnrollStudents">
+					{{ #if Template.subscriptionsReady }}
+						<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
+						<div class="form-group">
+							<label>Section</label>
+					      	<input type="text" id="section" name="section" class="form-control"  value="{{#if notEquals section._id null}} {{section.name}} {{/if}}" placeholder="Choose Section...">
+					      	<input type="hidden" id="sectionId" name="semesterId" value="{{section._id}}">
+					      	<!-- Modal Semester -->
+							<div class="modal fade" id="section_modal" tabindex="-1" role="dialog" aria-labelledby="section_modal">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+								     <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
+							        	<h5 class="modal-title" id="section_modal">Choose a section</h5>
+								    </div>
+								    <div class="modal-body">
+								        <table class="table table-striped">
+									        <thead>
+									          <tr>
+									              <th>Section</th>
+									              <th>Schedule</th>
+									              <th>Course</th>
+									              <th>Semester</th>
+									          </tr>
+									        </thead>
+
+									        <tbody>
+									        	{{#each sections}}
+									        		<tr class="section pointer-hover">
+									        			<td>{{name}}</td>
+									        			<td>
+									        				{{#each day}}
+																{{#if equals this 1}}
+																	Sun
+																{{/if}}
+																{{#if equals this 2}}
+																	M
+																{{/if}}
+																{{#if equals this 3}}
+																	T
+																{{/if}}
+																{{#if equals this 4}}
+																	W
+																{{/if}}
+																{{#if equals this 5}}
+																	Th
+																{{/if}}
+																{{#if equals this 6}}
+																	F
+																{{/if}}
+																{{#if equals this 7}}
+																	Sat
+																{{/if}}
+															{{/each}}
+									        			</td>
+									        			<td>{{course.title}}</td>
+									        			<td>{{semester.school_year}} {{semester.name}}</td>
+									        		</tr>
+									        	{{/each}}
+									        </tbody>
+									    </table>
+								    </div>
+							    </div>
+							  </div>
+							</div>
+					    </div>
+
+					    <div class="form-group">
+						  	<div class="form-row">
+						  		<label>Assigned Instructor</label>
+						  		<input type="text" id="instructor" name="instructor" class="form-control" value="{{#if notEquals instructor._id null}}{{instructor.subject_number}}: {{instructor.title}}{{/if}}" placeholder="Choose Instructor...">
+								<input type="hidden" id="instructorId" name="instructorId" value="{{instructor._id}}">
+							</div>
+							<!-- Modal Course -->
+							<div class="modal fade" id="instructor_modal" tabindex="-1" role="dialog" aria-labelledby="instructor_modal">
+							  <div class="modal-dialog">
+							    <div class="modal-content">
+								     <div class="modal-header">
+								        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
+							        	<h5 class="modal-title" id="instructor_modal">Choose a instructor</h5>
+								    </div>
+								    <div class="modal-body">
+								        <table class="table table-striped">
+									        <thead>
+									          <tr>
+									              <th>ID Number</th>
+									              <th>Name</th>
+									              <th>Department</th>
+									          </tr>
+									        </thead>
+
+									        <tbody>
+									        	{{#each instructors}}
+									        		<tr class="instructor pointer-hover">
+									        			<td>{{ profile.id_number }}</td>
+									        			<td>{{ profile.last_name}}, {{profile.first_name}} {{ profile.middle_name}}</td>
+									        			<td>{{ profile.department }}</td>
+									        		</tr>
+									        	{{/each}}
+									        </tbody>
+									    </table>
+								    </div>
+							    </div>
+							  </div>
+							</div>
+						</div>
+
+						<hr style="border-color:#f8c400;">
+						
+						<div class="container-fluid">
+							{{#each students}}
+								<div class="well well-sm col-xs-4" style="background:#E0E0E0;margin-right:0.02px;margin-top:1px;">
+									<input  name="students" type="checkbox" style="float:left;" />
+									<label for="{{ _id }}" style="display:block; border:none; height:100px; -webkit-font-smoothing: antialiased; color:black;">
+										<div style="padding-top:20px;float:left;">
+											{{#if equals profile.gender 'Male'}}
+												<img class="media-object" src="/assets/profile-picture3.png" style="width:50px;" align="left">
+											{{else}}
+												<img class="media-object" src="/assets/profile-picture2.png" style="width:50px;" align="left">
+											{{/if}}
+										</div>
+										<div class="media-body container-fluid">
+											<p class="font-style:bold;">{{ profile.id_number }}</p>
+											<p class="media-heading">
+												{{ profile.last_name }}, {{ profile.first_name }} {{ profile.middle_name }}
+											</p>
+											<div>
+												{{ profile.program }} - {{ profile.year }}
+											</div>
+										</div>
+									</label>
+								</div>
+							{{/each}}
+						</div>
+
+					    <div class="form-group">
+							<button type="submit" class="btn-gold form-control">
+								ENROLL STUDENTS
+							</button>
+						</div>
+			        {{ else }}
+						{{> loading }}
+					{{ /if }}
+				</form>
+			</div>
+		</div>
+	</div>
+</template>
