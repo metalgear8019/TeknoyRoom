@@ -237,10 +237,10 @@ Template.userList.events
 		        Meteor.call('parseUpload', results.data, (error, response) => {
 		          if(error){
 		            console.log(error.reason);
-		          }//else{
-		            //template.uploading.set(false);
-		            //Bert.alert('Upload complete', 'success', 'growl-top-right');
-		          //}
+		          }else{
+		            template.uploading.set(false);
+		            Bert.alert('Upload complete', 'success', 'growl-top-right');
+		          }
 		        });
 		      }
 		    });
