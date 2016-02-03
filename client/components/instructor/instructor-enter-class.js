@@ -25,7 +25,7 @@ Template.instructorEnterClass.onCreated(function () {
 		});
 
 		// clear on disconnect or close
-		peer.on('close', function () {
+		/*peer.on('close', function () {
 			console.log('peer id >> ' + peer.id + '\nroom id >> ' + classId);
 			// update the current user's profile
 			Meteor.users.update({_id: Meteor.userId()}, {
@@ -36,7 +36,7 @@ Template.instructorEnterClass.onCreated(function () {
 					}
 				}
 			});
-		});
+		});*/
 
 		// This event: remote peer receives a call
 		peer.on('call', function (incomingCall) {
@@ -110,10 +110,19 @@ Template.instructorEnterClass.events
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		},
-		'click #endCall': function (event) {
+		'click #leave': function (event) {
 			event.preventDefault();
-			alert('ending call...');
-			instructorPeer.currentCall.close();
+			if (undefined != instructorPeer.currentCall || null != instructorPeer.currentCall)
+				instructorPeer.currentCall.close();
+			Meteor.users.update({_id: Meteor.userId()}, {
+				$set: {
+					peer: { 
+						_id: null,
+						room_id: null
+					}
+				}
+			});
+			FlowRouter.go('/instructor/current');
 		}
 	}
 );
