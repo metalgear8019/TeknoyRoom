@@ -1,4 +1,4 @@
-var instructorPeer= {};
+var instructorPeer = {};
 
 Template.instructorEnterClass.onCreated(function () {
 	var self = this;
@@ -8,16 +8,16 @@ Template.instructorEnterClass.onCreated(function () {
 		self.subscribe(SubscriptionTag.PRESENCES);
 		self.subscribe(SubscriptionTag.ALL_USERS);
 
-		var peer = Helpers.createNewPeer();
+		instructorPeer.peer = Helpers.createNewPeer();
 
 		// This event: remote peer receives a call
-		peer.on('open', function () {
-			console.log('peer id >> ' + peer.id + '\nroom id >> ' + classId);
+		instructorPeer.peer.on('open', function () {
+			console.log('peer id >> ' + instructorPeer.peer.id + '\nroom id >> ' + classId);
 			// update the current user's profile
 			Meteor.users.update({_id: Meteor.userId()}, {
 				$set: {
 					peer: { 
-						_id: peer.id,
+						_id: instructorPeer.peer.id,
 						room_id: classId
 					}
 				}
@@ -39,7 +39,7 @@ Template.instructorEnterClass.onCreated(function () {
 		});*/
 
 		// This event: remote peer receives a call
-		peer.on('call', function (incomingCall) {
+		instructorPeer.peer.on('call', function (incomingCall) {
 			instructorPeer.currentCall = incomingCall;
 			incomingCall.answer(instructorPeer.localStream);
 			incomingCall.on('stream', function (remoteStream) {
@@ -101,7 +101,7 @@ Template.instructorEnterClass.events
 			event.preventDefault();
 			alert('making call...');
 			var user = this;
-			var outgoingCall = peer.call(user.peer._id, instructorPeer.localStream);
+			var outgoingCall = instructorPeer.peer.call(user.peer._id, instructorPeer.localStream);
 			instructorPeer.currentCall = outgoingCall;
 			outgoingCall.on('stream', function (remoteStream) {
 				instructorPeer.remoteStream = remoteStream;
