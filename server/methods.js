@@ -3,7 +3,7 @@ Meteor.methods
 	{
 		addUser: function (user) 
 		{
-			//check(user, Object);
+			check(user, Object);
 			try {
 				Accounts.createUser(user);
 				// Roles.addUserInRoles(id, user.roles);
