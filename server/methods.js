@@ -94,15 +94,30 @@ Meteor.methods
 		setBanned: function (user_id, setBan)
 		{
 			check(user_id, String);
+			check(setBan, Boolean);
+
 			var cursor = Users.findOne(user_id);
 
 			Users.update
 			(
 				user_id,
-				{
-					profile: {
-						$set: { banned: setBan }
-					}
+				{ 
+					$set: 
+					{
+						profile:  
+                    	{ 
+                    		id_number: cursor.profile.id_number,
+                            first_name: cursor.profile.first_name,
+                            last_name: cursor.profile.last_name,
+                            middle_name: cursor.profile.middle_name,
+                            banned: setBan,
+                            gender: cursor.profile.gender,
+                            user_type: cursor.profile.user_type,
+                            program: cursor.profile.program,
+                            year: cursor.profile.year,
+                            department: cursor.profile.department
+                    	}
+                	}
 				}
 			);
 		},

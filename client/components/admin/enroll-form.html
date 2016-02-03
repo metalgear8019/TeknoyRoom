@@ -115,30 +115,35 @@
 
 						<hr style="border-color:#f8c400;">
 						
-						<div class="container-fluid">
-							{{#each students}}
-								<div class="well well-sm col-xs-4" style="background:#E0E0E0;margin-right:0.02px;margin-top:1px;">
-									<input  name="students" class="students" type="checkbox" style="float:left;" value="{{_id}}" />
-									<label style="display:block; border:none; height:100px; -webkit-font-smoothing: antialiased; color:black;">
-										<div style="padding-top:20px;float:left;">
-											{{#if equals profile.gender 'Male'}}
-												<img class="media-object" src="/assets/profile-picture3.png" style="width:50px;" align="left">
-											{{else}}
-												<img class="media-object" src="/assets/profile-picture2.png" style="width:50px;" align="left">
-											{{/if}}
-										</div>
-										<div class="media-body container-fluid">
-											<p class="font-style:bold;">{{ profile.id_number }}</p>
-											<p class="media-heading">
-												{{ profile.last_name }}, {{ profile.first_name }} {{ profile.middle_name }}
-											</p>
-											<div>
-												{{ profile.program }} - {{ profile.year }}
-											</div>
-										</div>
-									</label>
-								</div>
-							{{/each}}
+						<div class="table">
+							<table class="table">
+								<thead>
+									<tr>
+										<th></th>
+										<th></th>
+										<th>Id Number</th>
+										<th>Name</th>
+										<th>Degree Program</th>
+									</tr>
+								</thead>
+								<tbody>
+									{{#each students}}
+										<tr style="background:#E0E0E0;">
+											<td><input id="students" name="students" type="checkbox" value="{{_id}}" /></td>
+											<td class="pointer-hover">
+												{{#if equals profile.gender 'Male'}}
+													<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+												{{else}}
+													<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+												{{/if}}
+											</td>
+											<td>{{ profile.id_number }}</td>
+											<td>{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
+											<td>{{profile.program}} - {{profile.year}}</td>
+										</tr>
+									{{/each}}
+								</tbody>
+							</table>
 						</div>
 
 					    <div class="form-group">
