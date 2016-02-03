@@ -467,7 +467,31 @@ Meteor.methods
 
 		    	if(! exists)
 		    	{
-		    		Accounts.createUser(item);
+
+		    		item.banned = (item.banned == null || item.banned == undefined)? false: item.banned;
+		    		item.middle_name = (item.middle_name == "" || item.middle_name == undefined)? '':item.middle_name;
+		    		item.gender = (item.gender == undefined || item.gender == null)? "Male":item.gender;
+		    		item.user_type = (item.department == null || item.department == undefined)? 2:1;
+
+
+		    		var user = {
+		    			username: 'cit' + item.id_number,
+		    			password: item.id_number,
+		    			emails: [],
+		    			profile:  
+                    	{ 
+                    		id_number: item.id_number,
+                            first_name: item.first_name,
+                            last_name: item.last_name,
+                            middle_name: item.middle_name,
+                            banned: item.banned,
+                            gender: item.gender,
+                            user_type: item.user_type,
+                            program: item.program,
+                            year: item.year
+                    	}
+		    		};
+		    		Accounts.createUser(user);
 		    	}
 		    	else
 		    	{
