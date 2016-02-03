@@ -455,7 +455,7 @@ Meteor.methods
 				Sections.insert
 				(
 					{
-						section_name: item.name,
+						section_name: item.section_name,
 						course: item.course,
 						semester: item.semester,
 						day: item.day,
