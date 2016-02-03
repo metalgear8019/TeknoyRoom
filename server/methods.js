@@ -435,7 +435,7 @@ Meteor.methods
 
 		getServerTime: function () 
 		{
-			var time = (new Date()).toTimeString();
+			var time = (new Date()).getTime();
 			console.log('server time >> ' + time);
 			return time;
 		},

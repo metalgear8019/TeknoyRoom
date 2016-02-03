@@ -1,4 +1,4 @@
-Template.studentPreviousCourses.onCreated(function () {
+Template.previousCourses.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_ENROLLEES);
@@ -8,7 +8,7 @@ Template.studentPreviousCourses.onCreated(function () {
 	});
 });
 
-Template.studentPreviousCourses.helpers
+Template.previousCourses.helpers
 (
 	{
 		sections: function()
@@ -34,6 +34,23 @@ Template.studentPreviousCourses.helpers
 		semesters: function ()
 		{
 			return Semesters.find({});
+		}
+	}
+);
+
+Template.previousCourses.events
+(
+	{
+		'click .pointer-hover': function (event) {
+			console.log('clicked row');
+			var result = Meteor.user().profile.user_type;
+			if (result == 0)
+				result = '/admin';
+			else if (result == 1)
+				result = '/instructor';
+			else if (result == 2)
+				result = '/student';
+			FlowRouter.go(result + '/previous/' + this._id);
 		}
 	}
 );

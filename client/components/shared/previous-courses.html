@@ -1,4 +1,4 @@
-<template name="studentPreviousCourses">
+<template name="previousCourses">
 	<!-- Instructor Current Courses -->
 	<div id="page-content-wrapper">
 		<div class="page-content inset">
@@ -18,21 +18,17 @@
 									<th>Name</th>
 									<th>Course</th>
 									<th>Semester</th>
-									<th>Day/s</th>
-									<th>Starting Time</th>
-									<th>Duration</th>
+									<th>Schedule</th>
 								</tr>
 							</thead>
 							<tbody>
 								{{ #each sections }}
-									<a href="/student/previous/{{ _id }}"><tr>
+									<tr>
 										<td class="pointer-hover">{{name}}</td>
 										<td class="pointer-hover">{{course.title}}</td>
 										<td class="pointer-hover">{{semester.name}}</td>
-										<td class="pointer-hover">{{day}}</td>
-										<td class="pointer-hover">{{hour}}:{{minute}}</td>
-										<td class="pointer-hover">{{duration}}</td>
-									</tr></a>
+										<td class="pointer-hover">{{time}}</td>
+									</tr>
 								{{/each}}
 							</tbody>
 						</table> 

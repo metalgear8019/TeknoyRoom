@@ -15,25 +15,14 @@ Template.currentCourses.helpers
 		{
 		 	var result = [];
 		 	var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
-		 	var enrolledIds = [];//enrolledSubjects.map(function (c) { return c.section; });
-			Sections.find({ /*_id: { $in: enrolledIds }*/ }).forEach(function (item) {
+		 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
+			Sections.find({ _id: { $in: enrolledIds } }).forEach(function (item) {
 				item.course = Courses.findOne(item.course) || '';
 				item.semester = Semesters.findOne(item.semester) || '';
 				item.time = Helpers.scheduleToString(item);
 				result.push(item);
 			});
-			console.log("results >> " + JSON.stringify(result));
-			return result;
-		},
-		type: function ()
-		{
-			var result = Meteor.user().profile.user_type;
-			if (result == 0)
-				result = 'admin';
-			else if (result == 1)
-				result = 'instructor';
-			else if (result == 2)
-				result = 'student';
+			// console.log("results >> " + JSON.stringify(result));
 			return result;
 		}
 	}
@@ -43,18 +32,15 @@ Template.currentCourses.events
 (
 	{
 		'click #enterClass': function (event) {
-			var time = Session.get('time');
+			var time = new Date(Session.get('time'));
 			var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
 		 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
-		 	console.log(Meteor.user());
-			var result = Sections.find({
-				_id: ( $in: enrolledIds ),
-				day: { $in: (time.getDay() + 1) },
-				hour: { $gte: time.getHours() },
-				minute: { $gte: time.getMinutes() }
-			});
-
-			result.sort({ hour: 1, minute: 1 });
+		 	console.log('time >> ' + time.getHours() + ':' + time.getMinutes() + ' on day ' + time.getDay());
+			var result = Sections.findOne({
+				/*_id: ( $in: enrolledIds ),*/
+				day: (time.getDay() + 1 + ''),
+				hour: { $lte: time.getHours() }
+			}, { sort: { hour: -1, minute: -1 }});
 			
 			/*var result = Sections.find({
 				hour: { $gte: time.getHours() },
@@ -67,12 +53,28 @@ Template.currentCourses.events
 			});*/
 
 			console.log("class >> " + JSON.stringify(result));
-			if (result != null || result != undefined || 
-					result[0].duration < Helpers.getDurationPast(time, result[0].hour, result[0].minute)) {
+
+			if (result != null && result != undefined && 
+					Helpers.getDurationPast(time, result.hour, result.minute) < result.duration) {
+				console.log("duration >> " + result.duration + "\ntime passed >> " + 
+					Helpers.getDurationPast(time, result.hour, result.minute));
+				Session.set('class', Enrollees.findOne({ section: result._id, user: Meteor.userId() })._id);
+				console.log('enrolled id >> ' + Session.get('class'));
 				FlowRouter.go('/student/current/enter');
 			} else {
 				alert('No classes currently held.');
 			}
+		},
+		'click .pointer-hover': function (event) {
+			console.log('clicked row');
+			var result = Meteor.user().profile.user_type;
+			if (result == 0)
+				result = '/admin';
+			else if (result == 1)
+				result = '/instructor';
+			else if (result == 2)
+				result = '/student';
+			FlowRouter.go(result + '/current/' + this._id);
 		}
 	}
 );
