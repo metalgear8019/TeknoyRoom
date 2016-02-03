@@ -293,6 +293,9 @@ Template.userForm.events
 							Role.Permission.WRITE_SEMESTERS
 						]
 					};
+
+					Meteor.call('addUser', user);
+					FlowRouter.go('/admin/user/');
 				}
 				else
 				{
