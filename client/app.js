@@ -1,5 +1,83 @@
 Session.setDefault('counter', 0);
 
+// sync client clock with server time with an interval
+setInterval(function () {
+	Meteor.call('getServerTime', function (error, result) {
+		Session.set('time', result);
+	});
+}, 1000);
+
+Helpers = {
+	dayToString: function (days) {
+		var result = '';
+		days.forEach(function (value) {
+			switch (value) {
+				case '1': result += 'Sun'; break;
+				case '2': result += 'M'; break;
+				case '3': result += 'T'; break;
+				case '4': result += 'W'; break;
+				case '5': result += 'Th'; break;
+				case '6': result += 'F'; break;
+				case '7': result += 'Sat'; break;
+			}
+		});
+		return result;
+	},
+	timeToString: function (hour, minute, offset) {
+		var period = 'AM';
+
+		hour = parseInt(hour + offset / 60);
+		minute = parseInt(minute) + parseInt(offset) % 60;
+
+		if (hour > 12) {
+			period = 'PM';
+			hour -= 12;
+		}
+
+		if (minute >= 60) {
+			minute -= 60;
+			hour++;
+		}
+
+		if (minute < 10) {
+			minute = '0' + minute;
+		}
+
+		var str = hour + ':' + minute + ' ' + period;
+		console.log(str);
+		return str;
+	},
+	scheduleToString: function (schedule) {
+		var result = Helpers.dayToString(schedule.day);
+		result += ' ' + Helpers.timeToString(schedule.hour, schedule.minute, 0) + ' - ' +
+			Helpers.timeToString(schedule.hour, schedule.minute, schedule.duration);
+		return result;
+	},
+	getDurationPast: function (time, hour, minute) {
+		var duration = (time.getHours() - hour) * 60;
+		duration += time.getMinutes() - minute;
+		return duration;
+	},
+	createNewPeer: function() {
+		return new Peer({
+			key: 'dqxm490i2c07ldi',  // change this key
+			debug: 3,
+			config: {'iceServers': [
+				{ url: 'stun:stun.l.google.com:19302' },
+				{ url: 'stun:stun1.l.google.com:19302' },
+				{ url: 'stun:stun2.l.google.com:19302' },
+				{ url: 'stun:stun3.l.google.com:19302' },
+				{ url: 'stun:stun4.l.google.com:19302' },
+				{
+					url: 'turn:numb.viagenie.ca',
+					credential: 'muazkh',
+					username: 'webrtc@live.com'
+				}
+			]}
+		});
+	}
+};
+
 hotKey = new Hotkeys({
 	autoLoad : false
 });

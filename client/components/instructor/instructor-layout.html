@@ -1,5 +1,5 @@
 <template name="instructorLayout">
-	<!--{{ #if currentUser }}
+	{{ #if currentUser }}
 		{{ #if isInRole 'instructor' }}-->
 			{{> Template.dynamic template=header }}
 			<div class="container">
@@ -8,7 +8,7 @@
 					{{> Template.dynamic template=main }}
 				</div>
 			</div>
-		<!--{{ else }}
+		{{ else }}
 			{{> unauthorized }}
 		{{ /if }}
 	{{ else }}
@@ -17,5 +17,5 @@
 		{{ else }}
 			{{> loginForm }}
 		{{ /if }}
-	{{ /if }}-->
+	{{ /if }}
 </template>

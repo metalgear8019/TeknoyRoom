@@ -122,6 +122,19 @@ Meteor.methods
 			);
 		},
 
+		setState: function (user_id, setState)
+		{
+			var cursor = Users.findOne(user_id);
+
+			Users.update
+			(
+				user_id,
+				{
+					$set: { state: setState }
+				}
+			);
+		},
+
 		addCourse: function(course)
 		{
 			check(course, Object);
@@ -344,8 +357,11 @@ Meteor.methods
 						$set:
 						{
 							user: enrollee.user,
-							section: enrollee.section,
-							attendance: enrollee.attendance		
+							section: enrollee.section
+						},
+						$addToSet:
+						{
+							attendance: { $each: enrollee.attendance }
 						}
 					}
 				);
@@ -432,7 +448,14 @@ Meteor.methods
 			}
 		},
 
-		parseUpload( data ) 
+		getServerTime: function () 
+		{
+			var time = (new Date()).getTime();
+			console.log('server time >> ' + time);
+			return time;
+		},
+
+		parseUpload: function (data) 
 		{
 	    	check( data, Array );
 
