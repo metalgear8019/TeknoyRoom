@@ -8,16 +8,16 @@ Template.studentEnterClass.onCreated(function () {
 		self.subscribe(SubscriptionTag.PRESENCES);
 		self.subscribe(SubscriptionTag.ALL_USERS);
 
-		var peer = Helpers.createNewPeer();
+		studentPeer.peer = Helpers.createNewPeer();
 
 		// This event: remote peer receives a call
-		peer.on('open', function () {
-			console.log('peer id >> ' + peer.id + '\nroom id >> ' + classId);
+		studentPeer.peer.on('open', function () {
+			console.log('peer id >> ' + studentPeer.peer.id + '\nroom id >> ' + classId);
 			// update the current user's profile
 			Meteor.users.update({_id: Meteor.userId()}, {
 				$set: {
 					peer: { 
-						_id: peer.id,
+						_id: studentPeer.peer.id,
 						room_id: classId
 					}
 				}
@@ -25,7 +25,7 @@ Template.studentEnterClass.onCreated(function () {
 		});
 
 		// clear on disconnect or close
-		peer.on('close', function () {
+		/*peer.on('close', function () {
 			console.log('peer id >> ' + peer.id + '\nroom id >> ' + classId);
 			// update the current user's profile
 			Meteor.users.update({_id: Meteor.userId()}, {
@@ -36,15 +36,15 @@ Template.studentEnterClass.onCreated(function () {
 					}
 				}
 			});
-		});
+		});*/
 
 		// This event: remote peer receives a call
-		peer.on('call', function (incomingCall) {
+		studentPeer.peer.on('call', function (incomingCall) {
 			studentPeer.currentCall = incomingCall;
 			incomingCall.answer(studentPeer.localStream);
 			incomingCall.on('stream', function (remoteStream) {
 				studentPeer.remoteStream = remoteStream;
-				var video = document.getElementById("myVideo");
+				var video = document.getElementById("theirVideo");
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		});
@@ -59,8 +59,8 @@ Template.studentEnterClass.onCreated(function () {
 		// get audio/video
 		navigator.getUserMedia({audio:true, video: true}, function (stream) {
 			//display video
-			//var video = document.getElementById('myVideo');
-			//video.src = URL.createObjectURL(stream);
+			var video = document.getElementById('myVideo');
+			video.src = URL.createObjectURL(stream);
 			studentPeer.localStream = stream;
 		}, function (error) { 
 			console.log(error); 
@@ -99,19 +99,28 @@ Template.studentEnterClass.events
 		'click #makeCall': function (event) {
 			event.preventDefault();
 			alert('making call...');
-			var outgoingCall = peer.call(getInstructorId(), studentPeer.localStream);
+			var outgoingCall = studentPeer.peer.call(getInstructorId(), studentPeer.localStream);
 			studentPeer.currentCall = outgoingCall;
 			outgoingCall.on('stream', function (remoteStream) {
 				studentPeer.remoteStream = remoteStream;
 				alert('receiving stream...');
-				var video = document.getElementById("myVideo");
+				var video = document.getElementById("theirVideo");
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		},
-		'click #endCall': function (event) {
+		'click #leave': function (event) {
 			event.preventDefault();
-			alert('ending call...');
-			studentPeer.currentCall.close();
+			if (undefined != studentPeer.currentCall || null != studentPeer.currentCall)
+				studentPeer.currentCall.close();
+			Meteor.users.update({_id: Meteor.userId()}, {
+				$set: {
+					peer: { 
+						_id: null,
+						room_id: null
+					}
+				}
+			});
+			FlowRouter.go('/student/current');
 		}
 	}
 );
@@ -126,8 +135,3 @@ var getInstructorId = function () {
 	console.log('query done >> ');
 	return result.peer._id;
 }
-
-/*$("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("active");
-});*/

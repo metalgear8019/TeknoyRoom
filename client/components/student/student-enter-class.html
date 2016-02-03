@@ -7,22 +7,25 @@
 				<!--<div class="alert alert-danger" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
 
 				<div style="margin-top:50px;margin-left:40px;">
-					<div class="panel panel-default" style="float:left;margin-right:10px;">
+					<div class="panel panel-default" style="float:left;margin-right:10px;height:574px;">
 						<div class="panel-body">
 							<div class="row" style="float:right;">
-								<a href="/student/currentcourses/" class="btn btn-success" data-toggle="tooltip" title="Leave Class">
+								<a href="" id="leave" class="btn btn-success" data-toggle="tooltip" title="Leave Class">
 									<i class="fa fa-sign-out"></i>
 								</a>
 							</div>
 							<div class="row">
 						  		<!--<input type="image" alt="Profile Picture" src="/assets/classroom.jpg" style="height:450px;width:550px;float:left;margin:10px;">-->
-						  		<div class="video-container">
+						  		<div class="video-container" style="height:450px;width:550px;float:left;margin:10px;">
 							  		{{ #if isAvailable }}
 							  			Instructor is now connected. <a href = "" id="makeCall">Refresh</a>
 							  		{{ else }}
 							  			Instructor is not yet online. Please wait...
 							  		{{ /if }}
-							  		<video id="myVideo" muted="true" class="myVideo" autoplay></video>
+							  		<!--<br>Own video:
+						  			<video id="myVideo" muted="true" class="myVideo" autoplay style="height:auto;width:550px;"></video>-->
+						  			<br>Instructor video:
+						  			<video id="theirVideo" muted="true" class="theirVideo" autoplay style="height:auto;width:550px;"></video>
 						  		</div>
 						  	</div>
 							<div class="row" style="float:left;">
@@ -42,12 +45,23 @@
 						</div>
 					</div>
 
-				  	<div class="panel panel-warning" style="width:250px;height:574px;float:right;">
-						<div class="panel-heading">
-						  	<h5 class="panel-title"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Notes</h5>
+					<div style="width:250px;height:574px;float:right;">
+						<div class="panel panel-warning" style="height:220px;">
+							<div class="panel-heading">
+							  	<h5 class="panel-title"><i class="fa fa-camera"></i>&nbsp;&nbsp;Your Video</h5>
+							</div>
+							<div class="panel-body">
+						  		<video id="myVideo" muted="true" class="myVideo" autoplay style="height:155px;width:240px;margin-top:-5px;margin-left:-10px;"></video>
+							</div>
 						</div>
-						<div class="panel-body">
-							<textarea class="form-control" rows="17" id="textArea"></textarea>
+
+					  	<div class="panel panel-warning" style="height:330px;">
+							<div class="panel-heading">
+							  	<h5 class="panel-title"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Notes</h5>
+							</div>
+							<div class="panel-body">
+								<textarea class="form-control" rows="9" id="textArea"></textarea>
+							</div>
 						</div>
 					</div>
 				</div>
