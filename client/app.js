@@ -7,7 +7,41 @@ setInterval(function () {
 	});
 }, 1000);
 
+// redirect on login
+Accounts.onLogin(function() {
+	var route = '/login';
+	var currentPath = FlowRouter.current().path;
+	console.log('path >> ' + currentPath);
+	splitPath = currentPath.split('/');
+	if (Roles.userIsInRole(Meteor.userId(), Role.Group.ADMIN)) {
+		route = Helpers.generateRedirectRoute(splitPath, 'admin');
+	} else if (Roles.userIsInRole(Meteor.userId(), Role.Group.INSTRUCTOR)) {
+		route = Helpers.generateRedirectRoute(splitPath, 'instructor');
+	} else if (Roles.userIsInRole(Meteor.userId(), Role.Group.STUDENT)) {
+		route = Helpers.generateRedirectRoute(splitPath, 'student');
+	}
+	FlowRouter.go(route);
+});
+
 Helpers = {
+	isEmpty: function (variable) {
+		var empty = false;
+		if (variable === null ||
+			variable === undefined ||
+			variable === [] ||
+			variable === {} ||
+			variable === '')
+				empty = true;
+		return empty;
+	},
+	generateRedirectRoute: function (splitPath, userType) {
+		var route = '/' + userType;
+		if (!Helpers.isEmpty(splitPath) && splitPath[1] === userType) {
+			for (i = 2; i < splitPath.length; i++)
+				route += '/' + splitPath[i];
+		}
+		return route;
+	},
 	dayToString: function (days) {
 		var result = '';
 		days.forEach(function (value) {
