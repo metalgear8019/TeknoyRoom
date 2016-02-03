@@ -58,23 +58,26 @@ Template.currentCourses.events
 					Helpers.getDurationPast(time, result.hour, result.minute) < result.duration) {
 				console.log("duration >> " + result.duration + "\ntime passed >> " + 
 					Helpers.getDurationPast(time, result.hour, result.minute));
-				Session.set('class', Enrollees.findOne({ section: result._id, user: Meteor.userId() })._id);
+				Session.set('class', result._id);
 				console.log('enrolled id >> ' + Session.get('class'));
-				FlowRouter.go('/student/current/enter');
+				FlowRouter.go(getRouteGroup() + '/current/enter');
 			} else {
 				alert('No classes currently held.');
 			}
 		},
 		'click .pointer-hover': function (event) {
-			console.log('clicked row');
-			var result = Meteor.user().profile.user_type;
-			if (result == 0)
-				result = '/admin';
-			else if (result == 1)
-				result = '/instructor';
-			else if (result == 2)
-				result = '/student';
-			FlowRouter.go(result + '/current/' + this._id);
+			FlowRouter.go(getRouteGroup() + '/current/' + this._id);
 		}
 	}
 );
+
+var getRouteGroup = function () {
+	var result = Meteor.user().profile.user_type;
+	if (result == 0)
+		result = '/admin';
+	else if (result == 1)
+		result = '/instructor';
+	else if (result == 2)
+		result = '/student';
+	return result;
+}
