@@ -15,7 +15,15 @@
 								</a>
 							</div>
 							<div class="row">
-						  		<input type="image" alt="Profile Picture" src="/assets/classroom.jpg" style="height:450px;width:550px;float:left;margin:10px;">
+						  		<!--<input type="image" alt="Profile Picture" src="/assets/classroom.jpg" style="height:450px;width:550px;float:left;margin:10px;">-->
+						  		<div class="video-container">
+							  		{{ #if isAvailable }}
+							  			Instructor is now connected. <a href = "" id="makeCall">Refresh</a>
+							  		{{ else }}
+							  			Instructor is not yet online. Please wait...
+							  		{{ /if }}
+							  		<video id="myVideo" muted="true" class="myVideo" autoplay></video>
+						  		</div>
 						  	</div>
 							<div class="row" style="float:left;">
 								<a id="share-screen" href="#" class="btn btn-success" data-toggle="tooltip" title="Share Current Screen">

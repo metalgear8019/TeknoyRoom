@@ -1,0 +1,43 @@
+<template name="currentCourses">
+	<!-- Instructor Current Courses -->
+	<div id="page-content-wrapper">
+		<div class="page-content inset">
+			<div class="container-fluid">
+
+				<!--<div class="alert alert-danger" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
+
+				<div class="panel panel-default" style="margin-top:50px;margin-left:100px;">
+					<div class="panel-body">
+						<div class="input-group" style="float:right;">
+							<i class="fa fa-search"></i>
+							<input type="text" id="search" name="search">
+						</div>
+						<table class="table table-striped table-hover">
+						  	<thead>
+								<tr>
+									<th>Name</th>
+									<th>Course</th>
+									<th>Semester</th>
+									<th>Schedule</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{ #each sections }}
+									<tr>
+										<td class="pointer-hover">{{name}}</td>
+										<td class="pointer-hover">{{course.title}}</td>
+										<td class="pointer-hover">{{semester.name}}</td>
+										<td class="pointer-hover">{{time}}</td>
+									</tr>
+								{{/each}}
+							</tbody>
+						</table> 
+						<div>
+							<a class="btn btn-warning" id="enterClass"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Enter Class</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>

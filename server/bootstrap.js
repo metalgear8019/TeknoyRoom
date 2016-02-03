@@ -8,6 +8,18 @@ Meteor.startup(function () {
 		}
 		return user;
 	});
+
+	// redirect on login
+	Accounts.onLogin(function() {
+		var route = '/login';
+		if (Roles.userIsInRole(Meteor.userId(), Role.Group.ADMIN))
+			route = '/admin';
+		else if (Roles.userIsInRole(Meteor.userId(), Role.Group.INSTRUCTOR))
+			route = '/instructor';
+		else if (Roles.userIsInRole(Meteor.userId(), Role.Group.STUDENT))
+			route = '/student';
+		FlowRouter.go(route);
+	});
 });
 
 Meteor.publish(SubscriptionTag.PRESENCES, function() {
@@ -50,11 +62,20 @@ Meteor.publish(SubscriptionTag.ONE_SECTION, function(id) {
 	return Sections.find({ _id: id });
 });
 
+Meteor.publish(SubscriptionTag.ALL_ENROLLEES, function() {
+	return Enrollees.find();
+});
+
 Meteor.publish(SubscriptionTag.ONE_ENROLLEE, function(id) {
 	check(id, String);
 	return Enrollees.find({ _id: id });
 });
 
-Meteor.publish(SubscriptionTag.ALL_ENROLLEES, function() {
-	return Enrollees.find({});
+Meteor.publish(SubscriptionTag.ALL_NOTES, function() {
+	return Notes.find();
+});
+
+Meteor.publish(SubscriptionTag.ONE_NOTE, function(id) {
+	check(id, String);
+	return Notes.find({ _id: id });
 });

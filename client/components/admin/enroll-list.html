@@ -26,6 +26,7 @@
 							<tr>
 								<th>Section</th>
 								<th>User</th>
+								<th>Department/Program</th>
 								{{#if currentPage adminEnrollList}}
 									<th></th>
 								{{/if}}
@@ -34,8 +35,9 @@
 						<tbody>
 							{{#each enrollees}}
 								<tr>
-									<td class="pointer-hover">{{section.name}}</td>
-									<td class="pointer-hover">{{[user.profile.id]}} {{user.profile.last_name}},  {{user.profile.first_name}}  {{user.profile.middle_name}}</td>
+									<td>{{section.name}}</td>
+									<td>{{[user.profile.id]}} {{user.profile.last_name}},  {{user.profile.first_name}}  {{user.profile.middle_name}}</td>
+									<td>{{#if equals user.profile.user_type 2}} {{user.profile.program}} - {{user.profile.year}} {{else}}  {{user.profile.department}} {{/if}}</td>
 									{{#if currentPage adminEnrollList}}
 										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
 									{{/if}}

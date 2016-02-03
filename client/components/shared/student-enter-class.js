@@ -1,32 +1,17 @@
-Template.instructorEnterClass.onCreated(function () {
+Template.studentEnterClass.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.PRESENCES);
+		self.subscribe(SubscriptionTag.ALL_USERS);
 
-		window.peer = new Peer({
-			key: 'dqxm490i2c07ldi',  // change this key
-			debug: 3,
-			config: {'iceServers': [
-				{ url: 'stun:stun.l.google.com:19302' },
-				{ url: 'stun:stun1.l.google.com:19302' },
-				{ url: 'stun:stun2.l.google.com:19302' },
-				{ url: 'stun:stun3.l.google.com:19302' },
-				{ url: 'stun:stun4.l.google.com:19302' },
-				{
-					url: 'turn:numb.viagenie.ca',
-					credential: 'muazkh',
-					username: 'webrtc@live.com'
-				}
-			]}
-		});
+		window.peer = Helpers.createNewPeer();
 
 		// This event: remote peer receives a call
 		peer.on('open', function () {
-			$('#myPeerId').text(peer.id);
 			// update the current user's profile
 			Meteor.users.update({_id: Meteor.userId()}, {
 				$set: {
-					profile: { peerId: peer.id }
+					peer: { _id: peer.id }
 				}
 			});
 		});
@@ -52,7 +37,7 @@ Template.instructorEnterClass.onCreated(function () {
 		// get audio/video
 		navigator.getUserMedia({audio:true, video: true}, function (stream) {
 			//display video
-			var video = document.getElementById("myVideo");
+			var video = document.getElementById('myVideo');
 			video.src = URL.createObjectURL(stream);
 			window.localStream = stream;
 		}, function (error) { 
@@ -61,16 +46,16 @@ Template.instructorEnterClass.onCreated(function () {
 	});
 });
 
-Template.instructorEnterClass.helpers
+Template.studentEnterClass.helpers
 (
 	{
 		onlineUsers: function () {
-			return Meteor.users.find({ "status.online": true });
+			return Meteor.users.find({ 'status.online': true });
 		}
 	}
 );
 
-Template.instructorEnterClass.events
+Template.studentEnterClass.events
 (
 	{
 		'click #share-screen': function (event)
@@ -79,13 +64,15 @@ Template.instructorEnterClass.events
 			$('#share-camera').removeAttr('disabled');
 			$('#share-screen').attr('disabled', 'disabled');
 		},
+
 		'click #share-camera': function (event)
 		{
 			event.preventDefault();
 			$('#share-screen').removeAttr('disabled');
 			$('#share-camera').attr('disabled', 'disabled');
 		},
-		"click #makeCall": function (event) {
+
+		'click #makeCall': function (event) {
 			event.preventDefault();
 			alert('making call...');
 			var user = this;
@@ -98,7 +85,7 @@ Template.instructorEnterClass.events
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		},
-		"click #endCall": function (event) {
+		'click #endCall': function (event) {
 			event.preventDefault();
 			alert('ending call...');
 			window.currentCall.close();

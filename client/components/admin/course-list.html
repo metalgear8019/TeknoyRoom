@@ -1,7 +1,7 @@
 <template name="courseList">
-	{{#if currentPage adminViewCourses}}
+	{{#if equals currentPage 'adminViewCourses'}}
 		<div id='ss_menu'>
-			<div id="addCourse"><i class="fa fa-certificate" style="color:black;"></i></div>
+			<div id="addCourse"><i class="fa fa-plus-circle" style="color:black;"></i></div>
 			<div id="addCourseCSV"><i class="fa fa-upload" style="color:black;"></i></div>
 			<div class='menu'>
 		 		<div class='share' id='ss_toggle' data-rot='180'>
@@ -27,7 +27,7 @@
 								<th>Subject Number</th>
 								<th>Title</th>
 								<th>Unit/s</th>
-								{{#if currentPage adminViewCourses}}
+								{{#if equals currentPage 'adminViewCourses'}}
 									<th></th>
 								{{/if}}
 							</tr>
@@ -38,7 +38,7 @@
 									<td class="pointer-hover">{{subject_number}}</td>
 									<td class="pointer-hover">{{title}}</td>
 									<td class="pointer-hover">{{unit}}</td>
-									{{#if currentPage adminViewCourses}}
+									{{#if equals currentPage 'adminViewCourses'}}
 										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
 									{{/if}}
 								</tr>
@@ -74,7 +74,7 @@
 		<!-- /#container-fluid -->
 	</div>
 	<!-- /#page-content-wrapper -->
-	{{#if currentPage adminViewCourses}}
+	{{#if equals currentPage 'adminViewCourses'}}
 		<script src="/js/round-side-menu.js"></script>
 	{{/if}}
 </template>

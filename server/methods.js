@@ -94,15 +94,43 @@ Meteor.methods
 		setBanned: function (user_id, setBan)
 		{
 			check(user_id, String);
+			check(setBan, Boolean);
+
+			var cursor = Users.findOne(user_id);
+
+			Users.update
+			(
+				user_id,
+				{ 
+					$set: 
+					{
+						profile:  
+                    	{ 
+                    		id_number: cursor.profile.id_number,
+                            first_name: cursor.profile.first_name,
+                            last_name: cursor.profile.last_name,
+                            middle_name: cursor.profile.middle_name,
+                            banned: setBan,
+                            gender: cursor.profile.gender,
+                            user_type: cursor.profile.user_type,
+                            program: cursor.profile.program,
+                            year: cursor.profile.year,
+                            department: cursor.profile.department
+                    	}
+                	}
+				}
+			);
+		},
+
+		setState: function (user_id, setState)
+		{
 			var cursor = Users.findOne(user_id);
 
 			Users.update
 			(
 				user_id,
 				{
-					profile: {
-						$set: { banned: setBan }
-					}
+					$set: { state: setState }
 				}
 			);
 		},
@@ -329,8 +357,11 @@ Meteor.methods
 						$set:
 						{
 							user: enrollee.user,
-							section: enrollee.section,
-							attendance: enrollee.attendance		
+							section: enrollee.section
+						},
+						$addToSet:
+						{
+							attendance: { $each: enrollee.attendance }
 						}
 					}
 				);
@@ -417,7 +448,14 @@ Meteor.methods
 			}
 		},
 
-		parseUpload( data ) 
+		getServerTime: function () 
+		{
+			var time = (new Date()).getTime();
+			console.log('server time >> ' + time);
+			return time;
+		},
+
+		parseUpload: function (data) 
 		{
 	    	check( data, Array );
 

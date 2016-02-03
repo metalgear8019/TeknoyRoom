@@ -1,7 +1,7 @@
 <template name="userList">
-	{{#if currentPage adminViewUsers}}
+	{{#if equals currentPage 'adminViewUsers'}}
 		<div id='ss_menu'>
-			<div id="addUser"><i class="fa fa-user" style="color:black;"></i></div>
+			<div id="addUser"><i class="fa fa-user-plus" style="color:black;"></i></div>
 			<div id="addUserCSV"><i class="fa fa-upload" style="color:black;"></i></div>
 			<div class='menu'>
 		 		<div class='share' id='ss_toggle' data-rot='180'>
@@ -14,7 +14,6 @@
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
 			<!--<div class="alert alert-warning" role="alert" style="margin-top:10px;">Mark users to ban.</div>-->
 			<div class="row" style="margin-top:30px;">
-
 				<form class="navbar-form navbar-left" role="search">
 				  	<div class="form-group">
 						<div class="input-group">
@@ -25,22 +24,21 @@
 						</div>
 					  	<div class="input-group dropdown" style="margin-left:20px;">
 						  <button class="btn btn-default dropdown-toggle form-control" type="button" style="width:200px;text-align:left;color:black;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						    Filter by &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						    {{filter}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						    <i class="fa fa-chevron-down"></i>
 						  </button>
 
 						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-						    <li><a href="#">None</a></li>
-						    <li><a href="#">Student</a></li>
-						    <li><a href="#">Instructor</a></li>
+						    <li><a id="none" style="cursor:pointer;">None</a></li>
+						    <li><a id="student" style="cursor:pointer;">Student</a></li>
+						    <li><a id="instructor" style="cursor:pointer;">Instructor</a></li>
 						  </ul>
 						</div>
-						<button type="submit" class="btn btn-gold">BAN SELECTED</button>
+						<button type="submit" class="btn btn-gold">{{#if equals currentPage 'adminViewUsers'}}BAN {{else}} UNBAN {{/if}} SELECTED</button>
 					</div>
 				</form>
 			</div> 
 			<!-- /#row for search bar -->
-			
 			<!--This is where the results will be displayed-->
 			<form id="frmUsers">
 				<!--{{ #each users}}
@@ -56,7 +54,7 @@
 								<th>Name</th>
 								<th>User Type</th>
 								<th>Department/Degree Program</th>
-								{{#if currentPage adminViewUsers}}
+								{{#if currentPage 'adminViewUsers'}}
 									<th></th>
 								{{/if}}
 							</tr>
@@ -64,7 +62,7 @@
 						<tbody>
 							{{ #each users}}
 								<tr>
-									<td class="pointer-hover"><input id="{{ _id }}" type="checkbox" name="users"/></td>
+									<td><input id="{{ _id }}" type="checkbox" name="users"/></td>
 									<td class="pointer-hover">
 										{{#if equals profile.gender 'Male'}}
 											<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
@@ -86,7 +84,7 @@
 										{{/if}}
 									</td>
 									<td>{{#if equals profile.user_type 2}}{{profile.program}} - {{profile.year}} {{else}} {{profile.department}}{{/if}}</td>
-									{{#if currentPage adminViewUsers}}
+									{{#if currentPage 'adminViewUsers'}}
 										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
 									{{/if}}
 								</tr>
@@ -121,9 +119,9 @@
 		</div> 
 		<!-- /#container-fluid -->
 	</div> 
+	<script src="/js/button-gold.js"></script>
 	<!-- /#page-content-wrapper -->
-	{{#if currentPage adminViewUsers}}
+	{{#if equals currentPage 'adminViewUsers'}}
 		<script src="/js/round-side-menu.js"></script>
-		<script src="/js/button-gold.js"></script>
 	{{/if}}
 </template>
