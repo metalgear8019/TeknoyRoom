@@ -9,16 +9,16 @@ setInterval(function () {
 
 // redirect on login
 Accounts.onLogin(function() {
-	var route = '/login';
+	var route;
 	var currentPath = FlowRouter.current().path;
-	console.log('path >> ' + currentPath);
+	var user = Users.findOne(Meteor.userId());
+	console.log('path >> ' + currentPath + '\nuser >> ' + JSON.stringify(user));
 	splitPath = currentPath.split('/');
-	if (Roles.userIsInRole(Meteor.userId(), Role.Group.ADMIN)) {
-		route = Helpers.generateRedirectRoute(splitPath, 'admin');
-	} else if (Roles.userIsInRole(Meteor.userId(), Role.Group.INSTRUCTOR)) {
-		route = Helpers.generateRedirectRoute(splitPath, 'instructor');
-	} else if (Roles.userIsInRole(Meteor.userId(), Role.Group.STUDENT)) {
-		route = Helpers.generateRedirectRoute(splitPath, 'student');
+	switch (user.profile.user_type) {
+		case 0: route = Helpers.generateRedirectRoute(splitPath, 'admin'); break;
+		case 1: route = Helpers.generateRedirectRoute(splitPath, 'instructor'); break;
+		case 2: route = Helpers.generateRedirectRoute(splitPath, 'student'); break;
+		default: route = '/login'
 	}
 	FlowRouter.go(route);
 });
