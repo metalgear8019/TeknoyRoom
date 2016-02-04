@@ -37,7 +37,7 @@ Template.currentCourses.events
 		 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
 		 	console.log('time >> ' + time.getHours() + ':' + time.getMinutes() + ' on day ' + time.getDay());
 			var result = Sections.findOne({
-				/*_id: ( $in: enrolledIds ),*/
+				_id: ( $in: enrolledIds ),
 				day: (time.getDay() + 1 + ''),
 				hour: { $lte: time.getHours() }
 			}, { sort: { hour: -1, minute: -1 }});

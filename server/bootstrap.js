@@ -8,18 +8,6 @@ Meteor.startup(function () {
 		}
 		return user;
 	});
-
-	// redirect on login
-	Accounts.onLogin(function() {
-		var route = '/login';
-		if (Roles.userIsInRole(Meteor.userId(), Role.Group.ADMIN))
-			route = '/admin';
-		else if (Roles.userIsInRole(Meteor.userId(), Role.Group.INSTRUCTOR))
-			route = '/instructor';
-		else if (Roles.userIsInRole(Meteor.userId(), Role.Group.STUDENT))
-			route = '/student';
-		FlowRouter.go(route);
-	});
 });
 
 Meteor.publish(SubscriptionTag.PRESENCES, function() {

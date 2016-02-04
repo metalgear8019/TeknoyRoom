@@ -7,7 +7,41 @@ setInterval(function () {
 	});
 }, 1000);
 
+// redirect on login
+Accounts.onLogin(function() {
+	var route;
+	var currentPath = FlowRouter.current().path;
+	var user = Users.findOne(Meteor.userId());
+	console.log('path >> ' + currentPath + '\nuser >> ' + JSON.stringify(user));
+	splitPath = currentPath.split('/');
+	switch (user.profile.user_type) {
+		case 0: route = Helpers.generateRedirectRoute(splitPath, 'admin'); break;
+		case 1: route = Helpers.generateRedirectRoute(splitPath, 'instructor'); break;
+		case 2: route = Helpers.generateRedirectRoute(splitPath, 'student'); break;
+		default: route = '/login'
+	}
+	FlowRouter.go(route);
+});
+
 Helpers = {
+	isEmpty: function (variable) {
+		var empty = false;
+		if (variable === null ||
+			variable === undefined ||
+			variable === [] ||
+			variable === {} ||
+			variable === '')
+				empty = true;
+		return empty;
+	},
+	generateRedirectRoute: function (splitPath, userType) {
+		var route = '/' + userType;
+		if (!Helpers.isEmpty(splitPath) && splitPath[1] === userType) {
+			for (i = 2; i < splitPath.length; i++)
+				route += '/' + splitPath[i];
+		}
+		return route;
+	},
 	dayToString: function (days) {
 		var result = '';
 		days.forEach(function (value) {

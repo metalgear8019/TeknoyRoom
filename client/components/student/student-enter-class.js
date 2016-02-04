@@ -14,13 +14,10 @@ Template.studentEnterClass.onCreated(function () {
 		studentPeer.peer.on('open', function () {
 			console.log('peer id >> ' + studentPeer.peer.id + '\nroom id >> ' + classId);
 			// update the current user's profile
-			Meteor.users.update({_id: Meteor.userId()}, {
-				$set: {
-					peer: { 
-						_id: studentPeer.peer.id,
-						room_id: classId
-					}
-				}
+			studentPeer.attendance.time_in = new Date();
+			Meteor.call('updatePeerStatus', Meteor.userId(), { 
+				_id: studentPeer.peer.id,
+				room_id: classId
 			});
 		});
 
@@ -112,14 +109,8 @@ Template.studentEnterClass.events
 			event.preventDefault();
 			if (undefined != studentPeer.currentCall || null != studentPeer.currentCall)
 				studentPeer.currentCall.close();
-			Meteor.users.update({_id: Meteor.userId()}, {
-				$set: {
-					peer: { 
-						_id: null,
-						room_id: null
-					}
-				}
-			});
+			studentPeer.attendance.time_out = new Date();
+			Meteor.call('logAttendance', Meteor.userId(), studentPeer.attendance);
 			FlowRouter.go('/student/current');
 		}
 	}
