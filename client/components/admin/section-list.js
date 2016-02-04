@@ -61,6 +61,7 @@ hotKey.add({
 
 Template.sectionList.onCreated(function () {
 	var self = this;
+	Session.set('searchTerm', '');
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_SECTIONS);
 		self.subscribe(SubscriptionTag.ALL_COURSES);
@@ -73,13 +74,24 @@ Template.sectionList.helpers
 	{
 		sections: function ()
 		{
+			var ses = Session.get('searchTerm');
 			var result = [];
-			Sections.find({}).forEach(function (item) {
-				item.course = Courses.findOne(item.course) || '';
-				item.semester = Semesters.findOne(item.semester) || '';
-				result.push(item);
-			});
-			//console.log("results: " + JSON.stringify(result));
+			if (ses == undefined || ses == '')
+			{
+				Sections.find({}).forEach(function (item) {
+					item.course = Courses.findOne(item.course) || '';
+					item.semester = Semesters.findOne(item.semester) || '';
+					result.push(item);
+				});
+			}
+			else
+			{
+				Sections.find({'name': { $regex: '.*' + ses + '.*' }}).forEach(function (item) {
+					item.course = Courses.findOne(item.course) || '';
+					item.semester = Semesters.findOne(item.semester) || '';
+					result.push(item);
+				});
+			}
 			return result;
 		}
 	}
@@ -103,6 +115,13 @@ Template.sectionList.helpers
 Template.sectionList.events
 (
 	{
+		'keyup #search': function(event)
+		{
+			event.preventDefault();
+			var value = event.target.value;
+			Session.set("searchTerm", value);
+		},
+
 		'click .pointer-hover': function (event)
 		{
 			event.preventDefault();
@@ -127,7 +146,9 @@ Template.sectionList.events
 			event.preventDefault();
 			$('#sectionCSV_modal').modal('show');
 		},
-		'change [name="uploadCSV"]' (event){
+
+		'change [name="uploadCSV"]' (event)
+		{
 		    //template.uploading.set(true);
 
 		    Papa.parse(event.target.files[0],{
@@ -143,7 +164,6 @@ Template.sectionList.events
 		        });
 		      }
 		    });
-		  }
-
+		 }
 	}
 );

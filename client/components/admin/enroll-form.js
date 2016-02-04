@@ -67,6 +67,13 @@ Tracker.autorun(function(){
 	}
 });
 
+var enrollee = {
+	section: '',
+	user: []
+};
+
+var enrolleeDependency = new Tracker.Dependency();
+
 Template.enrollForm.helpers
 (
 	{
@@ -103,17 +110,28 @@ Template.enrollForm.helpers
 			if (section._id != 'new')
 			{
 				section.course = Courses.findOne(section.course);
-				section.semester = Semesters.findOne(section.semester); 
+				section.semester = Semesters.findOne(section.semester);
 				return section;
 			}
 			return section;
+		},
+
+		enrollee: function()
+		{
+			enrolleeDependency.depend();
+			if (section._id != 'new')
+			{
+				var enrolleeId = Enrollees.findOne(section._id);
+			}
+
+			return enrollee;
 		},
 
 		item: function()
 		{
 			var id = FlowRouter.getParam('id');
 			return Enrollees.findOne(id) || { _id: 'new', isNew: true };
-		}
+		},
 	}
 );
 

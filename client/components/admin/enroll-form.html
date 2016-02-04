@@ -116,34 +116,44 @@
 						<hr style="border-color:#f8c400;">
 						
 						<div class="table">
-							<table class="table">
-								<thead>
-									<tr>
-										<th></th>
-										<th></th>
-										<th>Id Number</th>
-										<th>Name</th>
-										<th>Degree Program</th>
-									</tr>
-								</thead>
-								<tbody>
-									{{#each students}}
-										<tr style="background:#E0E0E0;">
-											<td><input id="students" name="students" type="checkbox" value="{{_id}}" /></td>
-											<td class="pointer-hover">
-												{{#if equals profile.gender 'Male'}}
-													<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
-												{{else}}
-													<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
-												{{/if}}
-											</td>
-											<td>{{ profile.id_number }}</td>
-											<td>{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
-											<td>{{profile.program}} - {{profile.year}}</td>
+							{{#if students.count}}
+								<table class="table">
+									<thead>
+										<tr>
+											<th></th>
+											<th></th>
+											<th>Id Number</th>
+											<th>Name</th>
+											<th>Degree Program</th>
 										</tr>
-									{{/each}}
-								</tbody>
-							</table>
+									</thead>
+									<tbody>
+										{{#each students}}
+											<tr style="background:#E0E0E0;">
+												<td><input id="students" name="students" type="checkbox" value="{{_id}}" /></td>
+												<td class="pointer-hover">
+													{{#if equals profile.gender 'Male'}}
+														<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+													{{else}}
+														<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+													{{/if}}
+												</td>
+												<td>{{ profile.id_number }}</td>
+												<td>{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
+												<td>{{profile.program}} - {{profile.year}}</td>
+											</tr>
+										{{/each}}
+									</tbody>
+								</table>
+							{{else}}
+								<div class="text-center">
+									<img src="/assets/empty_list_icon.png" style="height:256px;">
+									<div >
+										<h5>Nothing to display!</h5>
+										<p>Collection is empty.</p>
+									</div>
+								</div>
+							{{/if}}
 						</div>
 
 					    <div class="form-group">

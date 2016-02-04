@@ -2,11 +2,17 @@
 	<!-- Sidebar -->
 	<div id="sidebar-wrapper">
 		<ul id="sidebar_menu" class="sidebar-nav">
-			<div>
-				<input type="image" alt="Profile Picture" src="/assets/profile-picture2.png" style="height:200px;margin-left:20px;margin-top:20px;margin-bottom:15px;">
-			</div>
-			<li class="sidebar-brand"><a id="menu-toggle" href="#">{{ name }}<i id="main_icon" class="fa fa-bars"></i></a></li>
-			<h5 class="sidebar-brand">&nbsp;</h5>     
+			<li class="sidebar-brand">
+				<div style="background: #6b161d; width:250px;padding-top:20px;">
+					<img src="/assets/profile-picture2.png" style="height:200px;margin-bottom:20px;">
+				</div>
+			</li>
+			<li class="sidebar-brand">
+				<a id="menu-toggle" href="#">{{ name }}<i id="main_icon" class="fa fa-bars"></i></a>
+			</li>
+		</ul>
+		<ul class="sidebar-nav"> 
+			<h5 class="sidebar-brand">&nbsp;</h5>
 			<li><a href="/instructor/profile/">PROFILE<i class="sub_icon fa fa-user"></i></a></li>
 			<li><a href="/instructor/current">CURRENT COURSES<i class="sub_icon fa fa-angle-double-right"></i></a></li>
 			<li><a href="/instructor/previous">PREVIOUS COURSES<i class="sub_icon fa fa-angle-double-left"></i></a></li>
