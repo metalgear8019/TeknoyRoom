@@ -15,6 +15,51 @@ Meteor.methods
 			}
 		},
 
+		updatePeerStatus: function (user_id, peer_status)
+		{
+			check(user_id, String);
+			check(peer_status, Object);
+			try
+			{
+				Users.update({ _id: user_id }, {
+					$set: { peer: peer_status }
+				});
+			}
+			catch (e)
+			{
+				console.log(e);
+				throw new Meteor.Error(500, 'exception in updating class', e);
+			}
+		},
+
+		logAttendance: function (user_id, user_attendance)
+		{
+			check(user_id, String);
+			check(user_attendance, Object);
+			try
+			{
+				Users.update({ _id: user_id }, {
+					$set: { 
+						peer: {
+							_id: null,
+							room_id: null
+						}
+					}
+				});
+
+				Enrollee.update({ user: user_id }, {
+					$push: {
+						attendance: user_attendance
+					}
+				});
+			}
+			catch (e)
+			{
+				console.log(e);
+				throw new Meteor.Error(500, 'exception in logging attendance', e);
+			}
+		},
+
 		updateUser: function (user_id, user) 
 		{
 			check(user_id, String);

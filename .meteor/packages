@@ -35,3 +35,5 @@ reactive-var
 check
 audit-argument-checks
 mrt:moment
+sanjo:jasmine
+velocity:html-reporter
