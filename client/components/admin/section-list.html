@@ -17,63 +17,73 @@
 					<span class="input-group-addon">
 						<i class="fa fa-search" style="color:white;"></i>
 					</span>
-					<input type="text" id="search" name="firstname" class="form-control" style="color:white;">
+					<input type="text" id="search" name="search" class="form-control" style="color:white;">
 				</div>
 				<div class="table" style="margin-top:20px;">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Course</th>
-								<th>Semester</th>
-								<th>Day/s</th>
-								<th>Starting Time</th>
-								<th>Duration</th>
-								{{#if equals currentPage 'adminViewSections'}}
-									<th></th>
-								{{/if}}
-							</tr>
-						</thead>
-						<tbody>
-							{{#each sections}}
+					{{#if sections.length}}
+						<table class="table">
+							<thead>
 								<tr>
-									<td class="pointer-hover">{{name}}</td>
-									<td class="pointer-hover">{{course.title}}</td>
-									<td class="pointer-hover">{{semester.school_year}} {{semester.name}}</td>
-									<td class="pointer-hover">
-										{{#each day}}
-											{{#if equals this 1}}
-												Sun
-											{{/if}}
-											{{#if equals this 2}}
-												M
-											{{/if}}
-											{{#if equals this 3}}
-												T
-											{{/if}}
-											{{#if equals this 4}}
-												W
-											{{/if}}
-											{{#if equals this 5}}
-												Th
-											{{/if}}
-											{{#if equals this 6}}
-												F
-											{{/if}}
-											{{#if equals this 7}}
-												Sat
-											{{/if}}
-										{{/each}}
-									</td>
-									<td class="pointer-hover">{{hour}}:{{minute}}</td>
-									<td class="pointer-hover">{{duration}}</td>
+									<th>Name</th>
+									<th>Course</th>
+									<th>Semester</th>
+									<th>Day/s</th>
+									<th>Starting Time</th>
+									<th>Duration</th>
 									{{#if equals currentPage 'adminViewSections'}}
-										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+										<th></th>
 									{{/if}}
 								</tr>
-							{{/each}}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{{#each sections}}
+									<tr>
+										<td class="pointer-hover">{{name}}</td>
+										<td class="pointer-hover">{{course.title}}</td>
+										<td class="pointer-hover">{{semester.school_year}} {{semester.name}}</td>
+										<td class="pointer-hover">
+											{{#each day}}
+												{{#if equals this 1}}
+													Sun
+												{{/if}}
+												{{#if equals this 2}}
+													M
+												{{/if}}
+												{{#if equals this 3}}
+													T
+												{{/if}}
+												{{#if equals this 4}}
+													W
+												{{/if}}
+												{{#if equals this 5}}
+													Th
+												{{/if}}
+												{{#if equals this 6}}
+													F
+												{{/if}}
+												{{#if equals this 7}}
+													Sat
+												{{/if}}
+											{{/each}}
+										</td>
+										<td class="pointer-hover">{{hour}}:{{minute}}</td>
+										<td class="pointer-hover">{{duration}}</td>
+										{{#if equals currentPage 'adminViewSections'}}
+											<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+										{{/if}}
+									</tr>
+								{{/each}}
+							</tbody>
+						</table>
+					{{else}}
+						<div class="jumbotron text-center" style="background:white;">
+							<img src="/assets/empty_list_icon.png" style="height:288px;">
+							<div >
+								<h4>Nothing to display!</h4>
+								<p>Collection is empty.</p>
+							</div>
+						</div>
+					{{/if}}
 				</div>
 				<!-- Modal Import CSV -->
 				<div class="modal fade" id="sectionCSV_modal" role="dialog" aria-labelledby="sectionCSV_modal">
@@ -103,7 +113,7 @@
 						    	</div>
 						    	<div class="form-group">
 						    		<label>Choose file to upload</label>
-						    		<input type="file" class="form-control" name="uploadCSV">
+						    		<input type="file" class="form-control" name="uploadCSV" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 						    	</div>
 						    </div>
 						    <div class="modal-footer">

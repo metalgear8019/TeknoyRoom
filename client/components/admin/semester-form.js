@@ -15,6 +15,7 @@ hotKey.add({
 	}
 })
 
+
 Template.semesterForm.onCreated(function () {
 	{
 		var self = this;

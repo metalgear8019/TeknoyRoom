@@ -21,30 +21,40 @@
 					<input type="text" id="search" name="firstname" class="form-control" style="color:white;">
 				</div>
 				<div class="table" style="margin-top:20px;">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Subject Number</th>
-								<th>Title</th>
-								<th>Unit/s</th>
-								{{#if equals currentPage 'adminViewCourses'}}
-									<th></th>
-								{{/if}}
-							</tr>
-						</thead>
-						<tbody>
-							{{#each courses}}
+					{{#if courses.count}}
+						<table class="table">
+							<thead>
 								<tr>
-									<td class="pointer-hover">{{subject_number}}</td>
-									<td class="pointer-hover">{{title}}</td>
-									<td class="pointer-hover">{{unit}}</td>
+									<th>Subject Number</th>
+									<th>Title</th>
+									<th>Unit/s</th>
 									{{#if equals currentPage 'adminViewCourses'}}
-										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+										<th></th>
 									{{/if}}
 								</tr>
-							{{/each}}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{{#each courses}}
+									<tr>
+										<td class="pointer-hover">{{subject_number}}</td>
+										<td class="pointer-hover">{{title}}</td>
+										<td class="pointer-hover">{{unit}}</td>
+										{{#if equals currentPage 'adminViewCourses'}}
+											<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+										{{/if}}
+									</tr>
+								{{/each}}
+							</tbody>
+						</table>
+					{{else}}
+						<div class="jumbotron text-center" style="background:white;">
+							<img src="/assets/empty_list_icon.png" style="height:288px;">
+							<div >
+								<h4>Nothing to display!</h4>
+								<p>Collection is empty.</p>
+							</div>
+						</div>
+					{{/if}}
 				</div>
 				<!-- Modal Import CSV -->
 				<div class="modal fade" id="courseCSV_modal" role="dialog" aria-labelledby="courseCSV_modal">
@@ -58,7 +68,7 @@
 						    <div class="modal-body">
 						    	<div class="form-group">
 						    		<label>Choose file to upload: </label>
-						    		<input type="file" class="form-control">
+						    		<input type="file" class="form-control" name="uploadCSV" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 						    	</div>
 						    </div>
 						    <div class="modal-footer">

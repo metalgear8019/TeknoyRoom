@@ -120,6 +120,23 @@
 
 /******************************************************/
 
+.btn-transparent {
+  position: relative;
+  width: 250px;
+  border: 1px;
+  border-color: #fff;
+  border-radius: 20px;
+  border-style: solid;
+  background: transparent;
+  color: #fff;
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .btn-gold {
   position: relative;
   border: none;
@@ -451,3 +468,5 @@ badbounce {  0%, 100% {
   top: -118.56406px;
   left: -40.0px;
 }
+
+/***********/

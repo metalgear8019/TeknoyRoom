@@ -21,32 +21,42 @@
 					<input type="text" id="search" name="firstname" class="form-control" style="color:white;">
 				</div>
 				<div class="table" style="margin-top:20px;">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>School Year</th>
-								<th>Name</th>
-								<th>Start Date</th>
-								<th>End Date</th>
-								{{#if equals currentPage 'adminViewSemesters'}}
-									<th></th>
-								{{/if}}
-							</tr>
-						</thead>
-						<tbody>
-							{{#each semesters}}
+					{{#if semesters.count}}
+						<table class="table">
+							<thead>
 								<tr>
-									<td class="pointer-hover">{{school_year}}</td>
-									<td class="pointer-hover">{{name}}</td>
-									<td class="pointer-hover">{{start_date}}</td>
-									<td class="pointer-hover">{{end_date}}</td>
+									<th>School Year</th>
+									<th>Name</th>
+									<th>Start Date</th>
+									<th>End Date</th>
 									{{#if equals currentPage 'adminViewSemesters'}}
-										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+										<th></th>
 									{{/if}}
 								</tr>
-							{{/each}}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{{#each semesters}}
+									<tr>
+										<td class="pointer-hover">{{school_year}}</td>
+										<td class="pointer-hover">{{name}}</td>
+										<td class="pointer-hover">{{start_date}}</td>
+										<td class="pointer-hover">{{end_date}}</td>
+										{{#if equals currentPage 'adminViewSemesters'}}
+											<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+										{{/if}}
+									</tr>
+								{{/each}}
+							</tbody>
+						</table>
+					{{else}}
+						<div class="jumbotron text-center" style="background:white;">
+							<img src="/assets/empty_list_icon.png" style="height:288px;">
+							<div >
+								<h4>Nothing to display!</h4>
+								<p>Collection is empty.</p>
+							</div>
+						</div>
+					{{/if}}
 				</div>
 				<!-- Modal Import CSV -->
 				<div class="modal fade" id="semesterCSV_modal" role="dialog" aria-labelledby="semesterCSV_modal">
@@ -60,7 +70,7 @@
 						    <div class="modal-body">
 						    	<div class="form-group">
 						    		<label>Choose file to upload: </label>
-						    		<input type="file" class="form-control">
+						    		<input type="file" class="form-control" name="uploadCSV" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel">
 						    	</div>
 						    </div>
 						    <div class="modal-footer">
