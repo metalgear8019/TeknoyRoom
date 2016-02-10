@@ -5,6 +5,16 @@ Template.instructorEnterClass.onCreated(function () {
 	self.autorun(function () {
 		var classId = Session.get('class');
 
+		if (Helpers.isEmpty(classId)) {
+			self.subscribe(SubscriptionTag.ALL_ENROLEES);
+			self.subscribe(SubscriptionTag.ALL_SECTIONS);
+			classId = Helpers.getCurrentClass();
+			if (Helpers.isEmpty(classId))
+				FlowRouter.go('/' + Helpers.userTypeToString(Meteor.user().profile.user_type));
+			else
+				classId = classId._id;
+		}
+
 		self.subscribe(SubscriptionTag.PRESENCES);
 		self.subscribe(SubscriptionTag.ALL_USERS);
 

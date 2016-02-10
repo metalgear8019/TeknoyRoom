@@ -31,28 +31,8 @@ Template.currentCourses.helpers
 Template.currentCourses.events
 (
 	{
-		'click #enterClass': function (event) {
-			var time = new Date(Session.get('time'));
-			var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
-		 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
-		 	console.log('time >> ' + time.getHours() + ':' + time.getMinutes() + ' on day ' + time.getDay());
-			var result = Sections.findOne({
-				_id: ( $in: enrolledIds ),
-				day: (time.getDay() + 1 + ''),
-				hour: { $lte: time.getHours() }
-			}, { sort: { hour: -1, minute: -1 }});
-			
-			/*var result = Sections.find({
-				hour: { $gte: time.getHours() },
-				minute: { $gte: time.getMinutes() },
-				$filter: {
-					input: $duration,
-					as: 'duration',
-					cond: { $gt: time }
-				}
-			});*/
-
-			console.log("class >> " + JSON.stringify(result));
+		'click #enterClass': function () {
+			var result = Helpers.getCurrentClass();
 
 			if (result != null && result != undefined && 
 					Helpers.getDurationPast(time, result.hour, result.minute) < result.duration) {
