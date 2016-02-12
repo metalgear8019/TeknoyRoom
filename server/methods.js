@@ -380,6 +380,7 @@ Meteor.methods
 			{
 				_.each(enrollees, function(enrollees){
 					Enrollees.insert(enrollees);
+					console.log("results >> " + JSON.stringify(enrollees));
 				});
 			} 
 			catch(e)
@@ -496,7 +497,7 @@ Meteor.methods
 		getServerTime: function () 
 		{
 			var time = (new Date()).getTime();
-			console.log('server time >> ' + time);
+			//console.log('server time >> ' + time);
 			return time;
 		},
 

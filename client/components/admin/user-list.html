@@ -45,52 +45,62 @@
 					{{> userItem}}
 				{{/each}}-->
 				<div class="table">
-					<table class="table">
-						<thead>
-							<tr>
-								<th></th>
-								<th></th>
-								<th>Id Number</th>
-								<th>Name</th>
-								<th>User Type</th>
-								<th>Department/Degree Program</th>
-								{{#if currentPage 'adminViewUsers'}}
-									<th></th>
-								{{/if}}
-							</tr>
-						</thead>
-						<tbody>
-							{{ #each users}}
+					{{#if users.count}}
+						<table class="table">
+							<thead>
 								<tr>
-									<td><input id="{{ _id }}" type="checkbox" name="users"/></td>
-									<td class="pointer-hover">
-										{{#if equals profile.gender 'Male'}}
-											<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
-										{{else}}
-											<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
-										{{/if}}
-									</td>
-									<td class="pointer-hover">{{ profile.id_number }}</td>
-									<td class="pointer-hover">{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
-									<td class="pointer-hover">
-										{{#if equals profile.user_type 1}}
-											Instructor
-										{{else}}
-											{{#if equals profile.user_type 2}}
-												Student
-											{{else}}
-												Admin
-											{{/if}}
-										{{/if}}
-									</td>
-									<td>{{#if equals profile.user_type 2}}{{profile.program}} - {{profile.year}} {{else}} {{profile.department}}{{/if}}</td>
+									<th></th>
+									<th></th>
+									<th>Id Number</th>
+									<th>Name</th>
+									<th>User Type</th>
+									<th>Department/Degree Program</th>
 									{{#if currentPage 'adminViewUsers'}}
-										<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+										<th></th>
 									{{/if}}
 								</tr>
-							{{/each}}
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								{{ #each users}}
+									<tr>
+										<td><input id="{{ _id }}" type="checkbox" name="users"/></td>
+										<td class="pointer-hover">
+											{{#if equals profile.gender 'Male'}}
+												<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+											{{else}}
+												<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+											{{/if}}
+										</td>
+										<td class="pointer-hover">{{ profile.id_number }}</td>
+										<td class="pointer-hover">{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
+										<td class="pointer-hover">
+											{{#if equals profile.user_type 1}}
+												Instructor
+											{{else}}
+												{{#if equals profile.user_type 2}}
+													Student
+												{{else}}
+													Admin
+												{{/if}}
+											{{/if}}
+										</td>
+										<td>{{#if equals profile.user_type 2}}{{profile.program}} - {{profile.year}} {{else}} {{profile.department}}{{/if}}</td>
+										{{#if currentPage 'adminViewUsers'}}
+											<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+										{{/if}}
+									</tr>
+								{{/each}}
+							</tbody>
+						</table>
+					{{else}}
+						<div class="jumbotron text-center" style="background:white;">
+							<img src="/assets/empty_list_icon.png" style="height:288px;">
+							<div >
+								<h4>Nothing to display!</h4>
+								<p>Collection is empty.</p>
+							</div>
+						</div>
+					{{/if}}
 				</div>
 			</form>
 			<!-- Modal Import CSV -->

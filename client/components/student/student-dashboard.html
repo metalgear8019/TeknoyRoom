@@ -1,3 +1,68 @@
 <template name="studentDashboard">
-	<div>The student dashboard.</div>
+	<div class="jumbotron" style="margin-top:50px;margin-left:50px;">
+	  	<p>
+		  	<h1>
+		  		Hello, Student!
+		  		<a class="btn btn-primary btn-lg" href="#" role="button" style="float:right;">
+			  		Go to Class CSS323&nbsp;<i class="fa fa-sign-out"></i>
+			  	</a>
+		  	</h1>
+	  	</p>
+	  	<p>
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title"><a id="notes" name="notes">CCS323</a></h3>
+			  </div>
+			  <div class="panel-body">
+			    Computer Fundamentals
+			  </div>
+			</div>
+			
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">CCS421</h3>
+			  </div>
+			  <div class="panel-body">
+			    Software Engineering
+			  </div>
+			</div>
+
+			<div class="panel panel-default">
+			  <div class="panel-heading">
+			    <h3 class="panel-title">CCS111</h3>
+			  </div>
+			  <div class="panel-body">
+			    Digital Design
+			  </div>
+			</div>
+		</p>
+
+		<div class="modal fade" id="notes_modal" tabindex="-1" role="dialog" aria-labelledby="notes_modal">
+		  	<div class="modal-dialog">
+			    <div class="modal-content">
+				     <div class="modal-header">
+				     	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
+			        	<input type="text" id="notes_title" name="notes_title" class="modal-title form-control">
+				    </div>
+				    <div class="modal-body">
+				        <textarea class="form-control" rows="12" id="textArea"></textarea>
+				        <br>
+				        <br>
+				        <div style="float:right;margin-top:-15px;margin-right:5px;">
+					        <a class="btn btn-warning btn-lg" href="#" role="button" style="float:right;" id="addnote" name="addnote">
+						  		<i class="fa fa-trash"></i>
+						  	</a>
+						</div>
+						<div style="float:right;margin-top:-15px;">
+					        <a class="btn btn-warning btn-lg" href="#" role="button" style="float:right;" id="addnote" name="addnote">
+						  		<i class="fa fa-pencil"></i>
+						  	</a>
+						</div>
+						<br>
+				        <br>
+				    </div>
+			    </div>
+			</div>
+		</div>
+	</div>
 </template>

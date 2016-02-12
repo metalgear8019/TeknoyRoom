@@ -1,19 +1,17 @@
 <template name="unauthorized">
-	<div class="alert alert-danger col-xs-offset-4 col-md-4">
-		<!-- <a href="#" class="close" data-dismiss="alert" aria-label="close" id="logout">&times;</a>-->
-		You are not <strong>authorized</strong> to view this page.
-		{{ #if isInRole 'student' }}
-			<a href="/student">Click here</a> to bring yourself to your designated landing page.
-		{{ else }}
-			{{ #if isInRole 'instructor' }}
-				<a href="/instructor">Click here</a> to bring yourself to your designated landing page.
-			{{ else }}
-				{{ #if isInRole 'admin' }}
-					<a href="/admin">Click here</a> to bring yourself to your designated landing page.
-				{{ else }}
-					<a href="#" id="logout">Try again.</a>
-				{{ /if }}
-			{{ /if }}
-		{{ /if }}
+	<div class="container-fluid">
+		<div class="row text-center" style="position:absolute;left:0%;top:5%;width:100%;">
+			<div class="row">
+				<i class="fa fa-hand-paper-o" style="font-size:450px;color:white;" ></i>
+				<h1 style="color:white;position:absolute;left:0%;top:42%;width:100%;padding-left:2%;"><strong>HALT</strong></h1>
+			</div>
+			<div class="row" style="margin-top:1%;">
+				<p style="color:white;font-size:20px;">You are not <strong>authorized</strong> to access this page.</p>
+				<button id="redirect" type="button" class="btn-transparent" style="margin-top:5px;font-size:20px;">
+					REDIRECT
+				</button>
+			</div>
+		</div>
 	</div>
+	<script src="/js/button-gold.js"></script>
 </template>
