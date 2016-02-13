@@ -1,4 +1,6 @@
-var instructorPeer = {};
+var instructorPeer = {
+	attendance: {}
+};
 
 Template.instructorEnterClass.onCreated(function () {
 	var self = this;
@@ -51,28 +53,16 @@ Template.instructorEnterClass.onCreated(function () {
 			incomingCall.answer(instructorPeer.localStream);
 			incomingCall.on('stream', function (remoteStream) {
 				instructorPeer.remoteStream = remoteStream;
-				var video = document.getElementById("myVideo");
+				var video = document.getElementById('myVideo');
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		});
-
-		navigator.getUserMedia = ( 
-			navigator.getUserMedia ||
-			navigator.webkitGetUserMedia ||
-			navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia 
-		);
-
-		// get audio/video
-		navigator.getUserMedia({audio:true, video: true}, function (stream) {
-			//display video
-			var video = document.getElementById('myVideo');
-			video.src = URL.createObjectURL(stream);
-			instructorPeer.localStream = stream;
-		}, function (error) { 
-			console.log(error); 
-		});
 	});
+});
+
+Template.instructorEnterClass.onRendered(function () {
+	var video = document.getElementById('myVideo');
+	MediaHelpers.requestCameraFeed(video);
 });
 
 Template.instructorEnterClass.helpers
@@ -93,15 +83,13 @@ Template.instructorEnterClass.events
 		'click #share-screen': function (event)
 		{
 			event.preventDefault();
-			$('#share-camera').removeAttr('disabled');
-			$('#share-screen').attr('disabled', 'disabled');
+			MediaHelpers.requestUserMedia(document.getElementById('myVideo'));
 		},
 
 		'click #share-camera': function (event)
 		{
 			event.preventDefault();
-			$('#share-screen').removeAttr('disabled');
-			$('#share-camera').attr('disabled', 'disabled');
+			MediaHelpers.requestUserMedia(document.getElementById('myVideo'));
 		},
 
 		'click #makeCall': function (event) {
@@ -127,6 +115,49 @@ Template.instructorEnterClass.events
 		}
 	}
 );
+
+var MediaHelpers = {
+	requestUserMedia: function() {
+		console.log('getting user media');
+		navigator.getUserMedia = ( 
+			navigator.getUserMedia ||
+			navigator.webkitGetUserMedia ||
+			navigator.mozGetUserMedia ||
+			navigator.msGetUserMedia 
+		);
+	},
+	requestFeed: function (target, audioParams, videoParams) {
+		MediaHelpers.requestUserMedia();
+		console.log('setting user media parameters');
+		navigator.getUserMedia(
+			{
+				audio: audioParams,
+				video: videoParams
+			}, function (stream) {
+				target.src = URL.createObjectURL(stream);
+				instructorPeer.localStream = stream;
+			}, function (error) {
+				console.log('Feed not available.\n' + error);
+		});
+	},
+	requestScreenFeed: function(target) {
+		$('#share-camera').removeAttr('disabled');
+		$('#share-screen').attr('disabled', 'disabled');
+		MediaHelpers.requestFeed(target, true, {
+			mandatory: {
+				chromeMediaSource: 'screen',
+				maxWidth: 1280,
+				maxHeight: 720
+			},
+			optional: []
+		});
+	},
+	requestCameraFeed: function(target) {
+		$('#share-screen').removeAttr('disabled');
+		$('#share-camera').attr('disabled', 'disabled');
+		MediaHelpers.requestFeed(target, true, true);
+	}
+};
 
 /*$("#menu-toggle").click(function(e) {
         e.preventDefault();

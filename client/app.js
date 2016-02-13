@@ -54,6 +54,7 @@ Helpers = {
 	dayToString: function (days) {
 		var result = '';
 		days.forEach(function (value) {
+			value += '';
 			switch (value) {
 				case '1': result += 'Sun'; break;
 				case '2': result += 'M'; break;
@@ -124,11 +125,11 @@ Helpers = {
 	 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
 		var result = Sections.findOne({
 			_id: { $in: enrolledIds },
-			day: (time.getDay() + 1 + ''),
+			day: ( time.getDay() + 1 ),
 			hour: { $lte: time.getHours() }
 		}, { sort: { hour: -1, minute: -1 }});
 		
-		console.log("class >> " + JSON.stringify(result));
+		console.log("class >> " + JSON.stringify(result) + '\nday >> ' + time.getDay() + '\nhour >> ' + time.getHours());
 
 		if (result != null && result != undefined && 
 				Helpers.getDurationPast(time, result.hour, result.minute) < result.duration) {
@@ -142,6 +143,9 @@ Helpers = {
 			// alert('No classes currently held.');
 			return null;
 		}
+	},
+	getTime: function () {
+		return new Date(Session.get('time'));
 	}
 };
 
