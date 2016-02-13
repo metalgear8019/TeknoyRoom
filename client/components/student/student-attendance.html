@@ -2,11 +2,10 @@
 	<!-- Instructor Current Courses -->
 	<div id="page-content-wrapper">
 		<div class="page-content inset">
-			<div class="container-fluid">
-
-				<!--<div class="alert alert-danger" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
-
-				<div class="panel panel-default" style="margin-top:50px;margin-left:100px;">
+			<div class="container-fluid form-whitebg">
+				{{ #if Template.subscriptionsReady }}
+					{{ > ReactiveFullcalendar options=calendarOptions }}
+				<!--<div class="panel panel-default" style="margin-top:50px;margin-left:100px;">
 				  	<div class="panel-body">
 				  		<div class="input-group" style="float:right;">
 							<i class="fa fa-search"></i>
@@ -31,7 +30,10 @@
 							</tbody>
 						</table> 
 					</div>
-				</div>
+				</div>-->
+				{{ else }}
+					{{> loading }}
+				{{ /if }}
 			</div>
 		</div>
 	</div>

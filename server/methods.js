@@ -380,6 +380,7 @@ Meteor.methods
 			{
 				_.each(enrollees, function(enrollees){
 					Enrollees.insert(enrollees);
+					console.log("results >> " + JSON.stringify(enrollees));
 				});
 			} 
 			catch(e)
