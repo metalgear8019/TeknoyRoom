@@ -381,41 +381,49 @@ Template.enrollForm.events
 			event.preventDefault();
 			var section = event.target.sectionId.value;
 			var assignedInstructor = event.target.instructorId.value;
-
 			var enrollees = [];
 
-			if (assignedInstructor != enrollee.instructor._id)
+			if (section != 'new' && assignedInstructor != 'new')
 			{
-				if (enrollee.instructor._id != undefined)
+				console.log(section);
+				console.log(assignedInstructor);
+				if (assignedInstructor != enrollee.instructor._id)
 				{
-					var cursor = Enrollees.findOne({'user': enrollee.instructor._id});
-					Meteor.call('deleteEnrollee', cursor._id);
+					if (enrollee.instructor._id != undefined)
+					{
+						var cursor = Enrollees.findOne({'user': enrollee.instructor._id});
+						Meteor.call('deleteEnrollee', cursor._id);
+					}
+
+					enrollees.push({user: assignedInstructor, section: section, attendance: [{ date: new Date(), time_in: new Date(), time_out: new Date() }, { date: new Date('February 29, 2016'), time_in: new Date('February 29, 2016'), time_out: new Date('February 29, 2016') }] });
 				}
 
-				enrollees.push({user: assignedInstructor, section: section});
-			}
-
-			for (var i = 0; i < students.length; i++)
-			{
-				if (students[i].isChecked)
+				for (var i = 0; i < students.length; i++)
 				{
-					if (!students[i].isEnrolled)
+					if (students[i].isChecked)
 					{
-						enrollees.push({user: students[i]._id, section: section});
+						if (!students[i].isEnrolled)
+						{
+							enrollees.push({ user: students[i]._id, section: section, attendance: [{ date: new Date(), time_in: new Date(), time_out: new Date() }] });
+						}
+					}
+					else
+					{
+						if (students[i].isEnrolled)
+						{
+							var enrolleeId = Enrollees.findOne({'user': students[i]._id});
+							Meteor.call('deleteEnrollee', enrolleeId._id);
+						}
 					}
 				}
-				else
-				{
-					if (students[i].isEnrolled)
-					{
-						var enrolleeId = Enrollees.findOne({'user': students[i]._id});
-						Meteor.call('deleteEnrollee', enrolleeId._id);
-					}
-				}
-			}
 
-			Meteor.call('addEnrollee', enrollees);
-			FlowRouter.go('/admin/enroll/');
+				Meteor.call('addEnrollee', enrollees);
+				FlowRouter.go('/admin/enroll/');
+			}
+			else
+			{
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400); //fade out after 3 seconds
+			}
 		}
 	}
 );
