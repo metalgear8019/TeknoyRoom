@@ -42,9 +42,19 @@ Helpers = {
 		}
 		return route;
 	},
+	userTypeToString: function (userType) {
+		var result = '';
+		switch (userType) {
+			case 0: result = Role.Group.ADMIN; break;
+			case 1: result = Role.Group.INSTRUCTOR; break;
+			case 2: result = Role.Group.STUDENT; break;
+			default: result = Role.Group.GUEST; break;
+		}
+	},
 	dayToString: function (days) {
 		var result = '';
 		days.forEach(function (value) {
+			value += '';
 			switch (value) {
 				case '1': result += 'Sun'; break;
 				case '2': result += 'M'; break;
@@ -78,7 +88,6 @@ Helpers = {
 		}
 
 		var str = hour + ':' + minute + ' ' + period;
-		console.log(str);
 		return str;
 	},
 	scheduleToString: function (schedule) {
@@ -109,6 +118,34 @@ Helpers = {
 				}
 			]}
 		});
+	},
+	getCurrentClass: function () {
+		var time = new Date(Session.get('time'));
+		var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
+	 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
+		var result = Sections.findOne({
+			_id: { $in: enrolledIds },
+			day: ( time.getDay() + 1 ),
+			hour: { $lte: time.getHours() }
+		}, { sort: { hour: -1, minute: -1 }});
+		
+		console.log("class >> " + JSON.stringify(result) + '\nday >> ' + time.getDay() + '\nhour >> ' + time.getHours());
+
+		if (result != null && result != undefined && 
+				Helpers.getDurationPast(time, result.hour, result.minute) < result.duration) {
+			console.log("duration >> " + result.duration + "\ntime passed >> " + 
+				Helpers.getDurationPast(time, result.hour, result.minute));
+			// Session.set('class', result._id);
+			// console.log('enrolled id >> ' + Session.get('class'));
+			// FlowRouter.go(getRouteGroup() + '/current/enter');
+			return result;
+		} else {
+			// alert('No classes currently held.');
+			return null;
+		}
+	},
+	getTime: function () {
+		return new Date(Session.get('time'));
 	}
 };
 
