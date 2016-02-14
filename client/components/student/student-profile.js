@@ -5,6 +5,33 @@ Template.studentProfile.events
 		{
 			event.preventDefault();
 			$("#wrapper").toggleClass("active");
+		},
+		'click .profPic' : function()
+		{
+			$('#image_modal').modal('show');
+		},
+		'click .btn' : function()
+		{
+			var preview = document.querySelector('img');
+		    var file = document.querySelector('input[type=file]').files[0];
+		    var reader = new FileReader();
+
+		    reader.onload = function(e){
+		      preview.src = e.target.result;
+		      console.log(reader.result);
+		      //btoa(reader.result);
+		      //var obj = atob(reader.result);
+		      
+		    }
+
+		    if(file){
+		      reader.readAsDataURL(file);
+		      //btoa(file);
+		      //var obj = atob(file);
+		      //Meteor.call("insertion", obj);
+		    }else{
+		      preview.src = "";
+		    }
 		}
 	}
 );
