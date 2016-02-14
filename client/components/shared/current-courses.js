@@ -20,7 +20,13 @@ Template.currentCourses.helpers
 				item.course = Courses.findOne(item.course) || '';
 				item.semester = Semesters.findOne(item.semester) || '';
 				item.time = Helpers.scheduleToString(item);
-				result.push(item);
+
+				var currentDate = new Date();
+				
+				if (((currentDate.valueOf() >= item.semester.start_date.valueOf()) && (currentDate.valueOf() < item.semester.end_date.valueOf())))
+				{
+					result.push(item);
+				}
 			});
 			// console.log("results >> " + JSON.stringify(result));
 			return result;
@@ -35,7 +41,7 @@ Template.currentCourses.events
 			var time = new Date(Session.get('time'));
 			var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
 		 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
-		 	console.log('time >> ' + time.getHours() + ':' + time.getMinutes() + ' on day ' + time.getDay());
+		 	//console.log('time >> ' + time.getHours() + ':' + time.getMinutes() + ' on day ' + time.getDay());
 			var result = Sections.findOne({
 				_id: ( $in: enrolledIds ),
 				day: (time.getDay() + 1 + ''),
@@ -52,14 +58,14 @@ Template.currentCourses.events
 				}
 			});*/
 
-			console.log("class >> " + JSON.stringify(result));
+			//console.log("class >> " + JSON.stringify(result));
 
 			if (result != null && result != undefined && 
 					Helpers.getDurationPast(time, result.hour, result.minute) < result.duration) {
-				console.log("duration >> " + result.duration + "\ntime passed >> " + 
-					Helpers.getDurationPast(time, result.hour, result.minute));
+				//console.log("duration >> " + result.duration + "\ntime passed >> " + 
+				//	Helpers.getDurationPast(time, result.hour, result.minute));
 				Session.set('class', result._id);
-				console.log('enrolled id >> ' + Session.get('class'));
+				//console.log('enrolled id >> ' + Session.get('class'));
 				FlowRouter.go(getRouteGroup() + '/current/enter');
 			} else {
 				alert('No classes currently held.');

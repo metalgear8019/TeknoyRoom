@@ -88,7 +88,47 @@ Template.userForm.helpers
 				{
 					value: 'BSCS',
 					selected: ''
-				}
+				},
+
+				{
+					value: 'BSCPE',
+					selected: ''
+				},
+
+				{
+					value: 'BSIE',
+					selected: ''
+				},
+
+				{
+					value: 'BSME',
+					selected: ''
+				},
+
+				{
+					value: 'BSCHE',
+					selected: ''
+				},
+
+				{
+					value: 'BSEM',
+					selected: ''
+				},
+
+				{
+					value: 'BSEE',
+					selected: ''
+				},
+
+				{
+					value: 'BSECE',
+					selected: ''
+				},
+
+				{
+					value: 'BSARCH',
+					selected: ''
+				},
 			];
 
 			if (id != 'new')
