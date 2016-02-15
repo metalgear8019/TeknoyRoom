@@ -35,20 +35,76 @@
 						</div>
 					</div>
 
-				  	<div class="panel panel-warning" style="width:250px;float:right;">
+				  	<div class="panel panel-warning" style="width:250px;float:right;max-height:550px;">
 						<div class="panel-heading">
-						  	<h5 class="panel-title"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Students Online</h5>
+						  	<!--<h5 class="panel-title"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Students Online</h5>-->
+						  	<ul class="nav nav-pills">
+							  <li role="presentation" class="active"><a href="#" id="online" class="online" style="color:black;">All</a></li>
+							  <li role="presentation"><a href="#" style="color:black;" id="question" class="question">Questions</a></li>
+							</ul>
 						</div>
+
 						<div class="panel-body">
-						    <ul>
+							<div id="onlineWrapper" class="onlineWrapper">
+						    <ul style="list-style-type:none;">
 						    	<h6>
-						    		{{ #each onlineUsers }}
-							    		<a href="#" id="makeCall"><li>
-							    			[{{ username }}] {{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}
-							    		</li></a>
-						    		{{ /each }}
-								</h6>
+						    		<div style="margin-top:-12px;"></div>
+						    		<!--{{ #each onlineUsers }}-->
+							    		<a href="#" id="makeCall">
+							    			<li>
+							    				<p style="margin-top:15px;margin-left:-25px;color:black;text-align:left;">
+							    					<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:30px;width:30px;float:left;margin-top:-5px;">&nbsp;&nbsp;
+							    					Annalou Villaro Lim &nbsp;&nbsp;&nbsp;&nbsp;
+							    				</p>
+							    				<i class="fa fa-circle" style="color:green;margin-left:-13px;float:right;margin-top:-26px;"></i>
+							    			<!--[{{ username }}] {{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}-->
+							    			</li>
+							    		</a>
+							    		<a href="#" id="makeCall">
+							    			<li>
+							    				<p style="margin-top:15px;margin-left:-25px;color:black;text-align:left;">
+							    					<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:30px;width:30px;float:left;margin-top:-5px;">&nbsp;&nbsp;
+							    					Annalou Lim &nbsp;&nbsp;&nbsp;&nbsp;
+							    				</p>
+							    				<i class="fa fa-circle" style="color:green;margin-left:-13px;float:right;margin-top:-26px;"></i>
+							    			<!--[{{ username }}] {{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}-->
+							    			</li>
+							    		</a>
+						    		<!--{{ /each }}-->
+						    	</h6>
 						    </ul>
+						    </div>
+
+						    <div id="questionWrapper" class="questionWrapper" style="display:none">
+						    <ul style="list-style-type:none;">
+						    	<h6>
+						    		<div style="margin-top:-12px;"></div>
+						    		<!--{{ #each onlineUsers }}-->
+							    		<a href="#" id="makeCall">
+							    			<li>
+							    				<p style="margin-top:15px;margin-left:-25px;color:black;text-align:left;">
+							    					<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:30px;width:30px;float:left;margin-top:-5px;">&nbsp;&nbsp;
+							    					Annalou Lim &nbsp;&nbsp;&nbsp;&nbsp;
+							    				</p>
+							    				<i class="fa fa-circle" style="color:green;margin-left:-13px;float:right;margin-top:-26px;"></i>
+							    			<!--[{{ username }}] {{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}-->
+							    			</li>
+							    		</a>
+							    		<a href="#" id="makeCall">
+							    			<li>
+							    				<p style="margin-top:15px;margin-left:-25px;color:black;text-align:left;">
+							    					<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:30px;width:30px;float:left;margin-top:-5px;">&nbsp;&nbsp;
+							    					Annalou Villaro Lim &nbsp;&nbsp;&nbsp;&nbsp;
+							    				</p>
+							    				<i class="fa fa-circle" style="color:green;margin-left:-13px;float:right;margin-top:-26px;"></i>
+							    			<!--[{{ username }}] {{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}-->
+							    			</li>
+							    		</a>
+						    		<!--{{ /each }}-->
+						    	</h6>
+						    </ul>
+						    </div>
+								
 						</div>
 					</div>
 				</div>
