@@ -129,11 +129,11 @@ Helpers = {
 MediaHelpers = {
 	requestUserMedia: function() {
 		console.log('getting user media');
-		navigator.getUserMedia = ( 
-			navigator.getUserMedia ||
+		navigator.getUserMedia = (
 			navigator.webkitGetUserMedia ||
 			navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia 
+			navigator.msGetUserMedia ||
+			navigator.getUserMedia
 		);
 	},
 	requestFeed: function (target, peer, audioParams, videoParams) {
