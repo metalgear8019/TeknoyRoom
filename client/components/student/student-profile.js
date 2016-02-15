@@ -48,7 +48,11 @@ Template.studentProfile.events
 			    			console.log("There is an error\n" + error);
 			    		}else{
 			    			preview.src = data.link;
-			    			console.log("ni agi na cya diri");
+			    			//console.log("ni agi na cya diri");
+			    			var user_img = data.link;
+			    			console.log(data.link);
+			    			console.log(data);
+			    			Meteor.call('updateImage', Meteor.userId(), user_img);
 			    		}
 			    		
 			    	}
