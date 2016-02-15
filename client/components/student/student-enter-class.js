@@ -48,11 +48,11 @@ Template.studentEnterClass.onCreated(function () {
 			});
 		});
 
-		navigator.getUserMedia = ( 
-			navigator.getUserMedia ||
+		navigator.getUserMedia = (
 			navigator.webkitGetUserMedia ||
 			navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia 
+			navigator.msGetUserMedia ||
+			navigator.getUserMedia
 		);
 
 		// get audio/video
