@@ -80,7 +80,7 @@ Helpers = {
 	},
 	createNewPeer: function() {
 		return new Peer({
-			key: 'dqxm490i2c07ldi',  // change this key
+			key: '5a78de0d-b6bd-4986-9160-d74019d2fea9',  // change this key
 			debug: 3,
 			config: {'iceServers': [
 				{ url: 'stun:stun.l.google.com:19302' },
