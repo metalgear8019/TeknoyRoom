@@ -20,7 +20,13 @@ Template.previousCourses.helpers
 				item.course = Courses.findOne(item.course) || '';
 				item.semester = Semesters.findOne(item.semester) || '';
 				item.time = Helpers.scheduleToString(item);
-				result.push(item);
+
+				var currentDate = new Date();
+
+				if (!((currentDate.valueOf() >= item.semester.start_date.valueOf()) && (currentDate.valueOf() < item.semester.end_date.valueOf())))
+				{
+					result.push(item);
+				}
 			});
 			console.log("results >> " + JSON.stringify(result));
 			return result;

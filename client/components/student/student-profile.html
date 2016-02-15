@@ -1,6 +1,6 @@
 <template name="studentProfile">
 	<!-- Profile Preview -->
-	<div id="page-content-wrapper">
+	<div id="page-content-wrapper" style="margin-top:50px;">
 		<div class="page-content inset">
 			<div class="container-fluid">
 
@@ -8,7 +8,7 @@
 
 				<div class="panel panel-default" style="margin-top:50px;margin-left:100px;">
 				  	<div class="panel-body">
-					    <input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:270px;float:left;margin:50px;">
+					    <img alt="Profile Picture" src="/assets/profile-picture3.png" style="height:270px;float:left;margin:50px;" class="profPic">
 					    <div style="margin-left:30px;margin-top:65px;">
 						    <h4>Name</h4>
 						    <h6>{{ name }}</h6>
@@ -23,6 +23,23 @@
 						    <h6>{{ gender }}</h6>
 						</div>
 				  	</div>
+				</div>
+				<!--For the modal-->
+				<div class="modal fade" id="image_modal" role="dialog" aria-labelledby="image_modal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<form id="image_upload">
+									<div class="modal-body">
+										<div class="form-group">
+											<input type="file" id="imageUpload">
+											<button type="submit" class="btn btn-success">Upload Picture</button>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

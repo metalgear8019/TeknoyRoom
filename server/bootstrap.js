@@ -67,3 +67,8 @@ Meteor.publish(SubscriptionTag.ONE_NOTE, function(id) {
 	check(id, String);
 	return Notes.find({ _id: id });
 });
+
+Meteor.publish(SubscriptionTag.ONE_ENROLLEE_SECTION, function(id){
+	check(id, String);
+	return Enrollees.find({ section: id });
+});
