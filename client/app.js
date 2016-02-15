@@ -1,28 +1,5 @@
 Session.setDefault('counter', 0);
 
-// sync client clock with server time with an interval
-setInterval(function () {
-	Meteor.call('getServerTime', function (error, result) {
-		Session.set('time', result);
-	});
-}, 1000);
-
-// redirect on login
-Accounts.onLogin(function() {
-	var route;
-	var currentPath = FlowRouter.current().path;
-	var user = Users.findOne(Meteor.userId());
-	console.log('path >> ' + currentPath + '\nuser >> ' + JSON.stringify(user));
-	splitPath = currentPath.split('/');
-	switch (user.profile.user_type) {
-		case 0: route = Helpers.generateRedirectRoute(splitPath, 'admin'); break;
-		case 1: route = Helpers.generateRedirectRoute(splitPath, 'instructor'); break;
-		case 2: route = Helpers.generateRedirectRoute(splitPath, 'student'); break;
-		default: route = '/login'
-	}
-	FlowRouter.go(route);
-});
-
 Helpers = {
 	isEmpty: function (variable) {
 		var empty = false;
@@ -148,6 +125,72 @@ Helpers = {
 		return new Date(Session.get('time'));
 	}
 };
+
+MediaHelpers = {
+	requestUserMedia: function() {
+		console.log('getting user media');
+		navigator.getUserMedia = ( 
+			navigator.getUserMedia ||
+			navigator.webkitGetUserMedia ||
+			navigator.mozGetUserMedia ||
+			navigator.msGetUserMedia 
+		);
+	},
+	requestFeed: function (target, peer, audioParams, videoParams) {
+		MediaHelpers.requestUserMedia();
+		console.log('setting user media parameters');
+		navigator.getUserMedia(
+			{
+				audio: audioParams,
+				video: videoParams
+			}, function (stream) {
+				target.src = URL.createObjectURL(stream);
+				peer.localStream = stream;
+			}, function (error) {
+				console.log('Feed not available.\n' + error);
+		});
+	},
+	requestScreenFeed: function(target, peer) {
+		$('#share-camera').removeAttr('disabled');
+		$('#share-screen').attr('disabled', 'disabled');
+		MediaHelpers.requestFeed(target, peer, true, {
+			mandatory: {
+				chromeMediaSource: 'screen',
+				maxWidth: 1280,
+				maxHeight: 720
+			},
+			optional: []
+		});
+	},
+	requestCameraFeed: function(target, peer) {
+		$('#share-screen').removeAttr('disabled');
+		$('#share-camera').attr('disabled', 'disabled');
+		MediaHelpers.requestFeed(target, peer, true, true);
+	}
+};
+
+// sync client clock with server time with an interval
+setInterval(function () {
+	Meteor.call('getServerTime', function (error, result) {
+		Session.set('time', result);
+	});
+}, 1000);
+
+// redirect on login
+Accounts.onLogin(function() {
+	var route;
+	var currentPath = FlowRouter.current().path;
+	var user = Users.findOne(Meteor.userId());
+	console.log('path >> ' + currentPath + '\nuser >> ' + JSON.stringify(user));
+	splitPath = currentPath.split('/');
+	switch (user.profile.user_type) {
+		case 0: route = Helpers.generateRedirectRoute(splitPath, 'admin'); break;
+		case 1: route = Helpers.generateRedirectRoute(splitPath, 'instructor'); break;
+		case 2: route = Helpers.generateRedirectRoute(splitPath, 'student'); break;
+		default: route = '/login'
+	}
+	FlowRouter.go(route);
+});
 
 hotKey = new Hotkeys({
 	autoLoad : false

@@ -1,4 +1,15 @@
 Meteor.startup(function () {
+	/*SSLProxy({
+		port: 6000, //or 443 (normal port/requires sudo)
+		ssl : {
+			key: Assets.getText("server.key"),
+			cert: Assets.getText("server.crt"),
+
+			//Optional CA
+			//Assets.getText("ca.pem")
+		}
+	});*/
+
 	// code to run on server at startup
 	Accounts.onCreateUser(function (options, user) {
 		if (options.profile) {

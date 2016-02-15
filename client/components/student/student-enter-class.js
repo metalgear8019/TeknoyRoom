@@ -1,4 +1,6 @@
-var studentPeer = {};
+var studentPeer = {
+	attendance: {}
+};
 
 Template.studentEnterClass.onCreated(function () {
 	var self = this;
