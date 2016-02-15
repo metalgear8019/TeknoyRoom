@@ -103,6 +103,7 @@ sanjo:meteor-version@1.0.0
 service-configuration@1.0.6-modules.8
 session@1.1.2-modules.8
 sha@1.0.4
+simple:imgur@1.0.3
 spacebars@1.0.8-modules.8
 spacebars-compiler@1.0.8-modules.8
 srp@1.0.5-modules.8

@@ -73,20 +73,6 @@ Template.instructorEnterClass.helpers
 				'status.online': true,
 				'peer.room_id': Session.get('class')
 			});
-		},
-		'click #online': function (event)
-		{
-			event.preventDefault();
-			$("#questionWrapper").hide();
-			$("#onlineWrapper").show();
-			alert('online');
-		},
-		'click #question': function (event)
-		{
-			event.preventDefault();
-			$("#onlineWrapper").hide();
-			$("#questionWrapper").show();
-			alert('question');
 		}
 	}
 );
@@ -126,6 +112,20 @@ Template.instructorEnterClass.events
 			instructorPeer.attendance.time_out = new Date();
 			Meteor.call('logAttendance', Meteor.userId(), instructorPeer.attendance);
 			FlowRouter.go('/instructor/current');
+		},
+		'click #online': function (event)
+		{
+			event.preventDefault();
+			$("#questionWrapper").hide();
+			$("#onlineWrapper").show();
+			//alert('online');
+		},
+		'click #question': function (event)
+		{
+			event.preventDefault();
+			$("#onlineWrapper").hide();
+			$("#questionWrapper").show();
+			//alert('question');
 		}
 	}
 );

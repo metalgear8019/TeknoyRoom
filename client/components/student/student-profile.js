@@ -10,28 +10,55 @@ Template.studentProfile.events
 		{
 			$('#image_modal').modal('show');
 		},
-		'click .btn' : function()
+		'submit #image_upload' : function(event)
 		{
-			var preview = document.querySelector('img');
+			event.preventDefault();
+			var preview = document.getElementById("imagine");
 		    var file = document.querySelector('input[type=file]').files[0];
+		    //var buffer = new Buffer(file, 'binary');
 		    var reader = new FileReader();
 
-		    reader.onload = function(e){
+		    /*reader.onload = function(e){
 		      preview.src = e.target.result;
 		      console.log(reader.result);
 		      //btoa(reader.result);
 		      //var obj = atob(reader.result);
-		      
 		    }
-
 		    if(file){
-		      reader.readAsDataURL(file);
+		    	console.log(file);
+		    	btoa(file);
+		    	var obj = atob(file);
+		        reader.readAsDataURL(file);
 		      //btoa(file);
 		      //var obj = atob(file);
 		      //Meteor.call("insertion", obj);
 		    }else{
 		      preview.src = "";
 		    }
+		    }*/
+		    reader.onload = function(e){
+		    	console.log('n');
+			    Imgur.upload({
+			    	apiKey : 'be707efe5645e5b',
+			    	image : btoa(e.target.result)
+			    },
+			    
+			    	function(error, data){
+			    		if(error){
+			    			console.log("There is an error\n" + error);
+			    		}else{
+			    			preview.src = data.link;
+			    			//console.log("ni agi na cya diri");
+			    			var user_img = data.link;
+			    			console.log(data.link);
+			    			console.log(data);
+			    			Meteor.call('updateImage', Meteor.userId(), user_img);
+			    		}
+			    		
+			    	}
+			    );
+			};
+			reader.readAsBinaryString(file);
 		}
 	}
 );

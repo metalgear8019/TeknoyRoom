@@ -14,6 +14,25 @@ Meteor.methods
 				throw new Meteor.Error(500, 'exception in add user', e);
 			}
 		},
+		updateImage : function(user_id, img)
+		{
+			check(user_id, String);
+			check(img, String);
+
+			try
+			{
+				Users.update({_id : user_id},{
+					$set: {
+						"profile.image": img
+					}
+				});
+			}
+			catch(e)
+			{
+				console.log(e);
+				throw new Meteor.Error(500, 'error in uploading image', e);
+			}
+		},
 
 		updatePeerStatus: function (user_id, peer_status)
 		{
