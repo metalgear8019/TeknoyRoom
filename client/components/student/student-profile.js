@@ -81,6 +81,18 @@ Template.studentProfile.helpers
 		gender: function() {
 			var result = Meteor.user();
 			return result.profile.gender;
+		},
+		image: function(){
+			var result = Meteor.user();
+			var source;
+			if(result.profile.image != null)
+			{
+				source = result.profile.image;
+			}else
+			{
+				source = "/assets/profile-picture3.png";
+			}
+			return source;
 		}
 	}
 );
