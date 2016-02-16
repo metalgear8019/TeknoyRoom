@@ -8,7 +8,7 @@
 
 				<div class="panel panel-default" style="margin-top:50px;margin-left:100px;">
 				  	<div class="panel-body">
-					    <img alt="Profile Picture" src="/assets/profile-picture3.png" style="height:270px;float:left;margin:50px;" class="profPic" id="imagine">
+					    <img alt="Profile Picture" src="{{ image }}" style="height:270px;float:left;margin:50px;" class="profPic" id="image">
 					    <div style="margin-left:30px;margin-top:65px;">
 						    <h4>Name</h4>
 						    <h6>{{ name }}</h6>
@@ -29,12 +29,21 @@
 					<div class="modal-dialog">
 						<div class="modal-content">
 							<div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
+					        	<h5 class="modal-title" id="semester_modal">Choose your profile picture:</h5>
+						    </div>
+							<div class="modal-body">
 								<form id="image_upload">
-									<div class="modal-body">
-										<div class="form-group">
-											<input type="file" id="imageUpload">
-											<button type="submit" class="btn btn-success" id="sub">Upload Picture</button>
-										</div>
+									<div class="form-group">
+			                        	<div id="image-cropper-square">
+			                         		<img class="profile noselect form-control" name="previewImage" id="previewImage" src="/assets/placeholder.png">
+			                        	</div>
+					                </div>
+				                    <div class="form-group">
+				                    	<input type="file" id="imageUpload" name="imageUpload" accept="image/*" class="btn btn-default form-control">
+				                    </div>
+					                <div class="form-group">
+										<button type="submit" class="btn btn-success form-control">Upload Picture</button>
 									</div>
 								</form>
 							</div>

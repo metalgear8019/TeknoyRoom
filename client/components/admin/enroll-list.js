@@ -16,7 +16,9 @@ Template.enrollList.helpers
 		{
 			var result = [];
 			Enrollees.find({}).forEach(function (item) {
-				item.section = Sections.findOne(item.section) || '';
+				item.section = Sections.findOne(item.section);
+				item.section.semester = Semesters.findOne(item.section.semester);
+				item.section.course = Courses.findOne(item.section.course);
 				item.user = Users.findOne(item.user);
 				result.push(item);
 			});

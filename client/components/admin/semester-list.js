@@ -54,7 +54,7 @@ Template.semesterList.events
 
 		'click #addSemester': function (event)
 		{
-			FlowRouter.go('/admin/course/new');
+			FlowRouter.go('/admin/semester/new');
 		},
 
 		'click #addSemesterCSV': function (event)

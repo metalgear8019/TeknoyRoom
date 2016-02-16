@@ -34,8 +34,8 @@ Template.semesterForm.helpers
 			var result = Semesters.findOne(id) || { _id: 'new', isNew: true }
 			if (result._id != 'new')
 			{
-				result.start_date = result.start_date.getFullYear() + '-' + (((result.start_date.getMonth()+1) < 10)? '0'+(result.start_date.getMonth()+1): (result.start_date.time_in.getMonth()+1)) + '-' + ((result.start_date.getDate()) < 10? '0'+result.start_date.getDate(): result.start_date.getDate());
-				result.end_date = result.end_date.getFullYear() + '-' + (((result.end_date.getMonth()+1) < 10)? '0'+(result.end_date.getMonth()+1): (result.end_date.time_in.getMonth()+1)) + '-' + ((result.end_date.getDate()) < 10? '0'+result.end_date.getDate(): result.end_date.getDate());
+				result.start_date = result.start_date.getFullYear() + '-' + (((result.start_date.getMonth()+1) < 10)? '0'+(result.start_date.getMonth()+1): (result.start_date.getMonth()+1)) + '-' + ((result.start_date.getDate()) < 10? '0'+result.start_date.getDate(): result.start_date.getDate());
+				result.end_date = result.end_date.getFullYear() + '-' + (((result.end_date.getMonth()+1) < 10)? '0'+(result.end_date.getMonth()+1): (result.end_date.getMonth()+1)) + '-' + ((result.end_date.getDate()) < 10? '0'+result.end_date.getDate(): result.end_date.getDate());
 			}
 
 			return result;

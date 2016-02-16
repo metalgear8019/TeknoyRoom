@@ -6,14 +6,31 @@ Template.studentProfile.events
 			event.preventDefault();
 			$("#wrapper").toggleClass("active");
 		},
+
 		'click .profPic' : function()
 		{
 			$('#image_modal').modal('show');
 		},
+
+		'change #imageUpload': function(event)
+		{
+			event.preventDefault();
+			if(event.target.files && event.target.files[0]){
+		      var reader = new FileReader();
+		      reader.onload = function(e){
+		        $('#previewImage')
+		          .attr('src', e.target.result)
+		          .height(200);
+		     };
+
+		    	reader.readAsDataURL(event.target.files[0]);
+			}
+		},
+
 		'submit #image_upload' : function(event)
 		{
 			event.preventDefault();
-			var preview = document.getElementById("imagine");
+			var preview = document.getElementById("image");
 		    var file = document.querySelector('input[type=file]').files[0];
 		    //var buffer = new Buffer(file, 'binary');
 		    var reader = new FileReader();
@@ -81,6 +98,18 @@ Template.studentProfile.helpers
 		gender: function() {
 			var result = Meteor.user();
 			return result.profile.gender;
+		},
+		image: function(){
+			var result = Meteor.user();
+			var source;
+			if(result.profile.image != null)
+			{
+				source = result.profile.image;
+			}else
+			{
+				source = "/assets/profile-picture3.png";
+			}
+			return source;
 		}
 	}
 );
