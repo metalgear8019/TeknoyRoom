@@ -49,10 +49,10 @@ Template.studentEnterClass.onCreated(function () {
 		});
 
 		navigator.getUserMedia = (
-			navigator.webkitGetUserMedia ||
+			/*navigator.webkitGetUserMedia ||
 			navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia ||
-			navigator.getUserMedia
+			navigator.msGetUserMedia ||*/
+			navigator.mediaDevices.getUserMedia
 		);
 
 		// get audio/video
