@@ -27,7 +27,6 @@ alanning:roles
 bootswatch:paper
 fortawesome:fontawesome
 flowkey:hotkeys
-pedrohenriquerls:peerjs
 mizzao:user-status
 harrison:papa-parse
 themeteorchef:bert
@@ -38,3 +37,4 @@ mrt:moment
 sanjo:jasmine
 velocity:html-reporter
 gquemart:meteor-reactive-fullcalendar
+simple:imgur

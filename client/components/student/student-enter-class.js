@@ -1,4 +1,6 @@
-var studentPeer = {};
+var studentPeer = {
+	attendance: {}
+};
 
 Template.studentEnterClass.onCreated(function () {
 	var self = this;
@@ -46,11 +48,11 @@ Template.studentEnterClass.onCreated(function () {
 			});
 		});
 
-		navigator.getUserMedia = ( 
-			navigator.getUserMedia ||
-			navigator.webkitGetUserMedia ||
+		navigator.getUserMedia = (
+			/*navigator.webkitGetUserMedia ||
 			navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia 
+			navigator.msGetUserMedia ||*/
+			navigator.mediaDevices.getUserMedia
 		);
 
 		// get audio/video

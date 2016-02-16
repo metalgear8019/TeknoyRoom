@@ -6,32 +6,76 @@ Template.studentProfile.events
 			event.preventDefault();
 			$("#wrapper").toggleClass("active");
 		},
+
 		'click .profPic' : function()
 		{
 			$('#image_modal').modal('show');
 		},
-		'click .btn' : function()
+
+		'change #imageUpload': function(event)
 		{
-			var preview = document.querySelector('img');
+			event.preventDefault();
+			if(event.target.files && event.target.files[0]){
+		      var reader = new FileReader();
+		      reader.onload = function(e){
+		        $('#previewImage')
+		          .attr('src', e.target.result)
+		          .height(200);
+		     };
+
+		    	reader.readAsDataURL(event.target.files[0]);
+			}
+		},
+
+		'submit #image_upload' : function(event)
+		{
+			event.preventDefault();
+			var preview = document.getElementById("image");
 		    var file = document.querySelector('input[type=file]').files[0];
+		    //var buffer = new Buffer(file, 'binary');
 		    var reader = new FileReader();
 
-		    reader.onload = function(e){
+		    /*reader.onload = function(e){
 		      preview.src = e.target.result;
 		      console.log(reader.result);
 		      //btoa(reader.result);
 		      //var obj = atob(reader.result);
-		      
 		    }
-
 		    if(file){
-		      reader.readAsDataURL(file);
+		    	console.log(file);
+		    	btoa(file);
+		    	var obj = atob(file);
+		        reader.readAsDataURL(file);
 		      //btoa(file);
 		      //var obj = atob(file);
 		      //Meteor.call("insertion", obj);
 		    }else{
 		      preview.src = "";
 		    }
+		    }*/
+		    reader.onload = function(e){
+		    	console.log('n');
+			    Imgur.upload({
+			    	apiKey : 'be707efe5645e5b',
+			    	image : btoa(e.target.result)
+			    },
+			    
+			    	function(error, data){
+			    		if(error){
+			    			console.log("There is an error\n" + error);
+			    		}else{
+			    			preview.src = data.link;
+			    			//console.log("ni agi na cya diri");
+			    			var user_img = data.link;
+			    			console.log(data.link);
+			    			console.log(data);
+			    			Meteor.call('updateImage', Meteor.userId(), user_img);
+			    		}
+			    		
+			    	}
+			    );
+			};
+			reader.readAsBinaryString(file);
 		}
 	}
 );
@@ -54,6 +98,18 @@ Template.studentProfile.helpers
 		gender: function() {
 			var result = Meteor.user();
 			return result.profile.gender;
+		},
+		image: function(){
+			var result = Meteor.user();
+			var source;
+			if(result.profile.image != null)
+			{
+				source = result.profile.image;
+			}else
+			{
+				source = "/assets/profile-picture3.png";
+			}
+			return source;
 		}
 	}
 );

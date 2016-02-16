@@ -62,7 +62,7 @@ Template.instructorEnterClass.onCreated(function () {
 
 Template.instructorEnterClass.onRendered(function () {
 	var video = document.getElementById('myVideo');
-	MediaHelpers.requestCameraFeed(video);
+	MediaHelpers.requestCameraFeed(video, instructorPeer);
 });
 
 Template.instructorEnterClass.helpers
@@ -83,13 +83,13 @@ Template.instructorEnterClass.events
 		'click #share-screen': function (event)
 		{
 			event.preventDefault();
-			MediaHelpers.requestUserMedia(document.getElementById('myVideo'));
+			MediaHelpers.requestScreenFeed(document.getElementById('myVideo'), instructorPeer);
 		},
 
 		'click #share-camera': function (event)
 		{
 			event.preventDefault();
-			MediaHelpers.requestUserMedia(document.getElementById('myVideo'));
+			MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), instructorPeer);
 		},
 
 		'click #makeCall': function (event) {
@@ -101,65 +101,31 @@ Template.instructorEnterClass.events
 			outgoingCall.on('stream', function (remoteStream) {
 				instructorPeer.remoteStream = remoteStream;
 				alert('receiving stream...');
-				var video = document.getElementById("myVideo");
+				var video = document.getElementById('myVideo');
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
-			if (undefined != instructorPeer.currentCall || null != instructorPeer.currentCall)
+			if (!Helpers.isEmpty(instructorPeer.currentCall))
 				instructorPeer.currentCall.close();
 			instructorPeer.attendance.time_out = new Date();
 			Meteor.call('logAttendance', Meteor.userId(), instructorPeer.attendance);
 			FlowRouter.go('/instructor/current');
+		},
+		'click #online': function (event)
+		{
+			event.preventDefault();
+			$("#questionWrapper").hide();
+			$("#onlineWrapper").show();
+			//alert('online');
+		},
+		'click #question': function (event)
+		{
+			event.preventDefault();
+			$("#onlineWrapper").hide();
+			$("#questionWrapper").show();
+			//alert('question');
 		}
 	}
 );
-
-var MediaHelpers = {
-	requestUserMedia: function() {
-		console.log('getting user media');
-		navigator.getUserMedia = ( 
-			navigator.getUserMedia ||
-			navigator.webkitGetUserMedia ||
-			navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia 
-		);
-	},
-	requestFeed: function (target, audioParams, videoParams) {
-		MediaHelpers.requestUserMedia();
-		console.log('setting user media parameters');
-		navigator.getUserMedia(
-			{
-				audio: audioParams,
-				video: videoParams
-			}, function (stream) {
-				target.src = URL.createObjectURL(stream);
-				instructorPeer.localStream = stream;
-			}, function (error) {
-				console.log('Feed not available.\n' + error);
-		});
-	},
-	requestScreenFeed: function(target) {
-		$('#share-camera').removeAttr('disabled');
-		$('#share-screen').attr('disabled', 'disabled');
-		MediaHelpers.requestFeed(target, true, {
-			mandatory: {
-				chromeMediaSource: 'screen',
-				maxWidth: 1280,
-				maxHeight: 720
-			},
-			optional: []
-		});
-	},
-	requestCameraFeed: function(target) {
-		$('#share-screen').removeAttr('disabled');
-		$('#share-camera').attr('disabled', 'disabled');
-		MediaHelpers.requestFeed(target, true, true);
-	}
-};
-
-/*$("#menu-toggle").click(function(e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("active");
-});*/
