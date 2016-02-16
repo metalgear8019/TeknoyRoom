@@ -32,7 +32,14 @@
 								<form id="image_upload">
 									<div class="modal-body">
 										<div class="form-group">
-											<input type="file" id="imageUpload">
+				                        	<div id="image-cropper-circle">
+				                         		<img class="profile noselect" name="imageUpload" id="suggestImg" src="/assets/placeholder.png">
+				                        	</div>
+						                </div>
+					                    <div class="form-group">
+					                    	<input type="file" id="imageUpload" name="imageUpload" accept="image/*" onchange="readURLSuggest(this);">
+					                    </div>
+						                <div class="form-group">
 											<button type="submit" class="btn btn-success">Upload Picture</button>
 										</div>
 									</div>

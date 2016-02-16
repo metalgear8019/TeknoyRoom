@@ -126,8 +126,8 @@ Meteor.methods
 			check(user_id, String);
 			try
 			{
-				var cursor = Users.findOne(user_id);
 				Users.remove(user_id);
+				Enrollees.remove({'user': user_id});
 			} 
 			catch(e)
 			{
