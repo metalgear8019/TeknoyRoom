@@ -233,6 +233,9 @@ Meteor.methods
 			try
 			{
 				Courses.remove(course_id);
+				var sections = Sections.find({'course': course_id}).map(function(section){return section._id;});
+				Enrollees.remove({'section': { '$in': sections}});
+				Sections.remove({'_id': { '$in': sections}});
 			} 
 			catch(e)
 			{
@@ -365,6 +368,9 @@ Meteor.methods
 			try
 			{
 				Semesters.remove(semester_id);
+				var sections = Sections.find({'semester': semester_id}).map(function(section){return section._id;});
+				Enrollees.remove({'section': { '$in': sections}});
+				Sections.remove({'_id': { '$in': sections}});
 			} 
 			catch(e)
 			{
@@ -380,7 +386,7 @@ Meteor.methods
 			{
 				_.each(enrollees, function(enrollees){
 					Enrollees.insert(enrollees);
-					console.log("results >> " + JSON.stringify(enrollees));
+					//console.log("results >> " + JSON.stringify(enrollees));
 				});
 			} 
 			catch(e)

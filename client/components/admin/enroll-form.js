@@ -64,7 +64,7 @@ var students = [{
 
 var studentsDependency = new Tracker.Dependency();
 
-var flag = false;
+var flaginstructor = false;
 var flagStudent = false;
 var flagStudent2 = false;
 var student = {
@@ -133,7 +133,7 @@ Tracker.autorun(function(){
 			isEnrolled: false
 		}];
 
-		flag = false;
+		flaginstructor = false;
 		flagStudent = false;
 		flagStudent2 = false;
 		student = {
@@ -160,45 +160,10 @@ Template.enrollForm.helpers
 		{
 			studentsDependency.depend();
 			var cursorArray = Users.find({'profile.user_type': 2, 'profile.banned': false}).fetch();
-			
+
 			if (enrollee._id != 'new')
 			{
-				if (!flagStudent2)
-				{
-					for (var i = 0; i < enrollee.user.length; i++)
-					{
-						for (var j = 0; j < students.length; j++)
-						{
-							if (students[j]._id == enrollee.user[i]._id)
-							{
-								students[j].isChecked = true;
-								students[j].isEnrolled = true;
-								continue;
-							}
-						}
-						flagStudent2 = true;
-					}
-				}
-				else
-				{
-					if (flagStudent)
-					{
-						for (var j = 0; j < students.length; j++)
-						{
-							if (students[j]._id == student._id)
-							{
-								students[j].isChecked = !student.isChecked;
-								i = j;
-								break;
-							}
-						}
-						flagStudent = false;
-					}
-				}
-
-			}
-			else
-			{
+				console.log('if');
 				if (!flagStudent2)
 				{
 					for (var i = 0; i < cursorArray.length; i++)
@@ -218,6 +183,62 @@ Template.enrollForm.helpers
 							isEnrolled: false
 						});
 					}
+
+					for (var i = 0; i < enrollee.user.length; i++)
+					{
+						for (var j = 0; j < students.length; j++)
+						{
+							if (students[j]._id == enrollee.user[i]._id)
+							{
+								students[j].isChecked = true;
+								students[j].isEnrolled = true;
+								continue;
+							}
+						}
+					}
+					flagStudent2 = true;
+				}
+				else
+				{
+					if (flagStudent)
+					{
+						console.log('check/unchecked');
+						for (var j = 0; j < students.length; j++)
+						{
+							if (students[j]._id == student._id)
+							{
+								students[j].isChecked = !student.isChecked;
+								i = j;
+								break;
+							}
+						}
+						flagStudent = false;
+					}
+				}
+			}
+			else
+			{
+				console.log('else');
+				if (!flagStudent2)
+				{
+					for (var i = 0; i < cursorArray.length; i++)
+					{
+						students[i] = ({
+							_id: cursorArray[i]._id,
+							profile : {
+								id_number: cursorArray[i].profile.id_number,
+								first_name: cursorArray[i].profile.first_name,
+								middle_name: cursorArray[i].profile.middle_name,
+								last_name: cursorArray[i].profile.last_name,
+								gender: cursorArray[i].profile.gender,
+								program: cursorArray[i].profile.program,
+								year: cursorArray[i].profile.year
+							},
+							isChecked: false,
+							isEnrolled: false
+						});
+					}
+
 					flagStudent2 = true;
 				}
 				else
@@ -251,14 +272,14 @@ Template.enrollForm.helpers
 			instructorDependency.depend();
 			if (enrollee._id != 'new')
 			{
-				if (!flag)
+				if (!flaginstructor)
 				{
 					instructor = enrollee.instructor;
 				}
 			}
 			else
 			{ 
-				if (enrollee.instructor == 'new' && !flag)
+				if (enrollee.instructor == 'new' && !flaginstructor)
 				{
 					instructor = {
 						_id: 'new',
@@ -295,7 +316,7 @@ Template.enrollForm.helpers
 				section._id = section._id;
 				section.course = Courses.findOne(section.course);
 				section.semester = Semesters.findOne(section.semester);
-				flag = false;
+				flaginstructor = false;
 			}
 			return section;
 		},
@@ -314,9 +335,9 @@ Template.enrollForm.helpers
 					enrollee.section = section._id;
 					enrollee.instructor =  Users.find({ '_id': { '$in': users } , 'profile.user_type': 1}).fetch()[0];
 					enrollee.user = Users.find({ '_id': { '$in': users } , 'profile.user_type': 2}).fetch();
+					flagStudent2 = false;
 					studentsDependency.changed();
 					instructorDependency.changed();
-					flagStudent2 = false;
 				}
 				else
 				{
@@ -326,6 +347,7 @@ Template.enrollForm.helpers
 						instructor: 'new',
 						user: []
 					};
+					flagStudent2 = false;
 					studentsDependency.changed();
 					instructorDependency.changed();
 				}
@@ -363,7 +385,7 @@ Template.enrollForm.events
 		{
 			event.preventDefault();
 			instructor = this;
-			flag = true;
+			flaginstructor = true;
 			instructorDependency.changed();
 	        $('#instructor_modal').modal('hide');	
 		},
@@ -372,6 +394,7 @@ Template.enrollForm.events
 		{
 			event.preventDefault();
 			student = this;
+			console.log(student.profile.id_number);
 			flagStudent = true;
 			studentsDependency.changed();
 		},
@@ -385,8 +408,6 @@ Template.enrollForm.events
 
 			if (section != 'new' && assignedInstructor != 'new')
 			{
-				console.log(section);
-				console.log(assignedInstructor);
 				if (assignedInstructor != enrollee.instructor._id)
 				{
 					if (enrollee.instructor._id != undefined)
@@ -411,7 +432,7 @@ Template.enrollForm.events
 					{
 						if (students[i].isEnrolled)
 						{
-							var enrolleeId = Enrollees.findOne({'user': students[i]._id});
+							var enrolleeId = Enrollees.findOne({'user': students[i]._id, 'section': section});
 							Meteor.call('deleteEnrollee', enrolleeId._id);
 						}
 					}

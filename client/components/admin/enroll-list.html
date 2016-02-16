@@ -21,40 +21,48 @@
 					<input type="text" id="search" name="firstname" class="form-control" style="color:white;">
 				</div>
 				<div class="table" style="margin-top:20px;">
-					{{#if enrollees.length}}
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Section</th>
-									<th>User</th>
-									<th>Department/Program</th>
-									{{#if currentPage adminEnrollList}}
-										<th></th>
-									{{/if}}
-								</tr>
-							</thead>
-							<tbody>
-								{{#each enrollees}}
+					{{ #if Template.subscriptionsReady }}
+						{{#if enrollees.length}}
+							<table class="table">
+								<thead>
 									<tr>
-										<td>{{section.name}}</td>
-										<td>{{[user.profile.id]}} {{user.profile.last_name}},  {{user.profile.first_name}}  {{user.profile.middle_name}}</td>
-										<td>{{#if equals user.profile.user_type 2}} {{user.profile.program}} - {{user.profile.year}} {{else}}  {{user.profile.department}} {{/if}}</td>
+										<th>Semester</th>
+										<th>Course</th>
+										<th>Section</th>
+										<th>User</th>
+										<th>Department/Program</th>
 										{{#if currentPage adminEnrollList}}
-											<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+											<th></th>
 										{{/if}}
 									</tr>
-								{{/each}}
-							</tbody>
-						</table>
-					{{else}}
-						<div class="jumbotron text-center" style="background:white;">
-							<img src="/assets/empty_list_icon.png" style="height:288px;">
-							<div >
-								<h4>Nothing to display!</h4>
-								<p>Collection is empty.</p>
+								</thead>
+								<tbody>
+									{{#each enrollees}}
+										<tr>
+											<td>{{section.semester.school_year}} {{section.semester.name}}</td>
+											<td>{{section.course.subject_number}}: {{section.course.title}}</td>
+											<td>{{section.name}}</td>
+											<td>[{{user.profile.id_number}}] {{[user.profile.id]}} {{user.profile.last_name}},  {{user.profile.first_name}}  {{user.profile.middle_name}}</td>
+											<td>{{#if equals user.profile.user_type 2}} {{user.profile.program}} - {{user.profile.year}} {{else}}  {{user.profile.department}} {{/if}}</td>
+											{{#if currentPage adminEnrollList}}
+												<td><i id="delete" style="cursor:pointer; font-size:20px;" class="fa fa-trash" ></i></td>
+											{{/if}}
+										</tr>
+									{{/each}}
+								</tbody>
+							</table>
+						{{else}}
+							<div class="jumbotron text-center" style="background:white;">
+								<img src="/assets/empty_list_icon.png" style="height:288px;">
+								<div >
+									<h4>Nothing to display!</h4>
+									<p>Collection is empty.</p>
+								</div>
 							</div>
-						</div>
-					{{/if}}
+						{{/if}}
+					{{ else }}
+						{{> loading }}
+					{{ /if }}
 				</div>
 				<!-- Modal Import CSV -->
 				<div class="modal fade" id="courseCSV_modal" role="dialog" aria-labelledby="courseCSV_modal">

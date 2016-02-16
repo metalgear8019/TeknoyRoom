@@ -57,17 +57,17 @@ Template.studentAttendance.helpers
 							var firstDate = new Date(attendance[a].time_in.getFullYear(), attendance[a].time_in.getMonth(), attendance[a].time_in.getDate());
 							var secondDate = new Date(start_date.getFullYear(), start_date.getMonth(), start_date.getDate());
 
-							if (firstDate.toString() == secondDate.toString())
+							if (firstDate.valueOf() == secondDate.valueOf())
 							{
-								var startDate = (attendance[a].time_in.getFullYear()) + '-' + (((attendance[a].time_in.getMonth()+1) < 10)? '0'+(attendance[a].time_in.getMonth()+1): (attendance[a].time_in.getMonth()+1)) + '-' + (attendance[a].time_in.getDate());
+								var startDate = (attendance[a].time_in.getFullYear()) + '-' + (((attendance[a].time_in.getMonth()+1) < 10)? '0'+(attendance[a].time_in.getMonth()+1): (attendance[a].time_in.getMonth()+1)) + '-' + (((attendance[a].time_in.getDate()) < 10)? ('0'+ attendance[a].time_in.getDate()): attendance[a].time_in.getDate());
 								events.push({title: 'Present', start: startDate, rendering: 'background', color: '#8BC34A'});
 								break;
 							}
 							else
 							{
-								console.log('codition: ' + firstDate + '=' + secondDate);
-								var startDate = (start_date.getFullYear()) + '-' + (((start_date.getMonth()+1) < 10)? '0'+(start_date.getMonth()+1): (start_date.getMonth()+1)) + '-' + (start_date.getDate());
+								var startDate = (start_date.getFullYear()) + '-' + (((start_date.getMonth()+1) < 10)? '0'+(start_date.getMonth()+1): (start_date.getMonth()+1)) + '-' + (((start_date.getDate()) < 10)? ('0'+ start_date.getDate()): start_date.getDate());
 								events.push({title: 'Absent', start: startDate, rendering: 'background', color: '#F44336'});
+								console.log(startDate);
 								break;
 							}
 						}
