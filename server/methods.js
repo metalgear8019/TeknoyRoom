@@ -4,14 +4,14 @@ Meteor.methods
 		addUser: function (user) 
 		{
 			check(user, Object);
-			try {
+			try 
+			{
 				Accounts.createUser(user);
-				// Roles.addUserInRoles(id, user.roles);
 			} 
 			catch(e)
 			{
-				console.log(e);
-				throw new Meteor.Error(500, 'exception in add user', e);
+				console.log(e);	
+				return new Meteor.Error(500, 'exception in add user', e);
 			}
 		},
 		updateImage : function(user_id, img)
@@ -146,6 +146,7 @@ Meteor.methods
 			try
 			{
 				Users.remove(user_id);
+				Notes.remove({'owner': user_id});
 				Enrollees.remove({'user': user_id});
 			} 
 			catch(e)
@@ -253,6 +254,7 @@ Meteor.methods
 			{
 				Courses.remove(course_id);
 				var sections = Sections.find({'course': course_id}).map(function(section){return section._id;});
+				Notes.remove({'course': course_id});
 				Enrollees.remove({'section': { '$in': sections}});
 				Sections.remove({'_id': { '$in': sections}});
 			} 
@@ -324,6 +326,7 @@ Meteor.methods
 			try
 			{
 				Sections.remove(section_id);
+				Enrollees.remove({'section': section_id});
 			} 
 			catch(e)
 			{

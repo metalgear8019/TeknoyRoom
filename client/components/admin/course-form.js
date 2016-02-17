@@ -73,9 +73,7 @@ Template.courseForm.events
 			var subject_number = event.target.subject_number.value;
 			var title = event.target.title.value;
 			var unit = event.target.unit.value;
-
-			console.log('Subject number: ' + subject_number + '\nTitle: ' + title + '\nUnit: ' + unit);
-
+			
 			if (subject_number != '' && title != '' && unit != '') 
 			{
 				var course = {
@@ -97,7 +95,8 @@ Template.courseForm.events
 			}
 			else
 			{
-				//alert('Necessary fields must be filled..');
+				$('.toast').text('Please fill in the necessary fields.');
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 			}
 		}
 	}
