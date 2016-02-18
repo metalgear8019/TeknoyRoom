@@ -201,7 +201,6 @@ Template.enrollForm.helpers
 				{
 					if (flagStudent)
 					{
-						console.log('check/unchecked');
 						for (var j = 0; j < students.length; j++)
 						{
 							if (students[j]._id == student._id)
@@ -392,7 +391,6 @@ Template.enrollForm.events
 		{
 			event.preventDefault();
 			student = this;
-			console.log(student.profile.id_number);
 			flagStudent = true;
 			studentsDependency.changed();
 		},
@@ -416,7 +414,7 @@ Template.enrollForm.events
 							Meteor.call('deleteEnrollee', cursor._id);
 						}
 
-						enrollees.push({user: assignedInstructor, section: section, attendance: [{ date: new Date(), time_in: new Date(), time_out: new Date() }, { date: new Date('February 29, 2016'), time_in: new Date('February 29, 2016'), time_out: new Date('February 29, 2016') }] });
+						enrollees.push({user: assignedInstructor, section: section, attendance: [{ time_in: new Date(), time_out: new Date() }, { date: new Date('February 29, 2016'), time_in: new Date('February 29, 2016'), time_out: new Date('February 29, 2016') }] });
 					}
 
 					for (var i = 0; i < students.length; i++)
@@ -425,7 +423,28 @@ Template.enrollForm.events
 						{
 							if (!students[i].isEnrolled)
 							{
-								enrollees.push({ user: students[i]._id, section: section, attendance: [{ date: new Date(), time_in: new Date(), time_out: new Date() }] });
+								var sectionCursor = Sections.findOne(section);
+								var enrolleeCursor = Enrollees.find({'user': students[i]._id}).fetch();
+								var isAlreadyEnrolledInThatCourse = false;
+
+								for (var j = 0; j < enrolleeCursor.length; j++)
+								{
+									var enrolleeSectionCursor = Sections.findOne(enrolleeCursor[j].section);
+									if (sectionCursor.course == enrolleeSectionCursor.course && sectionCursor.semester == enrolleeSectionCursor.semester)
+									{
+										isAlreadyEnrolledInThatCourse = true;
+										break;
+									}
+									else
+									{
+										isAlreadyEnrolledInThatCourse = false;
+									}
+								}
+
+								if (!isAlreadyEnrolledInThatCourse)
+								{
+									enrollees.push({ user: students[i]._id, section: section, attendance: [{ time_in: new Date(), time_out: new Date() }] });
+								}
 							}
 						}
 						else
@@ -440,6 +459,11 @@ Template.enrollForm.events
 
 					Meteor.call('addEnrollee', enrollees);
 					FlowRouter.go('/admin/enroll/');
+				}
+				else
+				{
+					$('.toast').text('Please fill in the necessary fields.');
+					$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 				}
 			}
 			else

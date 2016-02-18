@@ -2,7 +2,6 @@
 Template.studentDashboard.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
-		var id = Meteor.userId();
 		self.subscribe(SubscriptionTag.ALL_NOTES);
 		self.subscribe(SubscriptionTag.ALL_COURSES);
 	});
@@ -79,19 +78,6 @@ Template.studentDashboard.events
 			noteDependency.changed();
 		},
 
-		'click #addNotes': function(event)
-		{
-			event.preventDefault();
-			var id = Meteor.userId();
-			var courses =  Courses.find({}).fetch();
-			console.log(courses.length);
-			for(var i = 0; i < courses.length; i++)
-			{
-				var note = {owner: id, course: courses[i]._id, content: 'this is a sample note'};
-				Meteor.call('addNote', note);
-			}
-		},
-
 		'click #clearContent': function(event)
 		{
 			event.preventDefault();
@@ -101,9 +87,7 @@ Template.studentDashboard.events
 		'submit #frmUpdateNote': function(event)
 		{
 			event.preventDefault();
-
 			var content = event.target.content.value;
-
 			var updatedNote = {
 				owner: note.owner,
 				course: note.course._id,

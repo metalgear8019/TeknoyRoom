@@ -408,7 +408,19 @@ Meteor.methods
 			{
 				_.each(enrollees, function(enrollees){
 					Enrollees.insert(enrollees);
-					//console.log("results >> " + JSON.stringify(enrollees));
+					var user = Users.findOne(enrollees.user);
+					if (user.profile.user_type == 2)
+					{	
+						var section = Sections.findOne(enrollees.section);
+						Notes.insert
+						(
+							{
+								owner: user._id,
+								course: section.course,
+								content: ''
+							}
+						);
+					}
 				});
 			} 
 			catch(e)
