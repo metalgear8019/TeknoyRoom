@@ -239,12 +239,6 @@ Template.sectionForm.events
 					var duration = ((end_hour - start_hour) * 60) + end_minutes - start_minutes;
 					var day = [];
 
-					/*for (i = 0; i < days.length; i++) { 
-						if (days[i].checked){
-							day.push(days[i].value); 
-						}
-					}*/
-
 					for (;j <= days.length; j++)
 					{
 						if (j % 7 == 0)
@@ -259,7 +253,7 @@ Template.sectionForm.events
 						}
 					}
 
-					if (name != '' && course != '' && semester != '' && day != '' && start_hour != '' && start_minutes != '')
+					if (name != '' && course != '' && semester != '' && day.length != 0 && start_hour != '' && start_minutes != '')
 					{
 						var section = {
 											name: name,
@@ -281,6 +275,8 @@ Template.sectionForm.events
 						}
 					}
 				}
+
+				FlowRouter.go('/admin/section/');
 			}
 			else
 			{
@@ -324,7 +320,7 @@ Template.sectionForm.events
 					}
 				}
 
-				if (name != '' && course != '' && semester != '' && day != '' && start_hour != '' && start_minutes != '')
+				if (name != '' && course != '' && semester != '' && day.length != 0 && start_hour != '' && start_minutes != '')
 				{
 					var section = {
 										name: name,
@@ -344,12 +340,16 @@ Template.sectionForm.events
 					{
 						Meteor.call('updateSection', id, section);
 					}
+
+					Tracker.flush();
+					FlowRouter.go('/admin/section/');
+				}
+				else
+				{
+					$('.toast').text('Please fill in the necessary fields.');
+					$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 				}
 			}
-
-			Tracker.flush();
-
-			FlowRouter.go('/admin/section/');
 		},
 
 		'click #addSection': function(event)

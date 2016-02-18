@@ -1,4 +1,4 @@
-Template.studentAttendance.onCreated(function () {
+Template.instructorAttendance.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
 		var id = FlowRouter.getParam('id');
@@ -8,7 +8,7 @@ Template.studentAttendance.onCreated(function () {
 	});
 });
 
-Template.studentAttendance.helpers
+Template.instructorAttendance.helpers
 (
 	{
 		calendarOptions: 
@@ -32,6 +32,7 @@ Template.studentAttendance.helpers
 				{
 					end_date = currentDate;
 				}
+
 
 				while(start_date <= end_date)
 				{
@@ -66,6 +67,7 @@ Template.studentAttendance.helpers
 							{
 								var startDate = (start_date.getFullYear()) + '-' + (((start_date.getMonth()+1) < 10)? '0'+(start_date.getMonth()+1): (start_date.getMonth()+1)) + '-' + (((start_date.getDate()) < 10)? ('0'+ start_date.getDate()): start_date.getDate());
 								events.push({title: 'Absent', start: startDate, rendering: 'background', color: '#F44336'});
+								console.log(startDate);
 								break;
 							}
 						}

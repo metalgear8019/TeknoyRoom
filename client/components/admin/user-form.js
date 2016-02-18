@@ -333,18 +333,20 @@ Template.userForm.events
 							Role.Permission.WRITE_SEMESTERS
 						]
 					};
-
+					
 					Meteor.call('addUser', user);
 					FlowRouter.go('/admin/user/');
 				}
 				else
 				{
-					//alert('Necessary fields must be filled..');
+					$('.toast').text('Please fill in the necessary fields.');
+					$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 				}
 			}
 			else
 			{
-				//alert('Necessary fields must be filled..');
+				$('.toast').text('Please fill in the necessary fields.');
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 			}
 		},
 

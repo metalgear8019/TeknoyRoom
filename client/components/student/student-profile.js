@@ -76,6 +76,7 @@ Template.studentProfile.events
 			    );
 			};
 			reader.readAsBinaryString(file);
+			$('#image_modal').modal('hide');
 		}
 	}
 );
@@ -105,9 +106,13 @@ Template.studentProfile.helpers
 			if(result.profile.image != null)
 			{
 				source = result.profile.image;
-			}else
+			}
+			else
 			{
-				source = "/assets/profile-picture3.png";
+				if (result.profile.gender == 'Male')
+					source = "/assets/profile-picture3.png";
+				else
+					source = "/assets/profile-picture2.png";
 			}
 			return source;
 		}
