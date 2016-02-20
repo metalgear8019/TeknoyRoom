@@ -50,7 +50,8 @@ Template.studentEnterClass.onCreated(function () {
 
 		navigator.getUserMedia = (
 			navigator.webkitGetUserMedia ||
-			navigator.mozGetUserMedia ||
+			navigator.mediaDevices.getUserMedia ||
+			// navigator.mozGetUserMedia ||
 			navigator.msGetUserMedia ||
 			navigator.getUserMedia
 		);
