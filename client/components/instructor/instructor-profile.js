@@ -76,6 +76,7 @@ Template.instructorProfile.events
 			    );
 			};
 			reader.readAsBinaryString(file);
+			$('#image_modal').modal('hide');
 		}
 	}
 );
@@ -94,6 +95,22 @@ Template.instructorProfile.helpers
 		gender: function() {
 			var result = Meteor.user();
 			return result.profile.gender;
+		},
+		image: function(){
+			var result = Meteor.user();
+			var source;
+			if(result.profile.image != null)
+			{
+				source = result.profile.image;
+			}
+			else
+			{
+				if (result.profile.gender == 'Male')
+					source = "/assets/profile-picture3.png";
+				else
+					source = "/assets/profile-picture2.png";
+			}
+			return source;
 		}
 	}
 );

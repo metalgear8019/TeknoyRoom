@@ -163,7 +163,6 @@ Template.enrollForm.helpers
 
 			if (enrollee._id != 'new')
 			{
-				console.log('if');
 				if (!flagStudent2)
 				{
 					for (var i = 0; i < cursorArray.length; i++)
@@ -202,7 +201,6 @@ Template.enrollForm.helpers
 				{
 					if (flagStudent)
 					{
-						console.log('check/unchecked');
 						for (var j = 0; j < students.length; j++)
 						{
 							if (students[j]._id == student._id)
@@ -218,7 +216,6 @@ Template.enrollForm.helpers
 			}
 			else
 			{
-				console.log('else');
 				if (!flagStudent2)
 				{
 					for (var i = 0; i < cursorArray.length; i++)
@@ -394,7 +391,6 @@ Template.enrollForm.events
 		{
 			event.preventDefault();
 			student = this;
-			console.log(student.profile.id_number);
 			flagStudent = true;
 			studentsDependency.changed();
 		},
@@ -406,45 +402,74 @@ Template.enrollForm.events
 			var assignedInstructor = event.target.instructorId.value;
 			var enrollees = [];
 
-			if (section != 'new' && assignedInstructor != 'new')
+			if (section != '' && assignedInstructor != '')
 			{
-				if (assignedInstructor != enrollee.instructor._id)
+				if (section != 'new' && assignedInstructor != 'new')
 				{
-					if (enrollee.instructor._id != undefined)
+					if (assignedInstructor != enrollee.instructor._id)
 					{
-						var cursor = Enrollees.findOne({'user': enrollee.instructor._id});
-						Meteor.call('deleteEnrollee', cursor._id);
+						if (enrollee.instructor._id != undefined)
+						{
+							var cursor = Enrollees.findOne({'user': enrollee.instructor._id});
+							Meteor.call('deleteEnrollee', cursor._id);
+						}
+
+						enrollees.push({user: assignedInstructor, section: section, attendance: [{ time_in: new Date(), time_out: new Date() }, { date: new Date('February 29, 2016'), time_in: new Date('February 29, 2016'), time_out: new Date('February 29, 2016') }] });
 					}
 
-					enrollees.push({user: assignedInstructor, section: section, attendance: [{ date: new Date(), time_in: new Date(), time_out: new Date() }, { date: new Date('February 29, 2016'), time_in: new Date('February 29, 2016'), time_out: new Date('February 29, 2016') }] });
-				}
-
-				for (var i = 0; i < students.length; i++)
-				{
-					if (students[i].isChecked)
+					for (var i = 0; i < students.length; i++)
 					{
-						if (!students[i].isEnrolled)
+						if (students[i].isChecked)
 						{
-							enrollees.push({ user: students[i]._id, section: section, attendance: [{ date: new Date(), time_in: new Date(), time_out: new Date() }] });
+							if (!students[i].isEnrolled)
+							{
+								var sectionCursor = Sections.findOne(section);
+								var enrolleeCursor = Enrollees.find({'user': students[i]._id}).fetch();
+								var isAlreadyEnrolledInThatCourse = false;
+
+								for (var j = 0; j < enrolleeCursor.length; j++)
+								{
+									var enrolleeSectionCursor = Sections.findOne(enrolleeCursor[j].section);
+									if (sectionCursor.course == enrolleeSectionCursor.course && sectionCursor.semester == enrolleeSectionCursor.semester)
+									{
+										isAlreadyEnrolledInThatCourse = true;
+										break;
+									}
+									else
+									{
+										isAlreadyEnrolledInThatCourse = false;
+									}
+								}
+
+								if (!isAlreadyEnrolledInThatCourse)
+								{
+									enrollees.push({ user: students[i]._id, section: section, attendance: [{ time_in: new Date(), time_out: new Date() }] });
+								}
+							}
+						}
+						else
+						{
+							if (students[i].isEnrolled)
+							{
+								var enrolleeId = Enrollees.findOne({'user': students[i]._id, 'section': section});
+								Meteor.call('deleteEnrollee', enrolleeId._id);
+							}
 						}
 					}
-					else
-					{
-						if (students[i].isEnrolled)
-						{
-							var enrolleeId = Enrollees.findOne({'user': students[i]._id, 'section': section});
-							Meteor.call('deleteEnrollee', enrolleeId._id);
-						}
-					}
-				}
 
-				Meteor.call('addEnrollee', enrollees);
-				FlowRouter.go('/admin/enroll/');
+					Meteor.call('addEnrollee', enrollees);
+					FlowRouter.go('/admin/enroll/');
+				}
+				else
+				{
+					$('.toast').text('Please fill in the necessary fields.');
+					$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+				}
 			}
 			else
 			{
-				$('.toast').text('error!');
-				$('.toast').fadeIn(400).delay(3000).fadeOut(400); //fade out after 3 seconds
+				$('.toast').text('Please fill in the necessary fields.');
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 			}
 		}
 	}

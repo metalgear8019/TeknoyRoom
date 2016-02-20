@@ -78,7 +78,8 @@ Template.semesterForm.events
 			}
 			else
 			{
-				//alert('Necessary fields must be filled..');
+				$('.toast').text('Please fill in the necessary fields.');
+				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 			}
 		}
 	}

@@ -16,15 +16,20 @@ Template.studentSidebar.helpers
 			var result = Meteor.user();
 			return result.profile.first_name.toUpperCase() + ' ' + result.profile.last_name.toUpperCase();
 		},
-		image: function(){
+		image: function()
+		{
 			var result = Meteor.user();
 			var source;
 			if(result.profile.image != null)
 			{
 				source = result.profile.image;
-			}else
+			}
+			else
 			{
-				source = "/assets/profile-picture3.png";
+				if (result.profile.gender == 'Male')
+					source = "/assets/profile-picture3.png";
+				else
+					source = "/assets/profile-picture2.png";
 			}
 			return source;
 		}
