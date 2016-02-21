@@ -288,7 +288,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in add section', e);
+				return new Meteor.Error(500, 'exception in add section', e);
 			}
 		},
 

@@ -334,14 +334,12 @@ Template.sectionForm.events
 
 					if (id == 'new')
 					{
-						Meteor.call('addSection', section);
-					    serverMessages.listen('serverMessage:success', function (subject, message, options) {
-					    	Notifications.success(subject, message, options);
-					  	});
-
-					  	serverMessages.listen('serverMessage:error', function (subject, message, options) {
-					    	Notifications.error(subject, message, options);
-					  	});
+						Meteor.call('addSection', section, function(err) {
+							if (err)
+								console.log('An error occured.\n' + err);
+							else
+								alert('Work na! Do success notification here!');
+						});
 					}
 					else
 					{
