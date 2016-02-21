@@ -328,8 +328,14 @@ Meteor.methods
 			check(section_id, String);
 			try
 			{
+				var enrolleeIds = Enrollees.find({'section': section_id}).map(function(item){return item._id;}); 
+				
+				for (var i = 0; i < enrolleeIds.length; i++)
+				{
+					Meteor.call('deleteEnrollee', enrolleeIds[i]);
+				}
+
 				Sections.remove(section_id);
-				Enrollees.remove({'section': section_id});
 			} 
 			catch(e)
 			{
@@ -392,10 +398,19 @@ Meteor.methods
 			check(semester_id, String);
 			try
 			{
+				//var sectionsCursor = Sections.find({'semester': semester_id});
+				var sectionIds = Sections.find({'semester': semester_id}).map(function(section){return section._id;});
+				//var sections = sectionsCursor.fetch();
+				//var enrolleesCursor = Enrollees.find({'section': { '$in': sectionIds } }).fetch();
+				
+				for (var i = 0; i < sectionIds.length; i++)
+				{
+					Meteor.call('deleteSection', sectionIds[i]);
+				}
+				
+				//Enrollees.remove({'section': { '$in': sectionIds}});
+				//Sections.remove({'_id': { '$in': sectionIds} });
 				Semesters.remove(semester_id);
-				var sections = Sections.find({'semester': semester_id}).map(function(section){return section._id;});
-				Enrollees.remove({'section': { '$in': sections}});
-				Sections.remove({'_id': { '$in': sections}});
 			} 
 			catch(e)
 			{
@@ -411,18 +426,25 @@ Meteor.methods
 			{
 				_.each(enrollees, function(enrollees){
 					Enrollees.insert(enrollees);
-					var user = Users.findOne(enrollees.user);
-					if (user.profile.user_type == 2)
-					{	
-						var section = Sections.findOne(enrollees.section);
-						Notes.insert
-						(
-							{
-								owner: user._id,
-								course: section.course,
-								content: ''
-							}
-						);
+					var userCursor = Users.findOne(enrollees.user);
+					if (userCursor.profile.user_type == 2)
+					{
+						var sectionCursor = Sections.findOne(enrollees.section);
+						var sectionsCursor = Sections.find({'course': sectionCursor.course}).map(function(item){ return item._id });
+						var enrolleesCursor = Enrollees.find({'user': enrollees.user, 'section': { '$in': sectionsCursor } }).fetch();
+
+						console.log(enrolleesCursor.length);
+						if (enrolleesCursor.length == 1)
+						{
+							Notes.insert
+							(
+								{
+									owner: userCursor._id,
+									course: sectionCursor.course,
+									content: ''
+								}
+							);
+						}
 					}
 				});
 			} 
@@ -433,40 +455,21 @@ Meteor.methods
 			}
 		},
 
-		updateEnrollee: function (enrollee_id, enrollee)
-		{
-			check(enrollee_id, String);
-			check(enrollee, Object);
-			try
-			{
-				Enrollees.update
-				(
-					enrollee_id,
-					{
-						$set:
-						{
-							user: enrollee.user,
-							section: enrollee.section
-						},
-						$addToSet:
-						{
-							attendance: { $each: enrollee.attendance }
-						}
-					}
-				);
-			} 
-			catch(e)
-			{
-				console.log(e);
-				throw new Meteor.Error(500, 'exception in update enrollee', e);
-			}
-		},
-
 		deleteEnrollee: function (enrollee_id)
 		{
 			check(enrollee_id, String);
 			try
 			{
+				var enrolleeCursor = Enrollees.findOne(enrollee_id);
+				var sectionCursor = Sections.findOne(enrolleeCursor.section);
+				var sectionsCursor = Sections.find({'course': sectionCursor.course}).map(function(item){ return item._id });
+				var enrolleesCursor = Enrollees.find({'user': enrolleeCursor.user, 'section': { '$in': sectionsCursor } }).fetch();
+				
+				if (enrolleesCursor.length == 1)
+				{
+					Notes.remove({'owner': enrolleeCursor.user, 'course': sectionCursor.course});
+				}
+
 				Enrollees.remove(enrollee_id);
 			} 
 			catch(e)
