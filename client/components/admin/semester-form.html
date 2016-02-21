@@ -9,7 +9,7 @@
 						<input id="_id" name="_id" type="hidden" value="{{ item._id }}">
 						
 						<div class="form-group">
-					    	<input type="text" id="school_year" name="school_year" class="form-control" placeholder="SCHOOL YEAR i.e. 2015-2016" value="{{ item.school_year }}">
+					    	<input type="text" id="school_year" name="school_year" class="form-control" placeholder="SCHOOL YEAR i.e. 2015-2016" value="{{ item.school_year }}" pattern="[0-9]{4} - [0-9]{4}">
 					    </div>
 
 						<div class="form-group">
