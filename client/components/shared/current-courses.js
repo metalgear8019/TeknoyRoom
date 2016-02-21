@@ -45,6 +45,7 @@ Template.currentCourses.events
 	{
 		'click #enterClass': function () {
 			var result = Helpers.getCurrentClass();
+			console.log(JSON.stringify(result));
 
 			if (result != null && result != undefined && 
 					Helpers.getDurationPast(Helpers.getTime(), result.hour, result.minute) < result.duration) {
