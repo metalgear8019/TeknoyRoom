@@ -42,6 +42,9 @@ Helpers = {
 		});
 		return result;
 	},
+	dateToString: function (date) {
+		return date.getMonth() + '/' + date.getDay() + '/' + date.getYear();
+	},
 	timeToString: function (hour, minute, offset) {
 		var period = 'AM';
 

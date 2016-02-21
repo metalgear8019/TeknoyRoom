@@ -52,14 +52,20 @@ Meteor.publish(SubscriptionTag.ONE_SEMESTER, function(id) {
 	return Semesters.find({ _id: id });
 });
 
-Meteor.publish(SubscriptionTag.CURRENT_SEMESTER, function() {
-	// check(time, Date);
-	var time = new Date();
+Meteor.publish(SubscriptionTag.CURRENT_SEMESTER, function(time) {
+	check(time, Date);
 	return Semesters.find({
 		start_date: { $lte: time },
 		end_date: { $gte: time }
 	});
-})
+});
+
+Meteor.publish(SubscriptionTag.PREVIOUS_SEMESTERS, function(time) {
+	check(time, Date);
+	return Semesters.find({
+		end_date: { $lt: time }
+	});
+});
 
 Meteor.publish(SubscriptionTag.ALL_SECTIONS, function() {
 	return Sections.find({});
@@ -72,6 +78,13 @@ Meteor.publish(SubscriptionTag.ONE_SECTION, function(id) {
 
 Meteor.publish(SubscriptionTag.ALL_ENROLLEES, function() {
 	return Enrollees.find();
+});
+
+Meteor.publish(SubscriptionTag.ALL_ENROLLEES_USER, function(userId) {
+	check(userId, String);
+	return Enrollees.find({
+		user: userId
+	});
 });
 
 Meteor.publish(SubscriptionTag.ONE_ENROLLEE, function(id) {

@@ -18,7 +18,7 @@ Accounts.onLogin(function() {
 		case 0: route = Helpers.generateRedirectRoute(splitPath, 'admin'); break;
 		case 1: route = Helpers.generateRedirectRoute(splitPath, 'instructor'); break;
 		case 2: route = Helpers.generateRedirectRoute(splitPath, 'student'); break;
-		default: route = '/'
+		default: route = '/';
 	}
 	FlowRouter.go(route);
 });
