@@ -85,6 +85,7 @@ Template.courseForm.events
 				if (id == 'new')
 				{
 					Meteor.call('addCourse', course);
+					
 				}
 				else 
 				{
@@ -92,6 +93,7 @@ Template.courseForm.events
 				}
 
 				FlowRouter.go('/admin/course/');
+				Notifications.addNotification('sample','sample message');
 			}
 			else
 			{

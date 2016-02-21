@@ -335,6 +335,13 @@ Template.sectionForm.events
 					if (id == 'new')
 					{
 						Meteor.call('addSection', section);
+					    serverMessages.listen('serverMessage:success', function (subject, message, options) {
+					    	Notifications.success(subject, message, options);
+					  	});
+
+					  	serverMessages.listen('serverMessage:error', function (subject, message, options) {
+					    	Notifications.error(subject, message, options);
+					  	});
 					}
 					else
 					{
@@ -350,6 +357,8 @@ Template.sectionForm.events
 					$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 				}
 			}
+			
+			  
 		},
 
 		'click #addSection': function(event)

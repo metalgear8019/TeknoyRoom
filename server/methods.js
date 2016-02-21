@@ -268,6 +268,7 @@ Meteor.methods
 		addSection: function (section)
 		{
 			check(section, Object);
+			check(serverMessages, Object);
 			try
 			{
 				Sections.insert
@@ -282,6 +283,7 @@ Meteor.methods
 						duration: section.duration
 					}
 				);
+				serverMessages.notify('serverMessage:success', 'Success', 'Section added!', {timeout : 5000});
 			} 
 			catch(e)
 			{
