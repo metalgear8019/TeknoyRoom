@@ -34,8 +34,6 @@ reactive-var
 check
 audit-argument-checks
 mrt:moment
-sanjo:jasmine
-velocity:html-reporter
 gquemart:meteor-reactive-fullcalendar
 simple:imgur
 gfk:notifications
