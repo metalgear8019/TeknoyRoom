@@ -52,6 +52,15 @@ Meteor.publish(SubscriptionTag.ONE_SEMESTER, function(id) {
 	return Semesters.find({ _id: id });
 });
 
+Meteor.publish(SubscriptionTag.CURRENT_SEMESTER, function() {
+	// check(time, Date);
+	var time = new Date();
+	return Semesters.find({
+		start_date: { $lte: time },
+		end_date: { $gte: time }
+	});
+})
+
 Meteor.publish(SubscriptionTag.ALL_SECTIONS, function() {
 	return Sections.find({});
 });

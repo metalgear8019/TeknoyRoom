@@ -104,17 +104,19 @@ Helpers = {
 		var result = Semesters.findOne({
 			start_date: { $lte: time },
 			end_date: { $gte: time }
-		});
+		}) || {};
 		return result;
 	},
 	getCurrentClass: function () {
 		var time = new Date(Session.get('time'));
 		var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
 	 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
+	 	var semesterId = Helpers.getCurrentSemester()._id;
 		var result = Sections.findOne({
 			_id: { $in: enrolledIds },
 			day: ( time.getDay() + 1 ),
-			hour: { $lte: time.getHours() }
+			hour: { $lte: time.getHours() },
+			semester: semesterId
 		}, { sort: { hour: -1, minute: -1 }});
 		
 		console.log("class >> " + JSON.stringify(result) + '\nday >> ' + time.getDay() + '\nhour >> ' + time.getHours());
