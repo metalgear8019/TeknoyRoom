@@ -57,7 +57,12 @@ Template.enrollList.events
 		'click #delete': function (event)
 		{
 			event.preventDefault();
-			Meteor.call('deleteEnrollee', this._id);
+			Meteor.call('deleteEnrollee', this._id, function(err){
+				if(err)
+					Notifications.error('ERROR', err.reason, {timeout: 5000});
+				else
+					Notifications.success('SUCCESS', 'Enrollee successfully deleted', {timeout: 5000});
+			});
 		}
 	}
 );

@@ -267,11 +267,21 @@ Template.sectionForm.events
 
 						if (id == 'new')
 						{
-							Meteor.call('addSection', section);
+							Meteor.call('addSection', section, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Section successfully added', {timeout: 5000});
+							});
 						}
 						else
 						{
-							Meteor.call('updateSection', id, section);
+							Meteor.call('updateSection', id, section, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Section updated successfully', {timeout: 5000});
+							});
 						}
 					}
 				}

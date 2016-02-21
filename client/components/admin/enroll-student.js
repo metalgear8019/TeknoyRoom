@@ -355,12 +355,22 @@ Template.enrollStudent.events
 							if (sections[i].isEnrolled)
 							{
 								var enrolleeId = Enrollees.findOne({'user': user, 'section': sections[i]._id});
-								Meteor.call('deleteEnrollee', enrolleeId._id);
+								Meteor.call('deleteEnrollee', enrolleeId._id, function(err){
+									if(err)
+										Notifications.error('ERROR', err.reason, {timeout: 5000});
+									else
+										Notifications.success('SUCCESS', 'Enrollees successfully deleted', {timeout: 5000});
+								});
 							}
 						}
 					}
 
-					Meteor.call('addEnrollee', enrollees);
+					Meteor.call('addEnrollee', enrollees, function(err){
+						if(err)
+							Notifications.error('ERROR', err.reason, {timeout: 5000});
+						else
+							Notifications.success('SUCCESS', 'Enrolle succesfully added', {timeout: 5000});
+					});
 					FlowRouter.go('/admin/enroll/');
 				}
 			}
