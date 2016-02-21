@@ -91,14 +91,10 @@ Helpers = {
 				{ url: 'stun:stun4.l.google.com:19302' },*/
 				{ url: 'stun:stun.skyway.io.com:3478' },
 				{
-					url: 'turn:homeo@turn.bistri.com:80',
-					credential: 'homeo'
-				}/*,
-				{
 					url: 'turn:numb.viagenie.ca',
 					credential: 'muazkh',
 					username: 'webrtc@live.com'
-				}*/
+				}
 			]}
 		});
 	},
@@ -115,7 +111,9 @@ Helpers = {
 			return false;
 		var currentDay = time.getDay() + 1;
 		var currentHour = time.getHours();
+		console.log('I do not understand.');
 		var durationPast = Helpers.getDurationPast(time, currentClass.hour, currentClass.minute);
+		console.log('I do not understand. Since game man.');
 		return (currentClass.day.includes(currentDay) && currentHour >= currentClass.hour &&
 			durationPast < currentClass.duration);
 	},

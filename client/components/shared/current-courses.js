@@ -14,14 +14,19 @@ Template.currentCourses.helpers
 	{
 		sections: function()
 		{
+			var result = [];
 		 	var enrolledIds = Enrollees.find().map(function (c) { return c.section; });
-			result = Sections.find({ _id: { $in: enrolledIds } }).map(function (item) {
-				// item.state = Helpers.isClassOngoing(item, time);
+		 	var currentSemester = Semesters.findOne() || { _id: null };
+			Sections.find({ _id: { $in: enrolledIds }, semester: currentSemester._id }).forEach(function (item) {
+				/*if (Helpers.isClassOngoing(item, time))
+					item.state = true;
+				else*/
+				// item.state = false;
 				item.course = Courses.findOne(item.course) || '';
-				item.semester = Semesters.findOne();
+				item.semester = currentSemester;
 				item.time = Helpers.scheduleToString(item);
-				// item.state = (currentClass._id === item._id);
-				return item;
+				// item.state = Helpers.isClassOngoing(item, time);
+				result.push(item);
 			});
 			// console.log("results >> " + JSON.stringify(result));
 			return result;

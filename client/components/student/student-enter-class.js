@@ -32,12 +32,12 @@ Template.studentEnterClass.onCreated(function () {
 Template.studentEnterClass.onRendered(function () {
 	// This event: remote peer receives a call
 	studentPeer.connections['local'].on('open', function () {
-		console.log('peer id >> ' + studentPeer.connections['local'].id + '\nroom id >> ' + classId);
+		console.log('peer id >> ' + studentPeer.connections['local'].id + '\nroom id >> ' + Session.get('class'));
 		// update the current user's profile
 		studentPeer.attendance.time_in = new Date();
 		Meteor.call('updatePeerStatus', Meteor.userId(), { 
 			_id: studentPeer.connections['local'].id,
-			room_id: classId
+			room_id: Session.get('class')
 		});
 
 		// This event: remote peer receives a call
@@ -96,10 +96,9 @@ Template.studentEnterClass.events
 			alert('making call...');
 			var video = document.getElementById('theirVideo');
 			var userPeerId = getInstructorId();
-			if (Helpers.isEmpty(userPeerId)) {
-				studentPeer.connections[userPeerId] = studentPeer.connections['local'].call(user.peer._id, studentPeer.streams.local);
-				studentPeer.currentCall = studentPeer.connections[userPeerId];
-				outgoingCall.on('stream', function (remoteStream) {
+			if (Helpers.isEmpty(studentPeer.streams[userPeerId])) {
+				studentPeer.connections[userPeerId] = studentPeer.connections['local'].call(userPeerId, studentPeer.streams.local);
+				studentPeer.connections[userPeerId].on('stream', function (remoteStream) {
 					studentPeer.streams[userPeerId] = remoteStream;
 					alert('receiving stream...');
 					video.src = URL.createObjectURL(remoteStream);

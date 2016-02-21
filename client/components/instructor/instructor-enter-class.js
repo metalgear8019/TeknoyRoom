@@ -1,9 +1,37 @@
 var instructorPeer = {
 	connections: {}, // key/value pairs of peer connections { [peerId]: connection }
 	streams: {}, // key/value pairs of streams { [peerId]: stream }
-	requests: [], // list of peer IDs who asked a question
 	attendance: {} // attendance of current user, to be inserted on room leave
 };
+
+var Requests = {
+	list: [], // list of students who asked questions
+	get: function () {
+		if (!this.dependency) {
+			this.dependency = new Tracker.Dependency();
+		}
+		this.dependency.depend();
+		return this.list;
+	},
+	add: function (peerId) {
+		var index = this.list.indexOf(peerId);
+		if (index < 0) {
+			this.list.push(peerId);
+			this.dependency.changed();
+		}
+	},
+	remove: function (peerId) {
+		var index = this.list.indexOf(peerId);
+		if (index > -1) {
+			this.list.splice();
+			this.dependency.changed();
+		}
+	},
+	reset: function () {
+		this.list = [];
+		this.dependency.changed();
+	}
+}
 
 Template.instructorEnterClass.onCreated(function () {
 	var self = this;
@@ -75,7 +103,7 @@ Template.instructorEnterClass.helpers
 		},
 		requests: function () {
 			return Users.find({
-				'peer._id': { $in : instructorPeer.requests }
+				'peer._id': { $in : Requests.get() }
 			});
 		}
 	}
@@ -100,10 +128,9 @@ Template.instructorEnterClass.events
 			alert('making call...');
 			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
-			if (Helpers.isEmpty(userPeerId)) {
+			if (Helpers.isEmpty(instructorPeer.streams[userPeerId])) {
 				instructorPeer.connections[userPeerId] = instructorPeer.connections['local'].call(user.peer._id, instructorPeer.streams.local);
-				instructorPeer.currentCall = instructorPeer.connections[userPeerId];
-				outgoingCall.on('stream', function (remoteStream) {
+				instructorPeer.connections[userPeerId].on('stream', function (remoteStream) {
 					instructorPeer.streams[userPeerId] = remoteStream;
 					alert('receiving stream...');
 					video.src = URL.createObjectURL(remoteStream);
