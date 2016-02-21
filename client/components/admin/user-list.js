@@ -24,7 +24,7 @@ Template.userList.helpers
 				{
 					if (filter == 'FILTER BY')
 					{
-				 		results = Users.find({'profile.banned': false});
+				 		results = Users.find({'profile.user_type': { '$ne': 0 }, 'profile.banned': false});
 					}
 					else if (filter == 'Student')
 					{

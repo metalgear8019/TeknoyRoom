@@ -203,7 +203,72 @@ Template.userForm.helpers
 				{
 					value: 'Computer Science',
 					selected: ''
-				}
+				},
+
+				{
+					value: 'Chemical Engineering',
+					selected: ''
+				},
+
+				{
+					value: 'Computer Engineering',
+					selected: ''
+				},
+
+				{
+					value: 'Electrical Engineering',
+					selected: ''
+				},
+
+				{
+					value: 'Electronics and Communications Engineering',
+					selected: ''
+				},
+
+				{
+					value: 'Industrial Engineering',
+					selected: ''
+				},
+
+				{
+					value: 'Mechanical Engineering',
+					selected: ''
+				},
+
+				{
+					value: 'Mining Engineering',
+					selected: ''
+				},
+
+				{
+					value: 'Chemistry',
+					selected: ''
+				},
+
+				{
+					value: 'Physics',
+					selected: ''
+				},
+
+				{
+					value: 'Math',
+					selected: ''
+				},
+
+				{
+					value: 'Biology',
+					selected: ''
+				},
+
+				{
+					value: 'Languages, Literatures and Communications',
+					selected: ''
+				},
+
+				{
+					value: 'Humanities',
+					selected: ''
+				},
 			];
 
 			if (id != 'new')
@@ -237,6 +302,7 @@ Template.userForm.events
 			var user_type = event.target.user_type.value;
 			var gender = event.target.gender.value;
 			var banned = event.target.banned.value;
+			var image = event.target.image.value;
 
 			if (banned == '')
 			{
@@ -253,7 +319,8 @@ Template.userForm.events
 					last_name: last_name,
 					user_type: user_type,
 					gender: gender,
-					banned: banned
+					banned: banned,
+					image: image
 				},
 				roles: [
 					'default',

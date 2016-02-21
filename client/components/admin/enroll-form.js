@@ -161,99 +161,106 @@ Template.enrollForm.helpers
 			studentsDependency.depend();
 			var cursorArray = Users.find({'profile.user_type': 2, 'profile.banned': false}).fetch();
 
-			if (enrollee._id != 'new')
+			if (cursorArray.length > 0)
 			{
-				if (!flagStudent2)
+				if (enrollee._id != 'new')
 				{
-					for (var i = 0; i < cursorArray.length; i++)
+					if (!flagStudent2)
 					{
-						students[i] = ({
-							_id: cursorArray[i]._id,
-							profile : {
-								id_number: cursorArray[i].profile.id_number,
-								first_name: cursorArray[i].profile.first_name,
-								middle_name: cursorArray[i].profile.middle_name,
-								last_name: cursorArray[i].profile.last_name,
-								gender: cursorArray[i].profile.gender,
-								program: cursorArray[i].profile.program,
-								year: cursorArray[i].profile.year
-							},
-							isChecked: false,
-							isEnrolled: false
-						});
-					}
-
-					for (var i = 0; i < enrollee.user.length; i++)
-					{
-						for (var j = 0; j < students.length; j++)
+						for (var i = 0; i < cursorArray.length; i++)
 						{
-							if (students[j]._id == enrollee.user[i]._id)
+							students[i] = ({
+								_id: cursorArray[i]._id,
+								profile : {
+									id_number: cursorArray[i].profile.id_number,
+									first_name: cursorArray[i].profile.first_name,
+									middle_name: cursorArray[i].profile.middle_name,
+									last_name: cursorArray[i].profile.last_name,
+									gender: cursorArray[i].profile.gender,
+									program: cursorArray[i].profile.program,
+									year: cursorArray[i].profile.year
+								},
+								isChecked: false,
+								isEnrolled: false
+							});
+						}
+
+						for (var i = 0; i < enrollee.user.length; i++)
+						{
+							for (var j = 0; j < students.length; j++)
 							{
-								students[j].isChecked = true;
-								students[j].isEnrolled = true;
-								continue;
+								if (students[j]._id == enrollee.user[i]._id)
+								{
+									students[j].isChecked = true;
+									students[j].isEnrolled = true;
+									continue;
+								}
 							}
 						}
+						flagStudent2 = true;
 					}
-					flagStudent2 = true;
+					else
+					{
+						if (flagStudent)
+						{
+							for (var j = 0; j < students.length; j++)
+							{
+								if (students[j]._id == student._id)
+								{
+									students[j].isChecked = !student.isChecked;
+									i = j;
+									break;
+								}
+							}
+							flagStudent = false;
+						}
+					}
 				}
 				else
 				{
-					if (flagStudent)
+					if (!flagStudent2)
 					{
-						for (var j = 0; j < students.length; j++)
+						for (var i = 0; i < cursorArray.length; i++)
 						{
-							if (students[j]._id == student._id)
-							{
-								students[j].isChecked = !student.isChecked;
-								i = j;
-								break;
-							}
+							students[i] = ({
+								_id: cursorArray[i]._id,
+								profile : {
+									id_number: cursorArray[i].profile.id_number,
+									first_name: cursorArray[i].profile.first_name,
+									middle_name: cursorArray[i].profile.middle_name,
+									last_name: cursorArray[i].profile.last_name,
+									gender: cursorArray[i].profile.gender,
+									program: cursorArray[i].profile.program,
+									year: cursorArray[i].profile.year
+								},
+								isChecked: false,
+								isEnrolled: false
+							});
 						}
-						flagStudent = false;
+
+						flagStudent2 = true;
+					}
+					else
+					{
+						if (flagStudent)
+						{
+							for (var j = 0; j < students.length; j++)
+							{
+								if (students[j]._id == student._id)
+								{
+									students[j].isChecked = !student.isChecked;
+									i = j;
+									break;
+								}
+							}
+							flagStudent = false;
+						}
 					}
 				}
 			}
 			else
 			{
-				if (!flagStudent2)
-				{
-					for (var i = 0; i < cursorArray.length; i++)
-					{
-						students[i] = ({
-							_id: cursorArray[i]._id,
-							profile : {
-								id_number: cursorArray[i].profile.id_number,
-								first_name: cursorArray[i].profile.first_name,
-								middle_name: cursorArray[i].profile.middle_name,
-								last_name: cursorArray[i].profile.last_name,
-								gender: cursorArray[i].profile.gender,
-								program: cursorArray[i].profile.program,
-								year: cursorArray[i].profile.year
-							},
-							isChecked: false,
-							isEnrolled: false
-						});
-					}
-
-					flagStudent2 = true;
-				}
-				else
-				{
-					if (flagStudent)
-					{
-						for (var j = 0; j < students.length; j++)
-						{
-							if (students[j]._id == student._id)
-							{
-								students[j].isChecked = !student.isChecked;
-								i = j;
-								break;
-							}
-						}
-						flagStudent = false;
-					}
-				}
+				students = [];
 			}
 
 			return students;
@@ -269,6 +276,7 @@ Template.enrollForm.helpers
 			instructorDependency.depend();
 			if (enrollee._id != 'new')
 			{
+				console.log(enrollee.instructor._id);
 				if (!flaginstructor)
 				{
 					instructor = enrollee.instructor;
@@ -330,7 +338,17 @@ Template.enrollForm.helpers
 					enrollee._id = enrollees[0]._id;
 					var users = enrollees.map(function (item) { return item.user; });
 					enrollee.section = section._id;
-					enrollee.instructor =  Users.find({ '_id': { '$in': users } , 'profile.user_type': 1}).fetch()[0];
+					enrollee.instructor =  Users.findOne({ '_id': { '$in': users } , 'profile.user_type': 1}) || {
+						_id: 'new',
+						profile: 
+						{
+							id_number: '',
+							first_name: '',
+							middle_name: '',
+							last_name: '',
+							department: ''
+						}
+					};
 					enrollee.user = Users.find({ '_id': { '$in': users } , 'profile.user_type': 2}).fetch();
 					flagStudent2 = false;
 					studentsDependency.changed();
@@ -439,10 +457,6 @@ Template.enrollForm.events
 									{
 										isAlreadyEnrolledInThatCourse = true;
 										break;
-									}
-									else
-									{
-										isAlreadyEnrolledInThatCourse = false;
 									}
 								}
 

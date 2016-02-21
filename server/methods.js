@@ -102,7 +102,8 @@ Meteor.methods
 	                                user_type: user.profile.user_type,
 	                                gender: user.profile.gender,
 	                                banned: user.profile.banned,
-	                                department: user.profile.department
+	                                department: user.profile.department,
+	                                image: user.profile.image
                             	}
                         	}
 					 	}
@@ -126,7 +127,8 @@ Meteor.methods
 	                                gender: user.profile.gender,
 	                                user_type: user.profile.user_type,
 	                                program: user.profile.program,
-	                                year: user.profile.year
+	                                year: user.profile.year,
+	                                image: user.profile.image
                             	}
                         	}
 						 }
@@ -180,7 +182,8 @@ Meteor.methods
                             user_type: cursor.profile.user_type,
                             program: cursor.profile.program,
                             year: cursor.profile.year,
-                            department: cursor.profile.department
+                            department: cursor.profile.department,
+                            image: cursor.profile.image
                     	}
                 	}
 				}

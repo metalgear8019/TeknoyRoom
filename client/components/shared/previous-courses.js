@@ -31,16 +31,6 @@ Template.previousCourses.helpers
 			console.log("results >> " + JSON.stringify(result));
 			return result;
 		},
-
-		courses: function ()
-		{
-			return Courses.find({});
-		},
-
-		semesters: function ()
-		{
-			return Semesters.find({});
-		}
 	}
 );
 

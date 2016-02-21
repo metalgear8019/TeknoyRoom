@@ -10,6 +10,7 @@
 					<form role="form" id="frmUser">
 						{{ #if Template.subscriptionsReady }}
 							<input id="_id" name="_id" type="hidden" value="{{item._id}}">
+							<input id="image" name="image" type="hidden" value="{{#if notEquals item.profile.image 'undefined'}}{{item.profile.image}}{{/if}}">
 							<input id="banned" name="banned" type="hidden" value="{{item.profile.banned}}">
 							
 							<div style="margin-right:30px;">
@@ -22,28 +23,23 @@
 						    </div>
 						    <div class="col-md-offset-4 ">
 							    <div class="form-group">
-									<input type="text" class="form-control" id="id_number" name="id_number" placeholder="Id Number" value="{{item.profile.id_number}}" disabled="{{#if item.isNew}}{{else}}true{{/if}}">
+									<input type="text" class="form-control" id="id_number" name="id_number" placeholder="ID NUMBER" value="{{item.profile.id_number}}" disabled="{{#if item.isNew}}{{else}}true{{/if}}">
 								</div>
 
 								<div class="form-group">
-									<input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" value="{{item.profile.first_name}}">
+									<input type="text" class="form-control" id="first_name" name="first_name" placeholder="FIRST NAME" value="{{item.profile.first_name}}">
 								</div>
 
 								<div class="form-group">
-									<input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="Middle Name" value="{{item.profile.middle_name}}">
+									<input type="text" class="form-control" id="middle_name" name="middle_name" placeholder="MIDDLE NAME" value="{{item.profile.middle_name}}">
 								</div>
 
 								<div class="form-group">
-									<input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" value="{{item.profile.last_name}}">
+									<input type="text" class="form-control" id="last_name" name="last_name" placeholder="LAST NAME" value="{{item.profile.last_name}}">
 								</div>
 
 								<div class="form-group">
-						        	<label>Profession</label>
-								  	<!--<select id="user_type" name="user_type" class="form-control">
-								    	<option value="2" selected="{{#if item.isNew}}selected{{else}}{{#if equals item.profile.user_type 2}}selected{{else}}{{/if}}{{/if}}">Student</option>
-								    	<option value="1" selected="{{#if equals item.profile.user_type 1}}selected{{else}}{{/if}}">Instructor</option>
-								    	<option value="0" selected="{{#if equals item.profile.user_type 0}}selected{{else}}{{/if}}">Admin</option>
-								  	</select>-->
+						        	<label>PROFESSION</label>
 								  	<select id="user_type" name="user_type" class="form-control" disabled="{{#if item.isNew}}{{else}}true{{/if}}">
 								  		{{#each userTypes}}
 								  			<option value="{{this.value}}" {{this.selected}}>{{this.name}}</option>
@@ -53,11 +49,7 @@
 
 							  	{{ #if isStudent }}
 							  		<div class="form-group">
-										<label>Degree Program</label>
-										<!--<select id="program" name="program" class="form-control">
-											<option value="BSIT" selected>BSIT</option>
-											<option value="BSCS">BSCS</option>
-										</select>-->
+										<label>DEGREE PROGRAM</label>
 										<select id="program" name="program" class="form-control">
 											{{#each Programs}}
 												<option value="{{this.value}}" {{this.selected}}>{{this.value}}</option>
@@ -65,14 +57,7 @@
 										</select>
 									</div>
 							  		<div class="form-group">
-										<label>Year</label>
-										<!--<select id="year" name="year" class="form-control">
-											<option value="1" selected="{{#if item.isNew}}selected{{else}}{{/if}}">1</option>
-											<option value="2">2</option>
-											<option value="3">3</option>
-											<option value="4">4</option>
-											<option value="5">5</option>
-										</select>-->
+										<label>YEAR</label>
 										<select id="year" name="year" class="form-control">
 											{{#each Years}}
 												<option value="{{this.value}}" {{this.selected}}>{{this.value}}</option>
@@ -80,11 +65,7 @@
 										</select>
 									</div>
 								{{ else }}
-										<label>Department</label>
-										<!--<select id="department" name="department" class="form-control">
-											<option value="IT Department" selected>Information Technology</option>
-											<option value="CS Department">Computer Science</option>
-										</select>-->
+										<label>DEPARTMENT</label>
 										<select id="department" name="department" class="form-control">
 											{{#each Departments}}
 												<option value="{{this.value}}" {{this.selected}}>{{this.value}}</option>
@@ -92,7 +73,7 @@
 										</select>
 								{{ /if }}
 								<div class="form-group">
-						  		<label>Gender</label>
+						  		<label>GENDER</label>
 							  	<p>
 									<input class="gender" name="gender" type="radio" id="male" value="Male" checked="{{#if item.isNew}}true{{else}}{{#if equals item.profile.gender 'Male'}}true{{else}}{{/if}}{{/if}}">
 									<label for="male" style="font-size:14px;">Male</label>
