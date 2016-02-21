@@ -9,22 +9,15 @@
 						<input type="hidden" id="_id" name="_id" value="{{ item._id }}">
 
 			        	<div class="form-group">
-					    	<input type="text" id="subject_number" name="subject_number" class="form-control" placeholder="Course Number" value="{{ item.subject_number }}">
+					    	<input type="text" id="subject_number" name="subject_number" class="form-control" placeholder="SUBJECT NUMBER" value="{{ item.subject_number }}">
 					    </div>
 
 					    <div class="form-group">
-							<input type="text" id="title" name="title" class="form-control" placeholder="Descriptive Title" value="{{ item.title }}">
+							<input type="text" id="title" name="title" class="form-control" placeholder="DESCRIPTIVE TITLE" value="{{ item.title }}">
 					    </div>
 
 					    <div class="form-group">
-					        <label>Units</label>
-						  	<!--<select class="form-control" id="unit" name="unit">
-						    	<option value="1.0">1.0</option>
-						    	<option value="2.0">2.0</option>
-						    	<option value="3.0" selected>3.0</option>
-						    	<option value="4.0">4.0</option>
-						    	<option value="6.0">6.0</option>
-						  	</select>-->
+					        <label>UNITS</label>
 						  	<select class="form-control" id="unit" name="unit">
 						  		{{#each Units}}
 						  			<option value="{{this.value}}.0" {{this.selected}}>{{this.value}}.0</option>

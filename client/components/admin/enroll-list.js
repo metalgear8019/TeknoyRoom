@@ -1,5 +1,6 @@
 Template.enrollList.onCreated(function () {
 	var self = this;
+	Session.set('searchTerm', '');
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_ENROLLEES);
 		self.subscribe(SubscriptionTag.ALL_USERS);
@@ -14,14 +15,29 @@ Template.enrollList.helpers
 	{
 		enrollees: function ()
 		{
+			var ses = Session.get('searchTerm');
 			var result = [];
-			Enrollees.find({}).forEach(function (item) {
-				item.section = Sections.findOne(item.section);
-				item.section.semester = Semesters.findOne(item.section.semester);
-				item.section.course = Courses.findOne(item.section.course);
-				item.user = Users.findOne(item.user);
-				result.push(item);
-			});
+
+			if (ses == undefined || ses == '')
+			{
+				Enrollees.find({}).forEach(function (item) {
+					item.section = Sections.findOne(item.section);
+					item.section.semester = Semesters.findOne(item.section.semester);
+					item.section.course = Courses.findOne(item.section.course);
+					item.user = Users.findOne(item.user);
+					result.push(item);
+				});
+			}
+			else
+			{
+				Enrollees.find({}).forEach(function (item) {
+					item.section = Sections.findOne(item.section);
+					item.section.semester = Semesters.findOne(item.section.semester);
+					item.section.course = Courses.findOne(item.section.course);
+					item.user = Users.findOne(item.user);
+					result.push(item);
+				});	
+			}
 
 			return result;
 		}
@@ -31,6 +47,12 @@ Template.enrollList.helpers
 Template.enrollList.events
 (
 	{
+		'keyup #search': function(event)
+		{
+			event.preventDefault();
+			var value = event.target.value;
+			Session.set("searchTerm", value);
+		},
 
 		'click #delete': function (event)
 		{

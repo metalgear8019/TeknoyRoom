@@ -20,11 +20,17 @@ Template.currentCourses.helpers
 				item.course = Courses.findOne(item.course) || '';
 				item.semester = Semesters.findOne(item.semester) || '';
 				item.time = Helpers.scheduleToString(item);
+				item.state = false;
 
 				var currentDate = new Date();
 				
 				if (((currentDate.valueOf() >= item.semester.start_date.valueOf()) && (currentDate.valueOf() < item.semester.end_date.valueOf())))
 				{
+					if (Helpers.getDurationPast(new Date(Session.get('time')), item.hour, item.minute) < item.duration)
+					{
+						item.state = true;
+					}
+
 					result.push(item);
 				}
 			});

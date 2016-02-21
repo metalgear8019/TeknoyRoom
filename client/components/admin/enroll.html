@@ -1,0 +1,15 @@
+<template name="enroll">
+	<div id="page-content-wrapper">
+		<div class="container-fluid" style="padding-right:0px;">
+			<button id="switch" type="button" class="btn btn-success">
+				<i class="fa fa-exchange"></i>
+			</button>
+
+			{{#if view}}
+				{{>enrollForm}}
+			{{else}}
+				{{>enrollStudent}}
+			{{/if}}
+		</div>
+	</div>
+</template>

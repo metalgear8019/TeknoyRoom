@@ -1,0 +1,126 @@
+<template name="enrollStudent">
+	<div class="row form-whitebg" style="margin-top:30px;">
+		
+		<form id="frmEnrollStudent">
+			{{ #if Template.subscriptionsReady }}
+				<input type="hidden" value="{{enrollee._id}}">
+				<div class="form-group">
+					<label>USER</label>
+					<input type="text" id="user" name="user" class="form-control"  value="{{#if notEquals user._id 'new'}} [{{user.profile.id_number}}] {{user.profile.last_name}}, {{user.profile.first_name}} {{user.profile.middle_name}} {{/if}}" placeholder="CHOOSE STUDENT/INSTRUCTOR">
+				    <input type="hidden" id="userId" name="userId" value="{{user._id}}">
+			      	<!-- Modal Student -->
+					<div class="modal fade" id="user_modal" tabindex="-1" role="dialog" aria-labelledby="user_modal">
+					  <div class="modal-dialog">
+					    <div class="modal-content">
+						     <div class="modal-header">
+						        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="fa fa-times-circle-o" style="color:black;"></i></span></button>
+					        	<h5 class="modal-title" id="user_modal">CHOOSE A STUDENT/INSTRUCTOR</h5>
+						    </div>
+						    <div class="modal-body">
+						        <table class="table table-striped table-hover">
+							        <thead>
+							          <tr>
+							          	<th></th>
+						              	<th>ID NUMBER</th>
+						              	<th>NAME</th>
+						              	<th>USER TYPE</th>
+						              	<th>DEPARTMENT/PROGRAM</th>
+							          </tr>
+							        </thead>
+
+							        <tbody>
+							        	{{#each users}}
+							        		<tr class="user pointer-hover">
+							        			<td>
+							        				{{#if equals profile.gender 'Male'}}
+														<img class="media-object" src="/assets/profile-picture3.png" style="width:40px;">
+													{{else}}
+														<img class="media-object" src="/assets/profile-picture2.png" style="width:40px;">
+													{{/if}}
+							        			</td>
+							        			<td>{{profile.id_number}}</td>
+							        			<td>{{profile.last_name}}, {{profile.first_name}} {{profile.middle_name}}</td>
+							        			<td>{{#if equals profile.user_type 2}}Student{{else}}Instructor{{/if}}</td>
+							        			<td>{{#if equals profile.user_type 2}} {{profile.program}} - {{profile.year}} {{else}} {{profile.department}} {{/if}}</td>
+							        		</tr>
+							        	{{/each}}
+							        </tbody>
+							    </table>
+						    </div>
+					    </div>
+					  </div>
+					</div>
+				</div>
+				<div>
+					{{#if sections.length}}
+						<table class="table table-striped">
+					        <thead>
+					          <tr>
+					          	<th></th>
+					            <th>SECTION</th>
+					            <th>SCHEDULE</th>
+					            <th>COURSE</th>
+					            <th>SEMESTER</th>
+					          </tr>
+					        </thead>
+
+					        <tbody>
+					        	{{#each sections}}
+					        		<tr>
+					        			<td><input id="{{ _id }}" type="checkbox" name="section" checked="{{isChecked}}" class="sectionsCheckbox" /></td>
+					        			<td>{{name}}</td>
+					        			<td>
+					        				{{#each day}}
+												{{#if equals this 1}}
+													Sun
+												{{/if}}
+												{{#if equals this 2}}
+													M
+												{{/if}}
+												{{#if equals this 3}}
+													T
+												{{/if}}
+												{{#if equals this 4}}
+													W
+												{{/if}}
+												{{#if equals this 5}}
+													Th
+												{{/if}}
+												{{#if equals this 6}}
+													F
+												{{/if}}
+												{{#if equals this 7}}
+													Sat
+												{{/if}}
+											{{/each}}
+											{{#if greaterThan hour 12}}{{minusTwelve hour}}:{{minute}} PM{{else}}{{hour}}:{{minute}} AM{{/if}}
+											{{#if greaterThan (computeTimeEndHour hour duration) 12}}{{minusTwelve (computeTimeEndHour hour duration)}}:{{computeTimeEndMinute minute duration}} PM{{else}}{{computeTimeEndHour hour duration}}:{{computeTimeEndMinute minute duration}} AM{{/if}}
+					        			</td>
+					        			<td>{{course.title}}</td>
+					        			<td>{{semester.school_year}} {{semester.name}}</td>
+					        		</tr>
+					        	{{/each}}
+					        </tbody>
+					    </table>
+					{{else}}
+						<div class="text-center">
+							<img src="/assets/empty_list_icon.png" style="height:256px;">
+							<div >
+								<h5>Nothing to display!</h5>
+								<p>Collection is empty.</p>
+							</div>
+						</div>
+					{{/if}}
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn-gold form-control">
+						ENROLL STUDENTS
+					</button>
+				</div>
+			{{ else }}
+				{{> loading }}
+			{{ /if }}
+		</form>
+	</div>
+	<script src="/js/button-gold.js"></script>
+</template>

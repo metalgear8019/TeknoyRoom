@@ -12,7 +12,6 @@
 	{{/if}}
 	<div id="page-content-wrapper">
 		<div class="container-fluid" style="padding-right:0px;margin-right:0px;">
-			<!--<div class="alert alert-warning" role="alert" style="margin-top:10px;">Mark users to ban.</div>-->
 			<div class="row" style="margin-top:30px;">
 				<form class="navbar-form navbar-left" role="search">
 				  	<div class="form-group">
@@ -24,8 +23,8 @@
 						</div>
 					  	<div class="input-group dropdown" style="margin-left:20px;">
 						  <button class="btn btn-default dropdown-toggle form-control" type="button" style="width:200px;text-align:left;color:black;" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						    {{filter}} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-						    <i class="fa fa-chevron-down"></i>
+						    {{filter}}
+						    <i class="fa fa-chevron-down" style="float:right;"></i>
 						  </button>
 
 						  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
@@ -38,12 +37,7 @@
 					</div>
 				</form>
 			</div> 
-			<!-- /#row for search bar -->
-			<!--This is where the results will be displayed-->
 			<form id="frmUsers">
-				<!--{{ #each users}}
-					{{> userItem}}
-				{{/each}}-->
 				<div class="table">
 					{{#if users.count}}
 						<table class="table">
@@ -51,10 +45,10 @@
 								<tr>
 									<th></th>
 									<th></th>
-									<th>Id Number</th>
-									<th>Name</th>
-									<th>User Type</th>
-									<th>Department/Degree Program</th>
+									<th>ID NUMBER</th>
+									<th>NAME</th>
+									<th>USER TYPE</th>
+									<th>DEPARTMENT/DEGREE PROGRAM</th>
 									{{#if currentPage 'adminViewUsers'}}
 										<th></th>
 									{{/if}}
