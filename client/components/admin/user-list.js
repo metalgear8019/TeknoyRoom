@@ -166,7 +166,12 @@ Template.userList.events
 		'click #delete': function (event)
 		{
 			event.preventDefault();
-			Meteor.call('deleteUser', this._id);
+			Meteor.call('deleteUser', this._id, function(err){
+				if(err)
+					Notifications.error('Error',err.reason, {timeout: 5000});
+				else
+					Notifications.success('Success','User succesfully added', {timeout: 5000});
+			});
 		},
 
 		'keyup #search': function(event)
@@ -236,11 +241,11 @@ Template.userList.events
 		      complete(results, file ){
 		        Meteor.call('parseUpload', results.data, (error, response) => {
 		          if(error){
-		            console.log(error.reason);
-		          }else{
-		            template.uploading.set(false);
-		            Bert.alert('Upload complete', 'success', 'growl-top-right');
-		          }
+		            Notifications.error('Error',error.reason, {timeout: 5000})
+		          }else
+		            //template.uploading.set(false);
+		            //Bert.alert('Upload complete', 'success', 'growl-top-right');
+		          	Notifications.success('Success','upload successfully added', {timeout: 5000});
 		        });
 		      }
 		    });

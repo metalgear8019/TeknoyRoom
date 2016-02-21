@@ -43,6 +43,8 @@ flowkey:hotkeys@1.1.1
 fortawesome:fontawesome@4.5.0
 fourseven:scss@3.3.3_3
 geojson-utils@1.0.5-modules.8
+gfk:notifications@1.1.4
+gfk:server-messages@1.1.0
 gquemart:meteor-reactive-fullcalendar@1.0.1
 harrison:papa-parse@1.1.1
 hot-code-push@1.0.1-modules.8

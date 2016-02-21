@@ -38,3 +38,5 @@ sanjo:jasmine
 velocity:html-reporter
 gquemart:meteor-reactive-fullcalendar
 simple:imgur
+gfk:notifications
+gfk:server-messages

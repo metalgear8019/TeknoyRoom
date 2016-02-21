@@ -429,7 +429,12 @@ Template.enrollForm.events
 						if (enrollee.instructor._id != undefined)
 						{
 							var cursor = Enrollees.findOne({'user': enrollee.instructor._id});
-							Meteor.call('deleteEnrollee', cursor._id);
+							Meteor.call('deleteEnrollee', cursor._id, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Enrollee successfully deleted', {timeout: 5000});
+							});
 						}
 
 						enrollees.push({user: assignedInstructor, section: section, attendance: [{ time_in: new Date(), time_out: new Date() }, { date: new Date('February 29, 2016'), time_in: new Date('February 29, 2016'), time_out: new Date('February 29, 2016') }] });

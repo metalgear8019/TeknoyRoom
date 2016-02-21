@@ -267,11 +267,21 @@ Template.sectionForm.events
 
 						if (id == 'new')
 						{
-							Meteor.call('addSection', section);
+							Meteor.call('addSection', section, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Section successfully added', {timeout: 5000});
+							});
 						}
 						else
 						{
-							Meteor.call('updateSection', id, section);
+							Meteor.call('updateSection', id, section, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Section updated successfully', {timeout: 5000});
+							});
 						}
 					}
 				}
@@ -336,14 +346,21 @@ Template.sectionForm.events
 					{
 						Meteor.call('addSection', section, function(err) {
 							if (err)
-								console.log('An error occured.\n' + err);
+								//console.log('An error occured.\n' + err);
+								Notifications.error(err.reason,'There is an error',{timeout: 5000});
 							else
-								alert('Work na! Do success notification here!');
+								//alert('Work na! Do success notification here!');
+								Notifications.success('Success','Section added',{timeout: 5000});
 						});
 					}
 					else
 					{
-						Meteor.call('updateSection', id, section);
+						Meteor.call('updateSection', id, section, function(err){
+							if(err)
+								Notifications.error('Error',err.reason,{timeout: 5000});
+							else
+								Notifications.success('Success','Section updated!',{timeout: 5000});
+						});
 					}
 
 					Tracker.flush();
@@ -355,6 +372,8 @@ Template.sectionForm.events
 					$('.toast').fadeIn(400).delay(3000).fadeOut(400);
 				}
 			}
+			
+			  
 		},
 
 		'click #addSection': function(event)
