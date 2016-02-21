@@ -95,10 +95,10 @@ Template.instructorEnterClass.events
 			event.preventDefault();
 			MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), instructorPeer);
 		},
-
 		'click #makeCall': function (event) {
 			event.preventDefault();
 			alert('making call...');
+			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
 			if (Helpers.isEmpty(userPeerId)) {
 				instructorPeer.connections[userPeerId] = instructorPeer.connections['local'].call(user.peer._id, instructorPeer.streams.local);
@@ -106,17 +106,16 @@ Template.instructorEnterClass.events
 				outgoingCall.on('stream', function (remoteStream) {
 					instructorPeer.streams[userPeerId] = remoteStream;
 					alert('receiving stream...');
-					var video = document.getElementById('myVideo');
 					video.src = URL.createObjectURL(remoteStream);
 				});
-			} else {}
+			} else {
+				video.src = URL.createObjectURL(instructorPeer.streams[userPeerId]);
+			}
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
 			MediaHelpers.stopStreams(instructorPeer.streams);
 			MediaHelpers.closeConnections(instructorPeer.connections);
-			// if (!Helpers.isEmpty(instructorPeer.currentCall))
-				// instructorPeer.currentCall.close();
 			FlowRouter.go('/instructor/current');
 		},
 		'click #online': function (event)
@@ -124,14 +123,12 @@ Template.instructorEnterClass.events
 			event.preventDefault();
 			$("#questionWrapper").hide();
 			$("#onlineWrapper").show();
-			//alert('online');
 		},
 		'click #question': function (event)
 		{
 			event.preventDefault();
 			$("#onlineWrapper").hide();
 			$("#questionWrapper").show();
-			//alert('question');
 		}
 	}
 );

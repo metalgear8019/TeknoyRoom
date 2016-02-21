@@ -1,5 +1,8 @@
 var studentPeer = {
-	attendance: {}
+	connections: {}, // key/value pairs of peer connections { [peerId]: connection }
+	streams: {}, // key/value pairs of streams { [peerId]: stream }
+	requests: [], // list of peer IDs who asked a question
+	attendance: {} // attendance of current user, to be inserted on room leave
 };
 
 Template.studentEnterClass.onCreated(function () {
@@ -7,65 +10,57 @@ Template.studentEnterClass.onCreated(function () {
 	self.autorun(function () {
 		var classId = Session.get('class');
 
+		if (Helpers.isEmpty(classId)) {
+			self.subscribe(SubscriptionTag.ALL_ENROLEES);
+			self.subscribe(SubscriptionTag.ALL_SECTIONS);
+			classId = Helpers.getCurrentClass();
+			if (Helpers.isEmpty(classId))
+				FlowRouter.go('/' + Helpers.userTypeToString(Meteor.user().profile.user_type));
+			else {
+				classId = classId._id;
+				Session.set('class', classId);
+			}
+		}
+
 		self.subscribe(SubscriptionTag.PRESENCES);
 		self.subscribe(SubscriptionTag.ALL_USERS);
 
-		studentPeer.peer = Helpers.createNewPeer();
+		studentPeer.connections['local'] = Helpers.createNewPeer();
+	});
+});
 
-		// This event: remote peer receives a call
-		studentPeer.peer.on('open', function () {
-			console.log('peer id >> ' + studentPeer.peer.id + '\nroom id >> ' + classId);
-			// update the current user's profile
-			studentPeer.attendance.time_in = new Date();
-			Meteor.call('updatePeerStatus', Meteor.userId(), { 
-				_id: studentPeer.peer.id,
-				room_id: classId
-			});
+Template.studentEnterClass.onRendered(function () {
+	// This event: remote peer receives a call
+	studentPeer.connections['local'].on('open', function () {
+		console.log('peer id >> ' + studentPeer.connections['local'].id + '\nroom id >> ' + classId);
+		// update the current user's profile
+		studentPeer.attendance.time_in = new Date();
+		Meteor.call('updatePeerStatus', Meteor.userId(), { 
+			_id: studentPeer.connections['local'].id,
+			room_id: classId
 		});
 
-		// clear on disconnect or close
-		/*peer.on('close', function () {
-			console.log('peer id >> ' + peer.id + '\nroom id >> ' + classId);
-			// update the current user's profile
-			Meteor.users.update({_id: Meteor.userId()}, {
-				$set: {
-					peer: { 
-						_id: null,
-						room_id: null
-					}
-				}
-			});
-		});*/
-
 		// This event: remote peer receives a call
-		studentPeer.peer.on('call', function (incomingCall) {
-			studentPeer.currentCall = incomingCall;
-			incomingCall.answer(studentPeer.localStream);
+		studentPeer.connections['local'].on('call', function (incomingCall) {
+			var incomingPeerId = incomingCall.peer;
+			studentPeer.connections[incomingPeerId] = incomingCall;
+			incomingCall.answer(studentPeer.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
-				studentPeer.remoteStream = remoteStream;
-				var video = document.getElementById("theirVideo");
+				studentPeer.streams[incomingPeerId] = remoteStream;
+				var video = document.getElementById('theirVideo');
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		});
 
-		navigator.getUserMedia = (
-			navigator.webkitGetUserMedia ||
-			navigator.mediaDevices.getUserMedia ||
-			// navigator.mozGetUserMedia ||
-			navigator.msGetUserMedia ||
-			navigator.getUserMedia
-		);
-
-		// get audio/video
-		navigator.getUserMedia({audio:true, video: true}, function (stream) {
-			//display video
-			var video = document.getElementById('myVideo');
-			video.src = URL.createObjectURL(stream);
-			studentPeer.localStream = stream;
-		}, function (error) { 
-			console.log(error); 
+		// when student leaves the room
+		studentPeer.connections['local'].on('close', function () {
+			studentPeer.attendance.time_out = new Date();
+			Meteor.call('logAttendance', Meteor.userId(), studentPeer.attendance);
+			console.log('Successfully closed connection.');
 		});
 	});
+
+	MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), studentPeer);
 });
 
 Template.studentEnterClass.helpers
@@ -95,32 +90,36 @@ Template.studentEnterClass.events
 			$('#share-screen').removeAttr('disabled');
 			$('#share-camera').attr('disabled', 'disabled');
 		},
-
-		'click #makeCall': function (event) {
+		'click #makeCall': function (event) 
+		{
 			event.preventDefault();
 			alert('making call...');
-			var outgoingCall = studentPeer.peer.call(getInstructorId(), studentPeer.localStream);
-			studentPeer.currentCall = outgoingCall;
-			outgoingCall.on('stream', function (remoteStream) {
-				studentPeer.remoteStream = remoteStream;
-				alert('receiving stream...');
-				var video = document.getElementById("theirVideo");
-				video.src = URL.createObjectURL(remoteStream);
-			});
+			var video = document.getElementById('theirVideo');
+			var userPeerId = getInstructorId();
+			if (Helpers.isEmpty(userPeerId)) {
+				studentPeer.connections[userPeerId] = studentPeer.connections['local'].call(user.peer._id, studentPeer.streams.local);
+				studentPeer.currentCall = studentPeer.connections[userPeerId];
+				outgoingCall.on('stream', function (remoteStream) {
+					studentPeer.streams[userPeerId] = remoteStream;
+					alert('receiving stream...');
+					video.src = URL.createObjectURL(remoteStream);
+				});
+			} else {
+				video.src = URL.createObjectURL(studentPeer.streams[userPeerId]);
+			}
 		},
-		'click #leave': function (event) {
+		'click #leave': function (event) 
+		{
 			event.preventDefault();
-			if (undefined != studentPeer.currentCall || null != studentPeer.currentCall)
-				studentPeer.currentCall.close();
-			studentPeer.attendance.time_out = new Date();
-			Meteor.call('logAttendance', Meteor.userId(), studentPeer.attendance);
+			MediaHelpers.stopStreams(studentPeer.streams);
+			MediaHelpers.closeConnections(studentPeer.connections);
 			FlowRouter.go('/student/current');
 		}
 	}
 );
 
 var getInstructorId = function () {
-	var result =  Meteor.users.findOne({
+	var result =  Users.findOne({
 		'profile.user_type': 1,
 		'status.online': true,
 		'peer.room_id': Session.get('class')
@@ -128,4 +127,4 @@ var getInstructorId = function () {
 
 	console.log('query done >> ');
 	return result.peer._id;
-}
+};

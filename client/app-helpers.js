@@ -99,6 +99,14 @@ Helpers = {
 			]}
 		});
 	},
+	getCurrentSemester: function () {
+		var time = new Date(Session.get('time'));
+		var result = Semesters.findOne({
+			start_date: { $lte: time },
+			end_date: { $gte: time }
+		});
+		return result;
+	},
 	getCurrentClass: function () {
 		var time = new Date(Session.get('time'));
 		var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
