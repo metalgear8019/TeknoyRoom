@@ -38,7 +38,12 @@ Template.courseList.events
 		'click #delete': function (event)
 		{
 			event.preventDefault();
-			Meteor.call('deleteCourse', this._id);
+			Meteor.call('deleteCourse', this._id, function(err){
+				if(err)
+					Notifications.error('ERROR', err.reason, {timeout: 5000});
+				else
+					Notifications.success('SUCCESS', 'Course successfully deleted', {timeout: 5000});
+			});
 		},
 
 		'click .pointer-hover': function (event)

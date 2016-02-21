@@ -3,9 +3,9 @@ Template.currentCourses.onCreated(function () {
 	var time = new Date(Session.get('time'));
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_ENROLLEES_USER, Meteor.userId());
+		self.subscribe(SubscriptionTag.CURRENT_SEMESTER, time);
 		self.subscribe(SubscriptionTag.ALL_SECTIONS);
 		self.subscribe(SubscriptionTag.ALL_COURSES);
-		self.subscribe(SubscriptionTag.CURRENT_SEMESTER, time);
 	});
 });
 
@@ -15,11 +15,12 @@ Template.currentCourses.helpers
 		sections: function()
 		{
 		 	var enrolledIds = Enrollees.find().map(function (c) { return c.section; });
-		 	var currentSemester = Semesters.findOne();
-			var result = Sections.find({ _id: { $in: enrolledIds }, semester: currentSemester._id }).map(function (item) {
+			result = Sections.find({ _id: { $in: enrolledIds } }).map(function (item) {
+				// item.state = Helpers.isClassOngoing(item, time);
 				item.course = Courses.findOne(item.course) || '';
-				item.semester = currentSemester;
+				item.semester = Semesters.findOne();
 				item.time = Helpers.scheduleToString(item);
+				// item.state = (currentClass._id === item._id);
 				return item;
 			});
 			// console.log("results >> " + JSON.stringify(result));

@@ -84,11 +84,22 @@ Template.courseForm.events
 
 				if (id == 'new')
 				{
-					Meteor.call('addCourse', course);
+					Meteor.call('addCourse', course, function(err){
+						if(err)
+							Notifications.error('Error',err.reason,{timeout: 5000});
+						else
+							Notifications.success('Success', 'Course added successfully',{timeout: 5000});
+					});
+					
 				}
 				else 
 				{
-					Meteor.call('updateCourse', id, course);
+					Meteor.call('updateCourse', id, course, function(err){
+						if(err)
+							Notifications.error('Error', err.reason, {timeout: 5000});
+						else
+							Notifications.success('Success', 'Course updated successfully',{timeout: 5000});
+					});
 				}
 
 				FlowRouter.go('/admin/course/');

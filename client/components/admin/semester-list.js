@@ -44,7 +44,12 @@ Template.semesterList.events
 		'click #delete': function (event)
 		{
 			event.preventDefault();
-			Meteor.call('deleteSemester', this._id);
+			Meteor.call('deleteSemester', this._id, function(err){
+				if(err)
+					Notifications.error('ERROR', err.reason, {timeout: 5000});
+				else
+					Notifications.success('SUCCESS', 'Semester successfully deleted', {timeout: 5000});
+			});
 		},
 
 		'click .pointer-hover': function (event)

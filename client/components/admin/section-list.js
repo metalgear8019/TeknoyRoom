@@ -133,7 +133,12 @@ Template.sectionList.events
 		'click #delete': function (event)
 		{
 			event.preventDefault();
-			Meteor.call('deleteSection', this._id);
+			Meteor.call('deleteSection', this._id, function(err){
+				if(err)
+					Notifications.error('Error',err.reason,{timeout: 5000});
+				else
+					Notifications.success('Success','Section successfully deleted',{timeout: 5000});
+			});
 		},
 
 		'click #addSection': function (event)
@@ -155,11 +160,12 @@ Template.sectionList.events
 		      header : true,
 		      complete(results, file ){
 		        Meteor.call('parseSectionUpload', results.data, (error, response) => {
-		          if(error){
-		            console.log(error.reason);
-		          }//else{
+		          if(error)
+		            Notifications.error('Error',error.reason,{timeout: 5000});
+		          else
 		            //template.uploading.set(false);
 		            //Bert.alert('Upload complete', 'success', 'growl-top-right');
+		            Notifications.success('Success','uploading success',{timeout: 5000});
 		          //}
 		        });
 		      }

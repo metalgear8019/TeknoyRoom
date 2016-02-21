@@ -3,9 +3,9 @@ Template.previousCourses.onCreated(function () {
 	var time = new Date(Session.get('time'));
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_ENROLLEES_USER, Meteor.userId());
+		self.subscribe(SubscriptionTag.PREVIOUS_SEMESTERS, time);
 		self.subscribe(SubscriptionTag.ALL_SECTIONS);
 		self.subscribe(SubscriptionTag.ALL_COURSES);
-		self.subscribe(SubscriptionTag.PREVIOUS_SEMESTERS, time);
 	});
 });
 
@@ -33,16 +33,6 @@ Template.previousCourses.helpers
 			console.log("results >> " + JSON.stringify(result));
 			return result;
 		},
-
-		courses: function ()
-		{
-			return Courses.find({});
-		},
-
-		semesters: function ()
-		{
-			return Semesters.find({});
-		}
 	}
 );
 

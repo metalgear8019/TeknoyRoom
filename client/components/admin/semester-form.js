@@ -67,11 +67,21 @@ Template.semesterForm.events
 				
 				if (id == 'new')
 				{
-					Meteor.call('addSemester', semester);
+					Meteor.call('addSemester', semester, function(err){
+						if(err)
+							Notifications.error('ERROR', err.reason, {timeout: 5000});
+						else
+							Notifications.success('SUCCESS', 'Semester successfully added', {timeout: 5000});
+					});
 				}
 				else 
 				{
-					Meteor.call('updateSemester', id, semester);
+					Meteor.call('updateSemester', id, semester, function(err){
+						if(err)
+							Notifications.error('ERROR', err.reason, {timeout: 5000});
+						else
+							Notifications.success('SUCCESS', 'Semester successfully updated', {timeout: 5000});
+					});
 				}
 
 				FlowRouter.go('/admin/semester/');

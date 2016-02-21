@@ -110,6 +110,15 @@ Helpers = {
 		}) || {};
 		return result;
 	},
+	isClassOngoing: function (currentClass, time) {
+		if (!(time instanceof Date) || Helpers.isEmpty(currentClass))
+			return false;
+		var currentDay = time.getDay() + 1;
+		var currentHour = time.getHours();
+		var durationPast = Helpers.getDurationPast(time, currentClass.hour, currentClass.minute);
+		return (currentClass.day.includes(currentDay) && currentHour >= currentClass.hour &&
+			durationPast < currentClass.duration);
+	},
 	getCurrentClass: function () {
 		var time = new Date(Session.get('time'));
 		var enrolledSubjects = Enrollees.find({ user: Meteor.userId() });
@@ -124,8 +133,7 @@ Helpers = {
 		
 		console.log("class >> " + JSON.stringify(result) + '\nday >> ' + time.getDay() + '\nhour >> ' + time.getHours());
 
-		if (result != null && result != undefined && 
-				Helpers.getDurationPast(time, result.hour, result.minute) < result.duration) {
+		if (Helpers.isClassOngoing(result, time)) {
 			console.log("duration >> " + result.duration + "\ntime passed >> " + 
 				Helpers.getDurationPast(time, result.hour, result.minute));
 			// Session.set('class', result._id);
