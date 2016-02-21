@@ -30,7 +30,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'error in uploading image', e);
+				return new Meteor.Error(500, 'error in uploading image', e);
 			}
 		},
 
@@ -47,7 +47,7 @@ Meteor.methods
 			catch (e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in updating class', e);
+				return new Meteor.Error(500, 'exception in updating class', e);
 			}
 		},
 
@@ -75,7 +75,7 @@ Meteor.methods
 			catch (e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in logging attendance', e);
+				return new Meteor.Error(500, 'exception in logging attendance', e);
 			}
 		},
 
@@ -136,7 +136,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in update user', e);
+				return new Meteor.Error(500, 'exception in update user', e);
 			}
 		},
 
@@ -152,7 +152,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in delete user', e);
+				return new Meteor.Error(500, 'exception in delete user', e);
 			}
 		},
 
@@ -217,7 +217,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in add course', e);
+				return new Meteor.Error(500, 'exception in add course', e);
 			}
 		},
 
@@ -243,7 +243,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in update course', e);
+				return new Meteor.Error(500, 'exception in update course', e);
 			}
 		},
 
@@ -261,14 +261,13 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in delete course', e);
+				return new Meteor.Error(500, 'exception in delete course', e);
 			}
 		},
 
 		addSection: function (section)
 		{
 			check(section, Object);
-			check(serverMessages, Object);
 			try
 			{
 				Sections.insert
@@ -283,7 +282,6 @@ Meteor.methods
 						duration: section.duration
 					}
 				);
-				serverMessages.notify('serverMessage:success', 'Success', 'Section added!', {timeout : 5000});
 			} 
 			catch(e)
 			{
@@ -318,7 +316,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in update section', e);
+				return new Meteor.Error(500, 'exception in update section', e);
 			}
 		},
 
@@ -333,7 +331,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in delete section', e);
+				return new Meteor.Error(500, 'exception in delete section', e);
 			}
 		},
 
@@ -355,7 +353,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in add semester', e);
+				return new Meteor.Error(500, 'exception in add semester', e);
 			}
 		},
 
@@ -382,7 +380,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in update semester', e);
+				return new Meteor.Error(500, 'exception in update semester', e);
 			}
 		},
 
@@ -399,7 +397,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in delete semester', e);
+				return new Meteor.Error(500, 'exception in delete semester', e);
 			}
 		},
 
@@ -428,7 +426,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in add enrollee', e);
+				return new Meteor.Error(500, 'exception in add enrollee', e);
 			}
 		},
 
@@ -457,7 +455,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in update enrollee', e);
+				return new Meteor.Error(500, 'exception in update enrollee', e);
 			}
 		},
 
@@ -471,7 +469,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in delete enrollee', e);
+				return new Meteor.Error(500, 'exception in delete enrollee', e);
 			}
 		},
 
@@ -492,7 +490,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in add note', e);
+				return new Meteor.Error(500, 'exception in add note', e);
 			}
 		},
 
@@ -518,7 +516,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in update note', e);
+				return new Meteor.Error(500, 'exception in update note', e);
 			}
 		},
 
@@ -532,7 +530,7 @@ Meteor.methods
 			catch(e)
 			{
 				console.log(e);
-				throw new Meteor.Error(500, 'exception in delete note', e);
+				return new Meteor.Error(500, 'exception in delete note', e);
 			}
 		},
 

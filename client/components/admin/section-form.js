@@ -336,14 +336,21 @@ Template.sectionForm.events
 					{
 						Meteor.call('addSection', section, function(err) {
 							if (err)
-								console.log('An error occured.\n' + err);
+								//console.log('An error occured.\n' + err);
+								Notifications.error(err.reason,'There is an error',{timeout: 5000});
 							else
-								alert('Work na! Do success notification here!');
+								//alert('Work na! Do success notification here!');
+								Notifications.success('Success','Section added',{timeout: 5000});
 						});
 					}
 					else
 					{
-						Meteor.call('updateSection', id, section);
+						Meteor.call('updateSection', id, section, function(err){
+							if(err)
+								Notifications.error('Error',err.reason,{timeout: 5000});
+							else
+								Notifications.success('Success','Section updated!',{timeout: 5000});
+						});
 					}
 
 					Tracker.flush();

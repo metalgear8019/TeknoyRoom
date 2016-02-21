@@ -276,11 +276,21 @@ Template.userForm.events
 						user.profile.department = department;
 						if (id == 'new')
 						{
-							Meteor.call('addUser', user);
+							Meteor.call('addUser', user, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Instructor successfully added', {timeout: 5000});
+							});
 						}
 						else
 						{
-							Meteor.call('updateUser', id, user);
+							Meteor.call('updateUser', id, user, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Instructor successfully updated', {timeout: 5000});
+							});
 						}
 						FlowRouter.go('/admin/user/');
 					}
@@ -301,12 +311,22 @@ Template.userForm.events
 
 						if (id == 'new')
 						{
-							Meteor.call('addUser', user);
+							Meteor.call('addUser', user, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Student successfully added')
+							});
 						}
 						else
 						{
 							console.log('updating');
-							Meteor.call('updateUser', id, user);
+							Meteor.call('updateUser', id, user, function(err){
+								if(err)
+									Notifications.error('ERROR', err.reason, {timeout: 5000});
+								else
+									Notifications.success('SUCCESS', 'Student successfully updated', {timeout: 5000});
+							});
 						}
 
 						FlowRouter.go('/admin/user/');
@@ -334,7 +354,12 @@ Template.userForm.events
 						]
 					};
 					
-					Meteor.call('addUser', user);
+					Meteor.call('addUser', user, function(err){
+						if(err)
+							Notifications.error('ERROR', err.reason, {timeout: 5000});
+						else
+							Notifications.success('SUCCESS', 'Admin successfully added', {timeout: 5000});
+					});
 					FlowRouter.go('/admin/user/');
 				}
 				else
