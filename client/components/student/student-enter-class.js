@@ -95,16 +95,13 @@ Template.studentEnterClass.events
 			// alert('making call...');
 			var video = document.getElementById('theirVideo');
 			var userPeerId = getInstructorId();
-			if (Helpers.isEmpty(studentPeer.streams[userPeerId])) {
-				studentPeer.connections[userPeerId] = studentPeer.connections['local'].call(userPeerId, studentPeer.streams.local);
-				studentPeer.connections[userPeerId].on('stream', function (remoteStream) {
-					studentPeer.streams[userPeerId] = remoteStream;
-					// alert('receiving stream...');
-					video.src = URL.createObjectURL(remoteStream);
-				});
-			} else {
-				video.src = URL.createObjectURL(studentPeer.streams[userPeerId]);
-			}
+			var outgoingCall = studentPeer.connections['local'].call(userPeerId, studentPeer.streams.local);
+			studentPeer.connections[userPeerId] = outgoingCall;
+			outgoingCall.on('stream', function (remoteStream) {
+				studentPeer.streams[userPeerId] = remoteStream;
+				// alert('receiving stream...');
+				video.src = URL.createObjectURL(remoteStream);
+			});
 		},
 		'click #askQuestion': function (event) 
 		{

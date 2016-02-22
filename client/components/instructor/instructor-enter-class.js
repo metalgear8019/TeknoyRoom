@@ -128,7 +128,7 @@ Template.instructorEnterClass.events
 			event.preventDefault();
 			alert('making call...');
 			var video = document.getElementById('myVideo');
-			var userPeerId = this.peer._id;
+			/*var userPeerId = this.peer._id;
 			if (Helpers.isEmpty(instructorPeer.streams[userPeerId])) {
 				instructorPeer.connections[userPeerId] = instructorPeer.connections['local'].call(user.peer._id, instructorPeer.streams.local);
 				instructorPeer.connections[userPeerId].on('stream', function (remoteStream) {
@@ -138,7 +138,7 @@ Template.instructorEnterClass.events
 				});
 			} else {
 				video.src = URL.createObjectURL(instructorPeer.streams[userPeerId]);
-			}
+			}*/
 		},
 		'click #answerQuestion': function (event) {
 			event.preventDefault();
