@@ -1,6 +1,9 @@
+var time = new Date(Session.get('time'));
+
 Template.currentCourses.onCreated(function () {
 	var self = this;
-	var time = new Date(Session.get('time'));
+ 	time = new Date(Session.get('time'));
+ 	console.log('user id: ' + Meteor.userId());
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_ENROLLEES_USER, Meteor.userId());
 		self.subscribe(SubscriptionTag.CURRENT_SEMESTER, time);
@@ -15,7 +18,7 @@ Template.currentCourses.helpers
 		sections: function()
 		{
 			var result = [];
-		 	var enrolledIds = Enrollees.find().map(function (c) { return c.section; });
+		 	var enrolledIds = Enrollees.find({}).map(function (c) { return c.section; });
 		 	var currentSemester = Semesters.findOne() || { _id: null };
 			Sections.find({ _id: { $in: enrolledIds }, semester: currentSemester._id }).forEach(function (item) {
 				/*if (Helpers.isClassOngoing(item, time))
@@ -25,7 +28,7 @@ Template.currentCourses.helpers
 				item.course = Courses.findOne(item.course) || '';
 				item.semester = currentSemester;
 				item.time = Helpers.scheduleToString(item);
-				// item.state = Helpers.isClassOngoing(item, time);
+				item.state = Helpers.isClassOngoing(item, time);
 				result.push(item);
 			});
 			// console.log("results >> " + JSON.stringify(result));

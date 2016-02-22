@@ -110,6 +110,7 @@ Template.studentEnterClass.events
 		'click #leave': function (event) 
 		{
 			event.preventDefault();
+			//$('video').src = null;
 			MediaHelpers.stopStreams(studentPeer.streams);
 			MediaHelpers.closeConnections(studentPeer.connections);
 			FlowRouter.go('/student/current');
