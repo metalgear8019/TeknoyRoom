@@ -1,9 +1,3 @@
-var studentPeer = {
-	connections: {}, // key/value pairs of peer connections { [peerId]: connection }
-	streams: {}, // key/value pairs of streams { [peerId]: stream }
-	attendance: {} // attendance of current user, to be inserted on room leave
-};
-
 Template.studentEnterClass.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
@@ -24,42 +18,42 @@ Template.studentEnterClass.onCreated(function () {
 		self.subscribe(SubscriptionTag.PRESENCES);
 		self.subscribe(SubscriptionTag.ALL_USERS);
 
-		studentPeer.connections['local'] = Helpers.createNewPeer();
+		PeerMedia.connections['local'] = Helpers.createNewPeer();
 	});
 });
 
 Template.studentEnterClass.onRendered(function () {
 	// This event: remote peer receives a call
-	studentPeer.connections['local'].on('open', function () {
-		console.log('peer id >> ' + studentPeer.connections['local'].id + '\nroom id >> ' + Session.get('class'));
+	PeerMedia.connections['local'].on('open', function () {
+		console.log('peer id >> ' + PeerMedia.connections['local'].id + '\nroom id >> ' + Session.get('class'));
 		// update the current user's profile
-		studentPeer.attendance.time_in = new Date();
+		PeerMedia.attendance.time_in = new Date();
 		Meteor.call('updatePeerStatus', Meteor.userId(), { 
-			_id: studentPeer.connections['local'].id,
+			_id: PeerMedia.connections['local'].id,
 			room_id: Session.get('class')
 		});
 
 		// This event: remote peer receives a call
-		studentPeer.connections['local'].on('call', function (incomingCall) {
+		PeerMedia.connections['local'].on('call', function (incomingCall) {
 			var incomingPeerId = incomingCall.peer;
-			studentPeer.connections[incomingPeerId] = incomingCall;
-			incomingCall.answer(studentPeer.streams.local);
+			PeerMedia.connections[incomingPeerId] = incomingCall;
+			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
-				studentPeer.streams[incomingPeerId] = remoteStream;
+				PeerMedia.streams[incomingPeerId] = remoteStream;
 				var video = document.getElementById('theirVideo');
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		});
 
 		// when student leaves the room
-		studentPeer.connections['local'].on('close', function () {
-			studentPeer.attendance.time_out = new Date();
-			Meteor.call('logAttendance', Meteor.userId(), studentPeer.attendance);
+		PeerMedia.connections['local'].on('close', function () {
+			PeerMedia.attendance.time_out = new Date();
+			Meteor.call('logAttendance', Meteor.userId(), PeerMedia.attendance);
 			console.log('Successfully closed connection.');
 		});
 	});
 
-	MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), studentPeer);
+	MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), PeerMedia);
 });
 
 Template.studentEnterClass.helpers
@@ -95,10 +89,10 @@ Template.studentEnterClass.events
 			// alert('making call...');
 			var video = document.getElementById('theirVideo');
 			var userPeerId = getInstructorId();
-			var outgoingCall = studentPeer.connections['local'].call(userPeerId, studentPeer.streams.local);
-			studentPeer.connections[userPeerId] = outgoingCall;
+			var outgoingCall = PeerMedia.connections['local'].call(userPeerId, PeerMedia.streams.local);
+			PeerMedia.connections[userPeerId] = outgoingCall;
 			outgoingCall.on('stream', function (remoteStream) {
-				studentPeer.streams[userPeerId] = remoteStream;
+				PeerMedia.streams[userPeerId] = remoteStream;
 				// alert('receiving stream...');
 				video.src = URL.createObjectURL(remoteStream);
 			});
@@ -106,13 +100,13 @@ Template.studentEnterClass.events
 		'click #askQuestion': function (event) 
 		{
 			event.preventDefault();
-			Meteor.call('addRequest', getInstructorId(), studentPeer.connections['local'].peer);
+			Meteor.call('addRequest', getInstructorId(), PeerMedia.connections['local'].id);
 		},
 		'click #leave': function (event) 
 		{
 			event.preventDefault();
-			MediaHelpers.stopStreams(studentPeer.streams);
-			MediaHelpers.closeConnections(studentPeer.connections);
+			MediaHelpers.stopStreams(PeerMedia.streams);
+			MediaHelpers.closeConnections(PeerMedia.connections);
 			FlowRouter.go('/student/current');
 		}
 	}

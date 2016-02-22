@@ -175,6 +175,12 @@ Helpers = {
 	}
 };
 
+PeerMedia = {
+	connections: {}, // key/value pairs of peer connections { [peerId]: connection }
+	streams: {}, // key/value pairs of streams { [peerId]: stream }
+	attendance: {} // attendance of current user, to be inserted on room leave
+};
+
 MediaHelpers = {
 	requestUserMedia: function() {
 		console.log('getting user media');
@@ -213,19 +219,23 @@ MediaHelpers = {
 		MediaHelpers.requestFeed(target, peer, true, true);
 	},
 	stopStreams: function(streams) {
-		for (streamId in streams) {
-			if (!streams.hasOwnProperty(streamId))
-				continue;
-			if (!Helpers.isEmpty(streamId))
-				streams[streamId].stop();
+		if (!Helpers.isEmpty(streams)) {
+			for (streamId in streams) {
+				if (!streams.hasOwnProperty(streamId))
+					continue;
+				if (!Helpers.isEmpty(streamId))
+					streams[streamId].stop();
+			}
 		}
 	},
 	closeConnections: function(connections) {
-		for (connId in connections) {
-			if (!connections.hasOwnProperty(connId))
-				continue;
-			if (!Helpers.isEmpty(connId))
-				connections[connId].destroy();
+		if (!Helpers.isEmpty(connections)) {
+			for (connId in connections) {
+				if (!connections.hasOwnProperty(connId))
+					continue;
+				if (!Helpers.isEmpty(connId))
+					connections[connId].destroy();
+			}
 		}
 	}
 };
