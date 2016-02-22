@@ -1,32 +1,3 @@
-/*var Requests = {
-	list: [], // list of students who asked questions
-	get: function () {
-		if (!this.dependency) {
-			this.dependency = new Tracker.Dependency();
-		}
-		this.dependency.depend();
-		return this.list;
-	},
-	add: function (peerId) {
-		var index = this.list.indexOf(peerId);
-		if (index < 0) {
-			this.list.push(peerId);
-			this.dependency.changed();
-		}
-	},
-	remove: function (peerId) {
-		var index = this.list.indexOf(peerId);
-		if (index > -1) {
-			this.list.splice();
-			this.dependency.changed();
-		}
-	},
-	reset: function () {
-		this.list = [];
-		this.dependency.changed();
-	}
-}*/
-
 Template.instructorEnterClass.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
@@ -79,7 +50,7 @@ Template.instructorEnterClass.onRendered(function () {
 		PeerMedia.connections['local'].on('close', function () {
 			PeerMedia.attendance.time_out = new Date();
 			Meteor.call('logAttendance', Meteor.userId(), PeerMedia.attendance);
-			console.log('Successfully closed connection.');
+			console.log('Successfully closed connection @' + Helpers.dateToString(PeerMedia.attendance.time_out));
 		});
 	});
 
@@ -96,9 +67,12 @@ Template.instructorEnterClass.helpers
 			});
 		},
 		requests: function () {
-			var requestIds = Users.findOne({ _id: Meteor.userId() }).peer.requests || [];
+			var user = Users.findOne({ _id: Meteor.userId() }) || { peer: { requests: [] } };
+			var requestIds = user.peer.requests;
 			return Users.find({
-				'peer._id': { $in : requestIds }
+				'status.online': true,
+				'peer._id': { $in : requestIds },
+				'peer.room_id': Session.get('class')
 			});
 		}
 	}
@@ -120,33 +94,35 @@ Template.instructorEnterClass.events
 		},
 		'click #makeCall': function (event) {
 			event.preventDefault();
-			alert('making call...');
+			console.log('making call...');
 			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
 			if (Helpers.isEmpty(PeerMedia.streams[userPeerId])) {
 				PeerMedia.connections[userPeerId] = PeerMedia.connections['local'].call(user.peer._id, PeerMedia.streams.local);
 				PeerMedia.connections[userPeerId].on('stream', function (remoteStream) {
 					PeerMedia.streams[userPeerId] = remoteStream;
-					alert('receiving stream...');
+					console.log('receiving stream...');
 					video.src = URL.createObjectURL(remoteStream);
 				});
 			} else {
+				console.log('switching stream...');
 				video.src = URL.createObjectURL(PeerMedia.streams[userPeerId]);
 			}
 		},
 		'click #answerQuestion': function (event) {
 			event.preventDefault();
-			// alert('making call...');
+			console.log('making call...');
 			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
 			if (Helpers.isEmpty(PeerMedia.streams[userPeerId])) {
 				PeerMedia.connections[userPeerId] = PeerMedia.connections['local'].call(user.peer._id, PeerMedia.streams.local);
 				PeerMedia.connections[userPeerId].on('stream', function (remoteStream) {
 					PeerMedia.streams[userPeerId] = remoteStream;
-					alert('receiving stream...');
+					console.log('receiving stream...');
 					video.src = URL.createObjectURL(remoteStream);
 				});
 			} else {
+				console.log('switching stream...');
 				video.src = URL.createObjectURL(PeerMedia.streams[userPeerId]);
 			}
 		},

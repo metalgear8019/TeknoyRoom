@@ -44,8 +44,7 @@ Template.currentCourses.events
 			var result = Helpers.getCurrentClass();
 			console.log(JSON.stringify(result));
 
-			if (result != null && result != undefined && 
-					Helpers.getDurationPast(Helpers.getTime(), result.hour, result.minute) < result.duration) {
+			if (!Helpers.isEmpty(result)) {
 				console.log("duration >> " + result.duration + "\ntime passed >> " + 
 					Helpers.getDurationPast(Helpers.getTime(), result.hour, result.minute));
 				Session.set('class', result._id);

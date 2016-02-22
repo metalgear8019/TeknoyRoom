@@ -1,9 +1,12 @@
 
 Template.studentDashboard.onCreated(function () {
 	var self = this;
+	var time = Session.get('time');
 	self.autorun(function () {
 		self.subscribe(SubscriptionTag.ALL_NOTES);
 		self.subscribe(SubscriptionTag.ALL_COURSES);
+		// self.subscribe(SubscriptionTag.CURRENT_CLASS, time, Meteor.userId());
+		self.subscribe(SubscriptionTag.ALL_SECTIONS);
 	});
 });
 
@@ -49,6 +52,15 @@ Template.studentDashboard.helpers
 		{
 			noteDependency.depend();
 			return note;
+		},
+
+		class: function()
+		{
+			var text = 'No classes yet';
+			var currentClass = Helpers.getCurrentClass();
+			if (!Helpers.isEmpty(currentClass))
+				text = 'Go to ' + Courses.findOne({ _id: currentClass.course }).title + ' ' + currentClass.name;
+			return text;
 		}
 	}
 );
@@ -82,6 +94,23 @@ Template.studentDashboard.events
 		{
 			event.preventDefault();
 			$('#content').val('');
+		},
+
+		'click #enterClass': function (event)
+		{
+			event.preventDefault();
+			var result = Helpers.getCurrentClass();
+			console.log(JSON.stringify(result));
+
+			if (!Helpers.isEmpty(result)) {
+				console.log("duration >> " + result.duration + "\ntime passed >> " + 
+					Helpers.getDurationPast(Helpers.getTime(), result.hour, result.minute));
+				Session.set('class', result._id);
+				console.log('enrolled id >> ' + Session.get('class'));
+				FlowRouter.go(getRouteGroup() + '/current/enter');
+			} else {
+				Notifications.warn('WARNING', 'No classes is currently in session', {timeout: 5000});
+			}
 		},
 
 		'submit #frmUpdateNote': function(event)

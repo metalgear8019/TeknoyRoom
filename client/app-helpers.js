@@ -83,9 +83,11 @@ Helpers = {
 		return new Peer({
 			// key: '5a78de0d-b6bd-4986-9160-d74019d2fea9',  // change this key
 			// path: '/',
-			// key: 'peerjs',
-			// port: 9000,
-			key: 'dqxm490i2c07ldi',
+			host: '/',
+			key: 'teknoyroom',
+			port: 9000,
+			debug: true
+			/*key: 'dqxm490i2c07ldi',
 			debug: true,
 			config: {'iceServers': [
 				{ url: 'stun:stun01.sipphone.com' },
@@ -122,7 +124,7 @@ Helpers = {
 					credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=', 
 					username: '28224511:1379330808'
 				}
-			]}
+			]}*/
 		});
 	},
 	getCurrentSemester: function () {
