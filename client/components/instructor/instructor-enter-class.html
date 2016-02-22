@@ -69,15 +69,16 @@
 						    <ul style="list-style-type:none;">
 						    	<h6>
 						    		<div style="margin-top:-12px;"></div>
-						    		{{ #each onlineUsers }}
-							    		<a href="#" id="answerQuestion">
+						    		{{ #each requests }}
+							    		<a href="" id="makeCall">
 							    			<li>
 							    				<p style="margin-top:15px;margin-left:-25px;color:black;text-align:left;">
 							    					<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:30px;width:30px;float:left;margin-top:-5px;">&nbsp;&nbsp;
 							    					[{{ username }}] <!--{{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}-->
 							    					<!--Annalou Villaro Lim--> &nbsp;&nbsp;&nbsp;&nbsp;
 							    				</p>
-							    				<i class="fa fa-circle" style="color:green;margin-left:-13px;float:right;margin-top:-26px;"></i>
+							    				<a href="" id="endQuestion"><i class="fa fa-cross" style="color:green;margin-left:-13px;float:right;margin-top:-26px;"></i>
+							    				</a>
 							    			</li>
 							    		</a>
 							    	{{ /each }}

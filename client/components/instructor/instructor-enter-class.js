@@ -1,9 +1,3 @@
-var instructorPeer = {
-	connections: {}, // key/value pairs of peer connections { [peerId]: connection }
-	streams: {}, // key/value pairs of streams { [peerId]: stream }
-	attendance: {} // attendance of current user, to be inserted on room leave
-};
-
 /*var Requests = {
 	list: [], // list of students who asked questions
 	get: function () {
@@ -53,7 +47,7 @@ Template.instructorEnterClass.onCreated(function () {
 		self.subscribe(SubscriptionTag.PRESENCES);
 		self.subscribe(SubscriptionTag.ALL_USERS);
 
-		instructorPeer.connections['local'] = Helpers.createNewPeer();
+		PeerMedia.connections['local'] = Helpers.createNewPeer();
 	});
 });
 
@@ -61,35 +55,35 @@ Template.instructorEnterClass.onRendered(function () {
 	var video = document.getElementById('myVideo');
 
 	// This event: remote peer receives a call
-	instructorPeer.connections['local'].on('open', function () {
-		console.log('peer id >> ' + instructorPeer.connections['local'].id + '\nroom id >> ' + Session.get('class'));
+	PeerMedia.connections['local'].on('open', function () {
+		console.log('peer id >> ' + PeerMedia.connections['local'].id + '\nroom id >> ' + Session.get('class'));
 		// update the current user's profile
-		instructorPeer.attendance.time_in = new Date();
+		PeerMedia.attendance.time_in = new Date();
 		Meteor.call('updatePeerStatus', Meteor.userId(), { 
-			_id: instructorPeer.connections['local'].id,
+			_id: PeerMedia.connections['local'].id,
 			room_id: Session.get('class')
 		});
 
 		// This event: remote peer receives a call
-		instructorPeer.connections['local'].on('call', function (incomingCall) {
+		PeerMedia.connections['local'].on('call', function (incomingCall) {
 			var incomingPeerId = incomingCall.peer;
-			instructorPeer.connections[incomingPeerId] = incomingCall;
-			incomingCall.answer(instructorPeer.streams.local);
+			PeerMedia.connections[incomingPeerId] = incomingCall;
+			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
-				instructorPeer.streams[incomingPeerId] = remoteStream;
+				PeerMedia.streams[incomingPeerId] = remoteStream;
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		});
 
 		// when instructor leaves the room
-		instructorPeer.connections['local'].on('close', function () {
-			instructorPeer.attendance.time_out = new Date();
-			Meteor.call('logAttendance', Meteor.userId(), instructorPeer.attendance);
+		PeerMedia.connections['local'].on('close', function () {
+			PeerMedia.attendance.time_out = new Date();
+			Meteor.call('logAttendance', Meteor.userId(), PeerMedia.attendance);
 			console.log('Successfully closed connection.');
 		});
 	});
 
-	MediaHelpers.requestCameraFeed(video, instructorPeer);
+	MediaHelpers.requestCameraFeed(video, PeerMedia);
 });
 
 Template.instructorEnterClass.helpers
@@ -116,50 +110,56 @@ Template.instructorEnterClass.events
 		'click #share-screen': function (event)
 		{
 			event.preventDefault();
-			MediaHelpers.requestScreenFeed(document.getElementById('myVideo'), instructorPeer);
+			MediaHelpers.requestScreenFeed(document.getElementById('myVideo'), PeerMedia);
 		},
 
 		'click #share-camera': function (event)
 		{
 			event.preventDefault();
-			MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), instructorPeer);
+			MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), PeerMedia);
 		},
 		'click #makeCall': function (event) {
 			event.preventDefault();
 			alert('making call...');
 			var video = document.getElementById('myVideo');
-			/*var userPeerId = this.peer._id;
-			if (Helpers.isEmpty(instructorPeer.streams[userPeerId])) {
-				instructorPeer.connections[userPeerId] = instructorPeer.connections['local'].call(user.peer._id, instructorPeer.streams.local);
-				instructorPeer.connections[userPeerId].on('stream', function (remoteStream) {
-					instructorPeer.streams[userPeerId] = remoteStream;
+			var userPeerId = this.peer._id;
+			if (Helpers.isEmpty(PeerMedia.streams[userPeerId])) {
+				PeerMedia.connections[userPeerId] = PeerMedia.connections['local'].call(user.peer._id, PeerMedia.streams.local);
+				PeerMedia.connections[userPeerId].on('stream', function (remoteStream) {
+					PeerMedia.streams[userPeerId] = remoteStream;
 					alert('receiving stream...');
 					video.src = URL.createObjectURL(remoteStream);
 				});
 			} else {
-				video.src = URL.createObjectURL(instructorPeer.streams[userPeerId]);
-			}*/
+				video.src = URL.createObjectURL(PeerMedia.streams[userPeerId]);
+			}
 		},
 		'click #answerQuestion': function (event) {
 			event.preventDefault();
 			// alert('making call...');
 			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
-			if (Helpers.isEmpty(instructorPeer.streams[userPeerId])) {
-				instructorPeer.connections[userPeerId] = instructorPeer.connections['local'].call(user.peer._id, instructorPeer.streams.local);
-				instructorPeer.connections[userPeerId].on('stream', function (remoteStream) {
-					instructorPeer.streams[userPeerId] = remoteStream;
+			if (Helpers.isEmpty(PeerMedia.streams[userPeerId])) {
+				PeerMedia.connections[userPeerId] = PeerMedia.connections['local'].call(user.peer._id, PeerMedia.streams.local);
+				PeerMedia.connections[userPeerId].on('stream', function (remoteStream) {
+					PeerMedia.streams[userPeerId] = remoteStream;
 					alert('receiving stream...');
 					video.src = URL.createObjectURL(remoteStream);
 				});
 			} else {
-				video.src = URL.createObjectURL(instructorPeer.streams[userPeerId]);
+				video.src = URL.createObjectURL(PeerMedia.streams[userPeerId]);
 			}
+		},
+		'click #endQuestion': function (event) 
+		{
+			event.preventDefault();
+			var userPeerId = this.peer._id;
+			Meteor.call('removeRequest', PeerMedia.connections['local'].id, userPeerId);
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
-			MediaHelpers.stopStreams(instructorPeer.streams);
-			MediaHelpers.closeConnections(instructorPeer.connections);
+			MediaHelpers.stopStreams(PeerMedia.streams);
+			MediaHelpers.closeConnections(PeerMedia.connections);
 			FlowRouter.go('/instructor/current');
 		},
 		'click #online': function (event)
