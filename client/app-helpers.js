@@ -81,15 +81,16 @@ Helpers = {
 	},
 	createNewPeer: function() {
 		return new Peer({
-			key: '5a78de0d-b6bd-4986-9160-d74019d2fea9',  // change this key
+			// key: '5a78de0d-b6bd-4986-9160-d74019d2fea9',  // change this key
+			key: 'dqxm490i2c07ldi',
 			debug: 3,
 			config: {'iceServers': [
-				/*{ url: 'stun:stun.l.google.com:19302' },
+				{ url: 'stun:stun.l.google.com:19302' },
 				{ url: 'stun:stun1.l.google.com:19302' },
 				{ url: 'stun:stun2.l.google.com:19302' },
 				{ url: 'stun:stun3.l.google.com:19302' },
-				{ url: 'stun:stun4.l.google.com:19302' },*/
-				{ url: 'stun:stun.skyway.io.com:3478' },
+				{ url: 'stun:stun4.l.google.com:19302' },
+				/*{ url: 'stun:stun.skyway.io.com:3478' },*/
 				{
 					url: 'turn:numb.viagenie.ca',
 					credential: 'muazkh',
