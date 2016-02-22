@@ -4,7 +4,7 @@ var instructorPeer = {
 	attendance: {} // attendance of current user, to be inserted on room leave
 };
 
-var Requests = {
+/*var Requests = {
 	list: [], // list of students who asked questions
 	get: function () {
 		if (!this.dependency) {
@@ -31,7 +31,7 @@ var Requests = {
 		this.list = [];
 		this.dependency.changed();
 	}
-}
+}*/
 
 Template.instructorEnterClass.onCreated(function () {
 	var self = this;
@@ -102,8 +102,9 @@ Template.instructorEnterClass.helpers
 			});
 		},
 		requests: function () {
+			var requestIds = Users.findOne({ _id: Meteor.userId() }).peer.requests || [];
 			return Users.find({
-				'peer._id': { $in : Requests.get() }
+				'peer._id': { $in : requestIds }
 			});
 		}
 	}
@@ -126,6 +127,22 @@ Template.instructorEnterClass.events
 		'click #makeCall': function (event) {
 			event.preventDefault();
 			alert('making call...');
+			var video = document.getElementById('myVideo');
+			var userPeerId = this.peer._id;
+			if (Helpers.isEmpty(instructorPeer.streams[userPeerId])) {
+				instructorPeer.connections[userPeerId] = instructorPeer.connections['local'].call(user.peer._id, instructorPeer.streams.local);
+				instructorPeer.connections[userPeerId].on('stream', function (remoteStream) {
+					instructorPeer.streams[userPeerId] = remoteStream;
+					alert('receiving stream...');
+					video.src = URL.createObjectURL(remoteStream);
+				});
+			} else {
+				video.src = URL.createObjectURL(instructorPeer.streams[userPeerId]);
+			}
+		},
+		'click #answerQuestion': function (event) {
+			event.preventDefault();
+			// alert('making call...');
 			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
 			if (Helpers.isEmpty(instructorPeer.streams[userPeerId])) {

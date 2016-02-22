@@ -10,6 +10,30 @@ Meteor.startup(function () {
 		}
 	});*/
 
+	var adminList = Users.find({ profile: { user_type: 0 } }).fetch();
+	if (adminList === undefined || adminList === null || adminList === []) {
+		var user = {
+			username: 'admin',
+			password: 'abcde12345',
+			profile: {
+				user_type: 0,
+				banned: false
+			},
+			roles: [
+				Role.Group.ADMIN,
+				Role.Permission.READ_USERS,
+				Role.Permission.READ_COURSES,
+				Role.Permission.READ_SECTIONS,
+				Role.Permission.READ_SEMESTERS,
+				Role.Permission.WRITE_USERS,
+				Role.Permission.WRITE_COURSES,
+				Role.Permission.WRITE_SECTIONS,
+				Role.Permission.WRITE_SEMESTERS
+			]
+		};
+		Meteor.call('addUser', user);
+	}
+
 	// code to run on server at startup
 	Accounts.onCreateUser(function (options, user) {
 		if (options.profile) {
