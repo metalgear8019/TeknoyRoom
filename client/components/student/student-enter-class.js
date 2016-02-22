@@ -1,7 +1,6 @@
 var studentPeer = {
 	connections: {}, // key/value pairs of peer connections { [peerId]: connection }
 	streams: {}, // key/value pairs of streams { [peerId]: stream }
-	requests: [], // list of peer IDs who asked a question
 	attendance: {} // attendance of current user, to be inserted on room leave
 };
 
@@ -93,19 +92,24 @@ Template.studentEnterClass.events
 		'click #makeCall': function (event) 
 		{
 			event.preventDefault();
-			alert('making call...');
+			// alert('making call...');
 			var video = document.getElementById('theirVideo');
 			var userPeerId = getInstructorId();
 			if (Helpers.isEmpty(studentPeer.streams[userPeerId])) {
 				studentPeer.connections[userPeerId] = studentPeer.connections['local'].call(userPeerId, studentPeer.streams.local);
 				studentPeer.connections[userPeerId].on('stream', function (remoteStream) {
 					studentPeer.streams[userPeerId] = remoteStream;
-					alert('receiving stream...');
+					// alert('receiving stream...');
 					video.src = URL.createObjectURL(remoteStream);
 				});
 			} else {
 				video.src = URL.createObjectURL(studentPeer.streams[userPeerId]);
 			}
+		},
+		'click #askQuestion': function (event) 
+		{
+			event.preventDefault();
+			Meteor.call('addRequest', getInstructorId(), studentPeer.connections['local'].peer);
 		},
 		'click #leave': function (event) 
 		{

@@ -66,7 +66,7 @@ Meteor.methods
 					}
 				});
 
-				Enrollee.update({ user: user_id }, {
+				Enrollees.update({ user: user_id }, {
 					$push: {
 						attendance: user_attendance
 					}
@@ -76,6 +76,36 @@ Meteor.methods
 			{
 				console.log(e);
 				return new Meteor.Error(500, 'exception in logging attendance', e);
+			}
+		},
+
+		addRequest: function (instructorPeerId, studentPeerId)
+		{
+			check(instructorPeerId, String);
+			check(studentPeerId, String);
+			try
+			{
+				Users.update({ peer: { _id: instructorPeerId } }, { $addToSet: { peer: { requests: studentPeerId } } });
+			}
+			catch (e)
+			{
+				console.log(e);
+				return new Meteor.Error(500, 'exception in requesting a question', e);
+			}
+		},
+
+		removeRequest: function (instructorPeerId, studentPeerId)
+		{
+			check(instructorPeerId, String);
+			check(studentPeerId, String);
+			try
+			{
+				Users.update({ peer: { _id: instructorPeerId } }, { $pull: { peer: { requests: studentPeerId } } });
+			}
+			catch (e)
+			{
+				console.log(e);
+				return new Meteor.Error(500, 'exception in requesting a question', e);
 			}
 		},
 
