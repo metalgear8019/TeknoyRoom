@@ -431,14 +431,12 @@ Template.userForm.events
 				}
 				else
 				{
-					$('.toast').text('Please fill in the necessary fields.');
-					$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+					Notifications.warn('WARNING', 'Please fill out the necessary fields.', {timeout: 5000});
 				}
 			}
 			else
 			{
-				$('.toast').text('Please fill in the necessary fields.');
-				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+				Notifications.warn('WARNING', 'Please fill out the necessary fields.', {timeout: 5000});
 			}
 		},
 

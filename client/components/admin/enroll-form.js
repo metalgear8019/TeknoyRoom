@@ -471,24 +471,32 @@ Template.enrollForm.events
 							if (students[i].isEnrolled)
 							{
 								var enrolleeId = Enrollees.findOne({'user': students[i]._id, 'section': section});
-								Meteor.call('deleteEnrollee', enrolleeId._id);
+								Meteor.call('deleteEnrollee', enrolleeId._id, function(err){
+									if(err)
+										Notifications.error('ERROR', err.reason, {timeout: 5000});
+									else
+										Notifications.success('SUCCESS', 'Enrollees successfully deleted', {timeout: 5000});
+								});
 							}
 						}
 					}
 
-					Meteor.call('addEnrollee', enrollees);
+					Meteor.call('addEnrollee', enrollees, function(err){
+						if(err)
+							Notifications.error('ERROR', err.reason, {timeout: 5000});
+						else
+							Notifications.success('SUCCESS', 'Enrolle succesfully added', {timeout: 5000});
+					});
 					FlowRouter.go('/admin/enroll/');
 				}
 				else
 				{
-					$('.toast').text('Please fill in the necessary fields.');
-					$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+					Notifications.warn('WARNING', 'Please fill out the necessary fields.', {timeout: 5000});
 				}
 			}
 			else
 			{
-				$('.toast').text('Please fill in the necessary fields.');
-				$('.toast').fadeIn(400).delay(3000).fadeOut(400);
+				Notifications.warn('WARNING', 'Please fill out the necessary fields.', {timeout: 5000});
 			}
 		}
 	}

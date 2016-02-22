@@ -52,7 +52,7 @@ Template.currentCourses.events
 				console.log('enrolled id >> ' + Session.get('class'));
 				FlowRouter.go(getRouteGroup() + '/current/enter');
 			} else {
-				alert('No classes currently held.');
+				Notifications.warn('WARNING', 'No classes is currently in session', {timeout: 5000});
 			}
 		},
 		'click .pointer-hover': function (event) {

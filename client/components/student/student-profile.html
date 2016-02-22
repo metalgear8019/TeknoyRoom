@@ -3,9 +3,7 @@
 	<div id="page-content-wrapper" style="margin-top:50px;">
 		<div class="page-content inset">
 			<div class="container-fluid">
-
-				<!--<div class="alert alert-danger" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
-
+				{{> notifications}}
 				<div class="panel panel-default" style="margin-top:50px;margin-left:100px;">
 				  	<div class="panel-body">
 					    <img alt="Profile Picture" src="{{ image }}" class="profPic normal-image {{#if notEquals image '/assets/profile-picture3.png'}}img-circle{{/if}}" id="image" width="270" height="270">
