@@ -10,8 +10,18 @@ Meteor.startup(function () {
 		}
 	});*/
 
-	var adminList = Users.find({ profile: { user_type: 0 } }).fetch();
-	if (adminList === undefined || adminList === null || adminList === []) {
+	// code to run on server at startup
+	Accounts.onCreateUser(function (options, user) {
+		if (options.profile) {
+			// include the user profile
+			user.profile = options.profile
+			Roles.setRolesOnUserObj(user, Role.generatePermissions(user.profile.user_type));
+		}
+		return user;
+	});
+
+	var adminList = Users.find({ 'profile.user_type': 0 }).fetch();
+	if (adminList.length === 0) {
 		var user = {
 			username: 'admin',
 			password: 'abcde12345',
@@ -31,18 +41,8 @@ Meteor.startup(function () {
 				Role.Permission.WRITE_SEMESTERS
 			]
 		};
-		Meteor.call('addUser', user);
+		Accounts.createUser(user);
 	}
-
-	// code to run on server at startup
-	Accounts.onCreateUser(function (options, user) {
-		if (options.profile) {
-			// include the user profile
-			user.profile = options.profile
-			Roles.setRolesOnUserObj(user, Role.generatePermissions(user.profile.user_type));
-		}
-		return user;
-	});
 });
 
 Meteor.publish(SubscriptionTag.PRESENCES, function() {
