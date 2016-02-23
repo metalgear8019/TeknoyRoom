@@ -81,6 +81,7 @@ Template.sectionList.helpers
 				Sections.find({}).forEach(function (item) {
 					item.course = Courses.findOne(item.course) || '';
 					item.semester = Semesters.findOne(item.semester) || '';
+					item.schedule = Helpers.scheduleToString(item);;
 					result.push(item);
 				});
 			}

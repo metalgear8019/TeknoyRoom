@@ -462,7 +462,7 @@ Template.enrollForm.events
 
 								if (!isAlreadyEnrolledInThatCourse)
 								{
-									enrollees.push({ user: students[i]._id, section: section, attendance: [{ time_in: new Date(), time_out: new Date() }] });
+									enrollees.push({ user: students[i]._id, section: section});
 								}
 							}
 						}
