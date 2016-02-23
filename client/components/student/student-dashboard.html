@@ -3,9 +3,13 @@
 		{{> notifications}}
 		<div class="jumbotron" style="margin-top:50px;margin-left:50px;">
 		  	<p>
-		  		<a class="btn btn-primary btn-lg" role="button" style="float:right;">
-			  		Go to Class CSS323&nbsp;<i class="fa fa-sign-out"></i>
-			  	</a>
+		  		{{ #if Template.subscriptionsReady }}
+			  		<a class="btn btn-primary btn-lg" href="" id="enterClass" role="button" style="float:right;">
+				  		{{ class }}&nbsp;<i class="fa fa-sign-out"></i>
+				  	</a>
+				{{ else }}
+					{{> loading }}
+				{{ /if }}
 			  	<h1>
 			  		Hello, {{name}}!
 			  	</h1>

@@ -134,3 +134,15 @@ Meteor.publish(SubscriptionTag.ALL_USER_NOTES, function(id){
 	check(id, String);
 	return Notes.find({'owner': id});
 });
+
+Meteor.publish(SubscriptionTag.CURRENT_CLASS, function (time, userId) {
+	check(time, Date);
+	check(userId, String);
+	var enrolledSubjects = Enrollees.find({ user: userId });
+ 	var enrolledIds = enrolledSubjects.map(function (c) { return c.section; });
+	return Sections.find({
+		_id: { $in: enrolledIds },
+		day: ( time.getDay() + 1 ),
+		hour: { $lte: time.getHours() }
+	}, { sort: { hour: -1, minute: -1 }});
+});

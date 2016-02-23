@@ -63,6 +63,11 @@ Template.studentEnterClass.helpers
 			var result = getInstructorId();
 			console.log('available instructor >> ' + JSON.stringify(result));
 			return result != null;
+		},
+		questionPending: function () {
+			var result = isQuestionPending();
+			console.log('is question pending >> ' + JSON.stringify(result));
+			return (Helpers.isEmpty(result)) ? '' : 'disabled';
 		}
 	}
 );
@@ -86,14 +91,14 @@ Template.studentEnterClass.events
 		'click #makeCall': function (event) 
 		{
 			event.preventDefault();
-			// alert('making call...');
+			console.log('making call...');
 			var video = document.getElementById('theirVideo');
 			var userPeerId = getInstructorId();
 			var outgoingCall = PeerMedia.connections['local'].call(userPeerId, PeerMedia.streams.local);
 			PeerMedia.connections[userPeerId] = outgoingCall;
 			outgoingCall.on('stream', function (remoteStream) {
 				PeerMedia.streams[userPeerId] = remoteStream;
-				// alert('receiving stream...');
+				console.log('receiving stream...');
 				video.src = URL.createObjectURL(remoteStream);
 			});
 		},
@@ -106,7 +111,7 @@ Template.studentEnterClass.events
 			event.preventDefault();
 			MediaHelpers.stopStreams(PeerMedia.streams);
 			MediaHelpers.closeConnections(PeerMedia.connections);
-			FlowRouter.go('/instructor/current');
+			FlowRouter.go('/student/current');
 		}
 	}
 );
