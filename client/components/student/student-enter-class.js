@@ -109,7 +109,7 @@ Template.studentEnterClass.events
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
-			MediaHelpers.stopStreams(PeerMedia.streams);
+			// MediaHelpers.stopStreams(PeerMedia.streams);
 			MediaHelpers.closeConnections(PeerMedia.connections);
 			FlowRouter.go('/student/current');
 		}

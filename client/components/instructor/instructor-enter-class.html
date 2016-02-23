@@ -25,13 +25,13 @@
 								<a id="share-camera" href="" class="btn btn-success" data-toggle="tooltip" title="Share Camera Feed">
 									<i class="fa fa-video-camera"></i>
 								</a>&nbsp;&nbsp;
-								<a href="" class="btn btn-success" data-toggle="tooltip" title="Answer the Question">
-									<i class="fa fa-microphone"></i>
-								</a>&nbsp;&nbsp;
 								<!--<a href="#" class="btn btn-success" data-toggle="tooltip" title="Ask a Question">	
 									<i class="fa fa-question-circle"></i>
 								</a>-->
 							</div>
+								<a style="float:right;" href="" class="btn btn-success" data-toggle="tooltip" title="Answer the Question">
+									<i class="fa fa-microphone"></i>
+								</a>&nbsp;&nbsp;
 						</div>
 					</div>
 
@@ -69,19 +69,20 @@
 						    <ul style="list-style-type:none;">
 						    	<h6>
 						    		<div style="margin-top:-12px;"></div>
-						    		{{ #each requests }}
-							    		<a href="" id="makeCall">
-							    			<li>
-							    				<p style="margin-top:15px;margin-left:-25px;color:black;text-align:left;">
-							    					<input type="image" alt="Profile Picture" src="/assets/profile-picture3.png" style="height:30px;width:30px;float:left;margin-top:-5px;">&nbsp;&nbsp;
-							    					[{{ username }}] <!--{{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}-->
-							    					<!--Annalou Villaro Lim--> &nbsp;&nbsp;&nbsp;&nbsp;
-							    				</p>
-							    				<a href="" id="endQuestion"><i class="fa fa-cross" style="color:green;margin-left:-13px;float:right;margin-top:-26px;"></i>
-							    				</a>
-							    			</li>
-							    		</a>
-							    	{{ /each }}
+						    		{{ #if Template.isSubscriptionsReady }}
+							    		{{ #each requests }}
+								    		<a href="" id="makeCall">
+								    			<li>
+								    				<p style="margin-top:15px;margin-left:-25px;color:black;text-align:left;">
+								    					<input type="image" class="{{#if notEquals image '/assets/profile-picture3.png'}}img-circle{{/if}}" alt="Profile Picture" src="{{ profile.image }}" style="height:30px;width:30px;float:left;margin-top:-5px;">&nbsp;&nbsp;
+								    					<!--[{{ username }}] -->{{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}
+								    					<!--Annalou Villaro Lim--> &nbsp;&nbsp;&nbsp;&nbsp;
+								    				</p>
+								    				<i class="fa fa-circle" style="color:green;margin-left:-13px;float:right;margin-top:-26px;"></i>
+								    			</li>
+								    		</a>
+								    	{{ /each }}
+							    	{{ /if }}
 						    	</h6>
 						    </ul>
 						    </div>

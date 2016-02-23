@@ -42,7 +42,7 @@ Template.instructorEnterClass.onRendered(function () {
 			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
 				PeerMedia.streams[incomingPeerId] = remoteStream;
-				video.src = URL.createObjectURL(remoteStream);
+				// video.src = URL.createObjectURL(remoteStream);
 			});
 		});
 
@@ -50,7 +50,7 @@ Template.instructorEnterClass.onRendered(function () {
 		PeerMedia.connections['local'].on('close', function () {
 			PeerMedia.attendance.time_out = new Date();
 			Meteor.call('logAttendance', Meteor.userId(), PeerMedia.attendance);
-			console.log('Successfully closed connection @' + Helpers.dateToString(PeerMedia.attendance.time_out));
+			console.log('Successfully closed connection @' + PeerMedia.attendance.time_out.toDateString());
 		});
 	});
 
@@ -64,10 +64,20 @@ Template.instructorEnterClass.helpers
 			return Users.find({
 				'status.online': true,
 				'peer.room_id': Session.get('class')
+			}).map(function (item) {
+				if (Helpers.isEmpty(item.profile.image))
+				{
+					if (item.profile.gender == 'Male')
+						item.profile.image = "/assets/profile-picture3.png";
+					else
+						item.profile.image = "/assets/profile-picture2.png";
+				}
+				return item; 
 			});
 		},
 		requests: function () {
-			var user = Users.findOne({ _id: Meteor.userId() }) || { peer: { requests: [] } };
+			// var user = Users.findOne({ _id: Meteor.userId() }) || { peer: { requests: [] } };
+			var user = Meteor.user();
 			var requestIds = user.peer.requests;
 			return Users.find({
 				'status.online': true,
@@ -111,7 +121,7 @@ Template.instructorEnterClass.events
 		},
 		'click #answerQuestion': function (event) {
 			event.preventDefault();
-			console.log('making call...');
+			console.log('answering question...');
 			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
 			if (Helpers.isEmpty(PeerMedia.streams[userPeerId])) {
@@ -130,11 +140,12 @@ Template.instructorEnterClass.events
 		{
 			event.preventDefault();
 			var userPeerId = this.peer._id;
+			video.src = URL.createObjectURL(PeerMedia.streams['local']);
 			Meteor.call('removeRequest', PeerMedia.connections['local'].id, userPeerId);
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
-			MediaHelpers.stopStreams(PeerMedia.streams);
+			// MediaHelpers.stopStreams(PeerMedia.streams);
 			MediaHelpers.closeConnections(PeerMedia.connections);
 			FlowRouter.go('/instructor/current');
 		},
