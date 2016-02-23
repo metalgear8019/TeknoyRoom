@@ -42,16 +42,12 @@ Template.instructorEnterClass.onRendered(function () {
 			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
 				PeerMedia.streams[incomingPeerId] = remoteStream;
-				// video.src = URL.createObjectURL(remoteStream);
+				video.src = URL.createObjectURL(remoteStream);
 			});
 		});
 
 		// when instructor leaves the room
-		PeerMedia.connections['local'].on('close', function () {
-			PeerMedia.attendance.time_out = new Date();
-			Meteor.call('logAttendance', Meteor.userId(), PeerMedia.attendance);
-			console.log('Successfully closed connection @' + PeerMedia.attendance.time_out.toDateString());
-		});
+		// PeerMedia.connections['local'].on('close', MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance));
 	});
 
 	MediaHelpers.requestCameraFeed(video, PeerMedia);
@@ -95,7 +91,7 @@ Template.instructorEnterClass.events
 		{
 			event.preventDefault();
 			MediaHelpers.requestScreenFeed(document.getElementById('myVideo'), PeerMedia);
-		},
+		},	
 
 		'click #share-camera': function (event)
 		{
@@ -108,7 +104,7 @@ Template.instructorEnterClass.events
 			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
 			if (Helpers.isEmpty(PeerMedia.streams[userPeerId])) {
-				PeerMedia.connections[userPeerId] = PeerMedia.connections['local'].call(user.peer._id, PeerMedia.streams.local);
+				PeerMedia.connections[userPeerId] = PeerMedia.connections['local'].call(userPeerId, PeerMedia.streams.local);
 				PeerMedia.connections[userPeerId].on('stream', function (remoteStream) {
 					PeerMedia.streams[userPeerId] = remoteStream;
 					console.log('receiving stream...');
@@ -125,7 +121,7 @@ Template.instructorEnterClass.events
 			var video = document.getElementById('myVideo');
 			var userPeerId = this.peer._id;
 			if (Helpers.isEmpty(PeerMedia.streams[userPeerId])) {
-				PeerMedia.connections[userPeerId] = PeerMedia.connections['local'].call(user.peer._id, PeerMedia.streams.local);
+				PeerMedia.connections[userPeerId] = PeerMedia.connections['local'].call(userPeerId, PeerMedia.streams.local);
 				PeerMedia.connections[userPeerId].on('stream', function (remoteStream) {
 					PeerMedia.streams[userPeerId] = remoteStream;
 					console.log('receiving stream...');
@@ -145,8 +141,9 @@ Template.instructorEnterClass.events
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
-			// MediaHelpers.stopStreams(PeerMedia.streams);
+			MediaHelpers.stopStreams(PeerMedia.streams);
 			MediaHelpers.closeConnections(PeerMedia.connections);
+			MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);
 			FlowRouter.go('/instructor/current');
 		},
 		'click #online': function (event)

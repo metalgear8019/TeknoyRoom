@@ -46,11 +46,7 @@ Template.studentEnterClass.onRendered(function () {
 		});
 
 		// when student leaves the room
-		PeerMedia.connections['local'].on('close', function () {
-			PeerMedia.attendance.time_out = new Date();
-			Meteor.call('logAttendance', Meteor.userId(), PeerMedia.attendance);
-			console.log('Successfully closed connection.');
-		});
+		// PeerMedia.connections['local'].on('close', MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance));
 	});
 
 	MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), PeerMedia);
@@ -61,8 +57,22 @@ Template.studentEnterClass.helpers
 	{
 		isAvailable: function () {
 			var result = getInstructorId();
+			var available = result != null;
+			if (available) {
+				if (Helpers.isEmpty(PeerMedia.connections[result])) {
+					var outgoingCall = PeerMedia.connections['local'].call(result, PeerMedia.streams.local);
+					PeerMedia.connections[result] = outgoingCall;
+					outgoingCall.on('stream', function (remoteStream) {
+						PeerMedia.streams[result] = remoteStream;
+						console.log('receiving stream...');
+						document.getElementById('theirVideo').src = URL.createObjectURL(remoteStream);
+					});
+				} else {
+					document.getElementById('theirVideo').src = URL.createObjectURL(PeerMedia.streams[result]);
+				}
+			}
 			console.log('available instructor >> ' + JSON.stringify(result));
-			return result != null;
+			return available;
 		},
 		questionPending: function () {
 			var result = isQuestionPending();
@@ -109,8 +119,9 @@ Template.studentEnterClass.events
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
-			// MediaHelpers.stopStreams(PeerMedia.streams);
+			MediaHelpers.stopStreams(PeerMedia.streams);
 			MediaHelpers.closeConnections(PeerMedia.connections);
+			MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);
 			FlowRouter.go('/student/current');
 		}
 	}
@@ -126,3 +137,11 @@ var getInstructorId = function () {
 	console.log('query done >> ');
 	return result.peer._id;
 };
+
+var isQuestionPending = function () {
+	var result = Users.findOne({
+		_id: getInstructorId()
+	}) || { peer: { requests: [] } };
+	var index = result.peer.requests.indexOf(PeerMedia.connections.local.id);
+	return (index > -1);
+}
