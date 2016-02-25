@@ -18,23 +18,23 @@ Template.studentEnterClass.onCreated(function () {
 		self.subscribe(SubscriptionTag.PRESENCES);
 		self.subscribe(SubscriptionTag.ALL_USERS);
 
-		PeerMedia.connections['local'] = Helpers.createNewPeer();
+		PeerMedia.connections.local = Helpers.createNewPeer();
 	});
 });
 
 Template.studentEnterClass.onRendered(function () {
 	// This event: remote peer receives a call
-	PeerMedia.connections['local'].on('open', function () {
-		console.log('peer id >> ' + PeerMedia.connections['local'].id + '\nroom id >> ' + Session.get('class'));
+	PeerMedia.connections.local.on('open', function () {
+		console.log('peer id >> ' + PeerMedia.connections.local.id + '\nroom id >> ' + Session.get('class'));
 		// update the current user's profile
 		PeerMedia.attendance.time_in = new Date();
 		Meteor.call('updatePeerStatus', Meteor.userId(), { 
-			_id: PeerMedia.connections['local'].id,
+			_id: PeerMedia.connections.local.id,
 			room_id: Session.get('class')
 		});
 
 		// This event: remote peer receives a call
-		PeerMedia.connections['local'].on('call', function (incomingCall) {
+		PeerMedia.connections.local.on('call', function (incomingCall) {
 			var incomingPeerId = incomingCall.peer;
 			PeerMedia.connections[incomingPeerId] = incomingCall;
 			incomingCall.answer(PeerMedia.streams.local);
@@ -46,10 +46,35 @@ Template.studentEnterClass.onRendered(function () {
 		});
 
 		// when student leaves the room
-		// PeerMedia.connections['local'].on('close', MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance));
+		// PeerMedia.connections.local.on('close', MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance));
 	});
 
 	MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), PeerMedia);
+
+	var self = this;
+	self.autorun(function () {
+		var instructor = Users.findOne({
+			'peer._id': getInstructorId()
+		});
+
+		console.log('instructor >> ' + JSON.stringify(instructor));
+
+		if (!Helpers.isEmpty(instructor)) {
+			if (instructor.peer.room_id == Session.get('class')) {
+				// TODO: call instructor and place stream in video DOM
+				var outgoingCall = PeerMedia.connections.local.call(instructor.peer._id, PeerMedia.streams.local);
+				PeerMedia.connections[instructor.peer._id] = outgoingCall;
+				outgoingCall.on('stream', function (remoteStream) {
+					PeerMedia.streams[instructor.peer._id] = remoteStream;
+					console.log('receiving stream...');
+					document.getElementById('myVideo').src = URL.createObjectURL(remoteStream);
+				});
+			} else if (instructor.peer.room_id == null) {
+				// TODO: leave room if instructor has disconnected
+				document.getElementById('myVideo').src = null;
+			}
+		}
+	});
 });
 
 Template.studentEnterClass.helpers
@@ -58,26 +83,13 @@ Template.studentEnterClass.helpers
 		isAvailable: function () {
 			var result = getInstructorId();
 			var available = result != null;
-			if (available) {
-				if (Helpers.isEmpty(PeerMedia.connections[result])) {
-					var outgoingCall = PeerMedia.connections['local'].call(result, PeerMedia.streams.local);
-					PeerMedia.connections[result] = outgoingCall;
-					outgoingCall.on('stream', function (remoteStream) {
-						PeerMedia.streams[result] = remoteStream;
-						console.log('receiving stream...');
-						document.getElementById('theirVideo').src = URL.createObjectURL(remoteStream);
-					});
-				} else {
-					document.getElementById('theirVideo').src = URL.createObjectURL(PeerMedia.streams[result]);
-				}
-			}
 			console.log('available instructor >> ' + JSON.stringify(result));
 			return available;
 		},
 		questionPending: function () {
 			var result = isQuestionPending();
 			console.log('is question pending >> ' + JSON.stringify(result));
-			return (Helpers.isEmpty(result)) ? '' : 'disabled';
+			return (result) ? 'disabled' : '';
 		}
 	}
 );
@@ -104,7 +116,7 @@ Template.studentEnterClass.events
 			console.log('making call...');
 			var video = document.getElementById('theirVideo');
 			var userPeerId = getInstructorId();
-			var outgoingCall = PeerMedia.connections['local'].call(userPeerId, PeerMedia.streams.local);
+			var outgoingCall = PeerMedia.connections.local.call(userPeerId, PeerMedia.streams.local);
 			PeerMedia.connections[userPeerId] = outgoingCall;
 			outgoingCall.on('stream', function (remoteStream) {
 				PeerMedia.streams[userPeerId] = remoteStream;
@@ -115,12 +127,14 @@ Template.studentEnterClass.events
 		'click #askQuestion': function (event) 
 		{
 			event.preventDefault();
-			Meteor.call('addRequest', getInstructorId(), PeerMedia.connections['local'].id);
+			Meteor.call('addRequest', getInstructorId(), PeerMedia.connections.local.id);
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
-			MediaHelpers.stopStreams(PeerMedia.streams);
-			MediaHelpers.closeConnections(PeerMedia.connections);
+			// MediaHelpers.stopStreams(PeerMedia.streams);
+			PeerMedia.streams.local.stop();
+			// MediaHelpers.closeConnections(PeerMedia.connections);
+			PeerMedia.connections.local.destroy();
 			MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);
 			FlowRouter.go('/student/current');
 		}
@@ -140,7 +154,7 @@ var getInstructorId = function () {
 
 var isQuestionPending = function () {
 	var result = Users.findOne({
-		_id: getInstructorId()
+		'peer._id': getInstructorId()
 	}) || { peer: { requests: [] } };
 	var index = result.peer.requests.indexOf(PeerMedia.connections.local.id);
 	return (index > -1);

@@ -17,19 +17,14 @@
 							<div class="row">
 						  		<!--<input type="image" alt="Profile Picture" src="/assets/classroom.jpg" style="height:450px;width:550px;float:left;margin:10px;">-->
 						  		<div class="video-container" style="height:450px;width:550px;float:left;margin:10px;">
-							  		<!--{{ #if isAvailable }}
+							  		{{ #if isAvailable }}
 							  			Instructor is now connected. <a href = "" id="makeCall">Refresh</a>
 							  		{{ else }}
 							  			Instructor is not yet online. Please wait...
-							  		{{ /if }}-->
+							  		{{ /if }}
 							  		<!--<br>Own video:
 						  			<video id="myVideo" muted="true" class="myVideo" autoplay style="height:auto;width:550px;"></video>-->
-						  			<!--<br>Instructor video:
-						  			<video id="theirVideo" class="theirVideo" autoplay style="height:auto;width:550px;"></video>-->
-						  			{{ #if isAvailable }}
-						  			{{ else }}
-						  				Instructor is not yet online. Please wait...
-						  			{{ /if }}
+						  			<br>Instructor video:
 						  			<video id="theirVideo" class="theirVideo" autoplay style="height:auto;width:550px;"></video>
 						  		</div>
 						  	</div>
