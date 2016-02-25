@@ -193,7 +193,7 @@ MediaHelpers = {
 			navigator.getUserMedia
 		);
 	},
-	requestFeed: function (target, peer, audioParams, videoParams) {
+	requestFeed: function (target, peer, audioParams, videoParams, callback) {
 		MediaHelpers.requestUserMedia();
 		console.log('setting user media parameters');
 		navigator.getUserMedia(
@@ -203,22 +203,26 @@ MediaHelpers = {
 			}, function (stream) {
 				target.src = URL.createObjectURL(stream);
 				peer.streams.local = stream;
+				if (!Helpers.isEmpty(callback))
+					callback(false, stream);
 			}, function (error) {
 				console.log('Feed not available.\n' + error);
+				if (!Helpers.isEmpty(callback))
+					callback(true, error);
 		});
 	},
-	requestScreenFeed: function(target, peer) {
+	requestScreenFeed: function(target, peer, callback) {
 		$('#share-camera').removeAttr('disabled');
 		$('#share-screen').attr('disabled', 'disabled');
 		MediaHelpers.requestFeed(target, peer, true, {
 				mozMediaSource: 'window',
 				mediaSource: 'window'
-		});
+		}, callback);
 	},
-	requestCameraFeed: function(target, peer) {
+	requestCameraFeed: function(target, peer, callback) {
 		$('#share-screen').removeAttr('disabled');
 		$('#share-camera').attr('disabled', 'disabled');
-		MediaHelpers.requestFeed(target, peer, true, true);
+		MediaHelpers.requestFeed(target, peer, true, true, callback);
 	},
 	stopStreams: function(streams) {
 		if (!Helpers.isEmpty(streams)) {

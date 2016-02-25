@@ -26,6 +26,7 @@
 						  			<video id="myVideo" muted="true" class="myVideo" autoplay style="height:auto;width:550px;"></video>-->
 						  			<br>Instructor video:
 						  			<video id="theirVideo" class="theirVideo" autoplay style="height:auto;width:550px;"></video>
+						  			{{ autocall }}
 						  		</div>
 						  	</div>
 							<div class="row" style="float:left;">
@@ -35,10 +36,10 @@
 								<a id="share-camera" href="" class="btn btn-success" data-toggle="tooltip" title="Share Camera Feed">
 									<i class="fa fa-video-camera"></i>
 								</a>&nbsp;&nbsp;
-								<a href="" class="btn btn-success" data-toggle="tooltip" disabled={{ questionPending }} title="Ask a Question">	
-									<i class="fa fa-question-circle"></i>
-								</a>
 							</div>
+							<a href="" style="float:right;" class="btn btn-success" data-toggle="tooltip" {{ questionPending }} title="Ask a Question">	
+								<i class="fa fa-question-circle"></i>
+							</a>
 						</div>
 					</div>
 

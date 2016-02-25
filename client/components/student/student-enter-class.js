@@ -37,16 +37,8 @@ Template.studentEnterClass.onRendered(function () {
 			PeerMedia.connections[incomingPeerId] = incomingCall;
 			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
-				if (video.src === null) {
-					PeerMedia.streams.local = remoteStream;
-					video.src = URL.createObjectURL(PeerMedia.streams.local);
-					Meteor.call('updatePeerStatus', Meteor.userId(), { 
-						_id: PeerMedia.connections.local.id,
-						room_id: Session.get('class')
-					});
-				} else {
-					PeerMedia.streams[incomingPeerId] = remoteStream;
-				}
+				PeerMedia.streams[incomingPeerId] = remoteStream;
+				video.src = URL.createObjectURL(PeerMedia.streams.local);
 			});
 		});
 
@@ -54,33 +46,14 @@ Template.studentEnterClass.onRendered(function () {
 		// PeerMedia.connections.local.on('close', MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance));
 	});
 
-	MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), PeerMedia);
-
-	var self = this;
-	self.autorun(function () {
-		var instructorId = getInstructorId();
-		if (!Helpers.isEmpty(instructorId)) {
-			var instructor = Users.findOne({
-				'peer._id': instructorId
-			});
-
-			console.log('instructor >> ' + JSON.stringify(instructor));
-
-			if (instructor.peer.room_id == Session.get('class')) {
-				// TODO: call instructor and place stream in video DOM
-				var outgoingCall = PeerMedia.connections.local.call(instructor.peer._id, PeerMedia.streams.local);
-				PeerMedia.connections[instructor.peer._id] = outgoingCall;
-				outgoingCall.on('stream', function (remoteStream) {
-					PeerMedia.streams[instructor.peer._id] = remoteStream;
-					console.log('receiving stream...');
-					video.src = URL.createObjectURL(remoteStream);
-				});
-			} else if (instructor.peer.room_id == null) {
-				// TODO: leave room if instructor has disconnected
-				video.src = null;
-			}
+	MediaHelpers.requestCameraFeed(document.getElementById('myVideo'), PeerMedia, function (hasError, data) {
+		if (hasError) {
+			console.log('Request feed error!\n' + data);
 		} else {
-			video.src = null;
+			Meteor.call('updatePeerStatus', Meteor.userId(), { 
+				_id: PeerMedia.connections.local.id,
+				room_id: Session.get('class')
+			});
 		}
 	});
 });
@@ -88,6 +61,33 @@ Template.studentEnterClass.onRendered(function () {
 Template.studentEnterClass.helpers
 (
 	{
+		autocall: function () {
+			var instructorId = getInstructorId();
+			console.log('instructor id >> ' + instructorId);
+			var video = document.getElementById('theirVideo');
+			if (instructorId != null && !Helpers.isEmpty(video)) {
+				var instructor = Users.findOne({
+					'peer._id': instructorId
+				});
+
+				console.log('instructor >> ' + JSON.stringify(instructor));
+
+				if (instructor.peer.room_id == Session.get('class')) {
+					// TODO: call instructor and place stream in video DOM
+					var outgoingCall = PeerMedia.connections.local.call(instructor.peer._id, PeerMedia.streams.local);
+					PeerMedia.connections[instructor.peer._id] = outgoingCall;
+					outgoingCall.on('stream', function (remoteStream) {
+						PeerMedia.streams[instructor.peer._id] = remoteStream;
+						console.log('receiving stream...');
+						video.src = URL.createObjectURL(remoteStream);
+					});
+				} else if (instructor.peer.room_id == null) {
+					// TODO: leave room if instructor has disconnected
+					video.src = null;
+				}
+			}
+			return '';
+		},
 		isAvailable: function () {
 			var result = getInstructorId();
 			var available = result != null;

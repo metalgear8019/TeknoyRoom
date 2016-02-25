@@ -37,16 +37,8 @@ Template.instructorEnterClass.onRendered(function () {
 			PeerMedia.connections[incomingPeerId] = incomingCall;
 			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
-				if (video.src === null) {
-					PeerMedia.streams.local = remoteStream;
-					video.src = URL.createObjectURL(PeerMedia.streams.local);
-					Meteor.call('updatePeerStatus', Meteor.userId(), { 
-						_id: PeerMedia.connections.local.id,
-						room_id: Session.get('class')
-					});
-				} else {
-					PeerMedia.streams[incomingPeerId] = remoteStream;
-				}
+				PeerMedia.streams[incomingPeerId] = remoteStream;
+				video.src = URL.createObjectURL(PeerMedia.streams.local);
 			});
 		});
 
@@ -54,7 +46,16 @@ Template.instructorEnterClass.onRendered(function () {
 		// PeerMedia.connections.local.on('close', MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance));
 	});
 
-	MediaHelpers.requestCameraFeed(video, PeerMedia);
+	MediaHelpers.requestCameraFeed(video, PeerMedia, function (hasError, data) {
+		if (hasError) {
+			console.log('Request feed error!\n' + data);
+		} else {
+			Meteor.call('updatePeerStatus', Meteor.userId(), { 
+				_id: PeerMedia.connections.local.id,
+				room_id: Session.get('class')
+			});
+		}
+	});
 });
 
 Template.instructorEnterClass.helpers
