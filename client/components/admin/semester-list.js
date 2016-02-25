@@ -15,7 +15,11 @@ Template.semesterList.helpers
 
 			if (ses == undefined || ses == '')
 			{
-			 	var results = Semesters.find({});
+			 	var results = Semesters.find({}).map(function(item){
+			 		item.start_date = Helpers.dateToString(item.start_date);
+			 		item.end_date = Helpers.dateToString(item.end_date);
+			 		return item;
+			 	});
 		 	}
 		 	else
 		 	{
@@ -23,7 +27,11 @@ Template.semesterList.helpers
 			 		'$or': [
 			 			{ 'school_year': { $regex: '.*' + ses + '.*' } }
 				 	]
-			 	});
+			 	}).map(function(item){
+			 		item.start_date = Helpers.dateToString(item.start_date);
+			 		item.end_date = Helpers.dateToString(item.end_date);
+			 		return item;
+			 	});;
 		 	}
 
 			return results;
