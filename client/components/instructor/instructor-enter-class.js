@@ -30,10 +30,6 @@ Template.instructorEnterClass.onRendered(function () {
 		console.log('peer id >> ' + PeerMedia.connections.local.id + '\nroom id >> ' + Session.get('class'));
 		// update the current user's profile
 		PeerMedia.attendance.time_in = new Date();
-		Meteor.call('updatePeerStatus', Meteor.userId(), { 
-			_id: PeerMedia.connections.local.id,
-			room_id: Session.get('class')
-		});
 
 		// This event: remote peer receives a call
 		PeerMedia.connections.local.on('call', function (incomingCall) {
@@ -41,8 +37,16 @@ Template.instructorEnterClass.onRendered(function () {
 			PeerMedia.connections[incomingPeerId] = incomingCall;
 			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
-				PeerMedia.streams[incomingPeerId] = remoteStream;
-				video.src = URL.createObjectURL(remoteStream);
+				if (video.src === null) {
+					PeerMedia.streams.local = remoteStream;
+					video.src = URL.createObjectURL(PeerMedia.streams.local);
+					Meteor.call('updatePeerStatus', Meteor.userId(), { 
+						_id: PeerMedia.connections.local.id,
+						room_id: Session.get('class')
+					});
+				} else {
+					PeerMedia.streams[incomingPeerId] = remoteStream;
+				}
 			});
 		});
 

@@ -23,15 +23,13 @@ Template.studentEnterClass.onCreated(function () {
 });
 
 Template.studentEnterClass.onRendered(function () {
+	var video = document.getElementById('theirVideo');
+
 	// This event: remote peer receives a call
 	PeerMedia.connections.local.on('open', function () {
 		console.log('peer id >> ' + PeerMedia.connections.local.id + '\nroom id >> ' + Session.get('class'));
 		// update the current user's profile
 		PeerMedia.attendance.time_in = new Date();
-		Meteor.call('updatePeerStatus', Meteor.userId(), { 
-			_id: PeerMedia.connections.local.id,
-			room_id: Session.get('class')
-		});
 
 		// This event: remote peer receives a call
 		PeerMedia.connections.local.on('call', function (incomingCall) {
@@ -39,9 +37,16 @@ Template.studentEnterClass.onRendered(function () {
 			PeerMedia.connections[incomingPeerId] = incomingCall;
 			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
-				PeerMedia.streams[incomingPeerId] = remoteStream;
-				var video = document.getElementById('theirVideo');
-				video.src = URL.createObjectURL(remoteStream);
+				if (video.src === null) {
+					PeerMedia.streams.local = remoteStream;
+					video.src = URL.createObjectURL(PeerMedia.streams.local);
+					Meteor.call('updatePeerStatus', Meteor.userId(), { 
+						_id: PeerMedia.connections.local.id,
+						room_id: Session.get('class')
+					});
+				} else {
+					PeerMedia.streams[incomingPeerId] = remoteStream;
+				}
 			});
 		});
 
@@ -53,13 +58,14 @@ Template.studentEnterClass.onRendered(function () {
 
 	var self = this;
 	self.autorun(function () {
-		var instructor = Users.findOne({
-			'peer._id': getInstructorId()
-		});
+		var instructorId = getInstructorId();
+		if (!Helpers.isEmpty(instructorId)) {
+			var instructor = Users.findOne({
+				'peer._id': instructorId
+			});
 
-		console.log('instructor >> ' + JSON.stringify(instructor));
+			console.log('instructor >> ' + JSON.stringify(instructor));
 
-		if (!Helpers.isEmpty(instructor)) {
 			if (instructor.peer.room_id == Session.get('class')) {
 				// TODO: call instructor and place stream in video DOM
 				var outgoingCall = PeerMedia.connections.local.call(instructor.peer._id, PeerMedia.streams.local);
@@ -67,12 +73,14 @@ Template.studentEnterClass.onRendered(function () {
 				outgoingCall.on('stream', function (remoteStream) {
 					PeerMedia.streams[instructor.peer._id] = remoteStream;
 					console.log('receiving stream...');
-					document.getElementById('myVideo').src = URL.createObjectURL(remoteStream);
+					video.src = URL.createObjectURL(remoteStream);
 				});
 			} else if (instructor.peer.room_id == null) {
 				// TODO: leave room if instructor has disconnected
-				document.getElementById('myVideo').src = null;
+				video.src = null;
 			}
+		} else {
+			video.src = null;
 		}
 	});
 });
@@ -88,7 +96,7 @@ Template.studentEnterClass.helpers
 		},
 		questionPending: function () {
 			var result = isQuestionPending();
-			console.log('is question pending >> ' + JSON.stringify(result));
+			console.log('is question pending >> ' + result);
 			return (result) ? 'disabled' : '';
 		}
 	}
@@ -153,9 +161,13 @@ var getInstructorId = function () {
 };
 
 var isQuestionPending = function () {
-	var result = Users.findOne({
-		'peer._id': getInstructorId()
-	}) || { peer: { requests: [] } };
+	var instructorId = getInstructorId();
+	var result = { peer: { requests: [] } };
+	if (!Helpers.isEmpty(instructorId)) {
+		result = Users.findOne({
+			'peer._id': instructorId
+		});
+	}
 	var index = result.peer.requests.indexOf(PeerMedia.connections.local.id);
 	return (index > -1);
 }
