@@ -51,9 +51,10 @@ Meteor.methods
 			}
 		},
 
-		logAttendance: function (user_id, user_attendance)
+		logAttendance: function (user_id, section_id, user_attendance)
 		{
 			check(user_id, String);
+			check(section_id, String);
 			check(user_attendance, Object);
 			try
 			{
@@ -66,7 +67,7 @@ Meteor.methods
 					}
 				});
 
-				Enrollees.update({ user: user_id }, {
+				Enrollees.update({ user: user_id, section: section_id }, {
 					$push: {
 						attendance: user_attendance
 					}

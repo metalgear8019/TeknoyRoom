@@ -23,6 +23,10 @@ Accounts.onLogin(function() {
 	FlowRouter.go(route);
 });
 
+Accounts.onLoginFailure(function () {
+	Notifications.error('ERROR', 'The username or password is incorrect. Please try again.', {timeout: 5000});
+});
+
 hotKey = new Hotkeys({
 	autoLoad : false
 });

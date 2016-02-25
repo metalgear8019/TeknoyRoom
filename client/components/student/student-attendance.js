@@ -19,7 +19,7 @@ Template.studentAttendance.helpers
                 var id = FlowRouter.getParam('id');
                 var section = Sections.findOne(id);
                 var semester = Semesters.findOne(section.semester);
-				var result = Enrollees.findOne({ section: id });
+				var result = Enrollees.findOne({ user: Meteor.userId(), section: id });
 				var attendance = result.attendance;
 				var start_date = semester.start_date;
 				var end_date = semester.end_date;
@@ -51,22 +51,21 @@ Template.studentAttendance.helpers
 
 					if (haveClasses)
 					{
-						for (var a = 0; a < attendance.length; a++)
+						for (var a = 0; a < attendance.length;)
 						{
 							var firstDate = new Date(attendance[a].time_in.getFullYear(), attendance[a].time_in.getMonth(), attendance[a].time_in.getDate());
 							var secondDate = new Date(start_date.getFullYear(), start_date.getMonth(), start_date.getDate());
 
+							console.log('condition: ' + firstDate + '=' + secondDate)
 							if (firstDate.valueOf() == secondDate.valueOf())
 							{
 								var startDate = (attendance[a].time_in.getFullYear()) + '-' + (((attendance[a].time_in.getMonth()+1) < 10)? '0'+(attendance[a].time_in.getMonth()+1): (attendance[a].time_in.getMonth()+1)) + '-' + (((attendance[a].time_in.getDate()) < 10)? ('0'+ attendance[a].time_in.getDate()): attendance[a].time_in.getDate());
 								events.push({title: 'Present', start: startDate, rendering: 'background', color: '#8BC34A'});
-								break;
 							}
 							else
 							{
 								var startDate = (start_date.getFullYear()) + '-' + (((start_date.getMonth()+1) < 10)? '0'+(start_date.getMonth()+1): (start_date.getMonth()+1)) + '-' + (((start_date.getDate()) < 10)? ('0'+ start_date.getDate()): start_date.getDate());
 								events.push({title: 'Absent', start: startDate, rendering: 'background', color: '#F44336'});
-								break;
 							}
 						}
 						haveClasses = false;
@@ -81,7 +80,7 @@ Template.studentAttendance.helpers
             id: "calendar1",
             autoruns: [
                 function () {
-                    console.log("user defined autorun function executed!");
+                    //console.log("user defined autorun function executed!");
                 }
             ]
         }

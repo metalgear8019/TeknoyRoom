@@ -239,5 +239,10 @@ MediaHelpers = {
 					connections[connId].destroy();
 			}
 		}
+	},
+	logAttendance: function (userId, sectionId, attendance) {
+		attendance.time_out = new Date();
+		Meteor.call('logAttendance', userId, sectionId, attendance);
+		console.log('Successfully closed connection.');
 	}
 };
