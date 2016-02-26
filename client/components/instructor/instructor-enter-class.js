@@ -30,10 +30,6 @@ Template.instructorEnterClass.onRendered(function () {
 		console.log('peer id >> ' + PeerMedia.connections.local.id + '\nroom id >> ' + Session.get('class'));
 		// update the current user's profile
 		PeerMedia.attendance.time_in = new Date();
-		Meteor.call('updatePeerStatus', Meteor.userId(), { 
-			_id: PeerMedia.connections.local.id,
-			room_id: Session.get('class')
-		});
 
 		// This event: remote peer receives a call
 		PeerMedia.connections.local.on('call', function (incomingCall) {
@@ -42,7 +38,7 @@ Template.instructorEnterClass.onRendered(function () {
 			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
 				PeerMedia.streams[incomingPeerId] = remoteStream;
-				video.src = URL.createObjectURL(remoteStream);
+				video.src = URL.createObjectURL(PeerMedia.streams.local);
 			});
 		});
 
@@ -50,7 +46,16 @@ Template.instructorEnterClass.onRendered(function () {
 		// PeerMedia.connections.local.on('close', MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance));
 	});
 
-	MediaHelpers.requestCameraFeed(video, PeerMedia);
+	MediaHelpers.requestCameraFeed(video, PeerMedia, function (hasError, data) {
+		if (hasError) {
+			console.log('Request feed error!\n' + data);
+		} else {
+			Meteor.call('updatePeerStatus', Meteor.userId(), { 
+				_id: PeerMedia.connections.local.id,
+				room_id: Session.get('class')
+			});
+		}
+	});
 });
 
 Template.instructorEnterClass.helpers
