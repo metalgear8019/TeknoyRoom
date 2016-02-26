@@ -51,12 +51,13 @@ Template.studentAttendance.helpers
 
 					if (haveClasses)
 					{
-						for (var a = 0; a < attendance.length;)
+						var absents = [];
+						for (var a = 0; a < attendance.length; a++)
 						{
 							var firstDate = new Date(attendance[a].time_in.getFullYear(), attendance[a].time_in.getMonth(), attendance[a].time_in.getDate());
 							var secondDate = new Date(start_date.getFullYear(), start_date.getMonth(), start_date.getDate());
 
-							console.log('condition: ' + firstDate + '=' + secondDate)
+							//console.log('condition: ' + firstDate + '=' + secondDate)
 							if (firstDate.valueOf() == secondDate.valueOf())
 							{
 								var startDate = (attendance[a].time_in.getFullYear()) + '-' + (((attendance[a].time_in.getMonth()+1) < 10)? '0'+(attendance[a].time_in.getMonth()+1): (attendance[a].time_in.getMonth()+1)) + '-' + (((attendance[a].time_in.getDate()) < 10)? ('0'+ attendance[a].time_in.getDate()): attendance[a].time_in.getDate());
@@ -65,9 +66,24 @@ Template.studentAttendance.helpers
 							else
 							{
 								var startDate = (start_date.getFullYear()) + '-' + (((start_date.getMonth()+1) < 10)? '0'+(start_date.getMonth()+1): (start_date.getMonth()+1)) + '-' + (((start_date.getDate()) < 10)? ('0'+ start_date.getDate()): start_date.getDate());
-								events.push({title: 'Absent', start: startDate, rendering: 'background', color: '#F44336'});
+								absents.push(startDate);
 							}
+							/*else
+							{
+								var startDate = (start_date.getFullYear()) + '-' + (((start_date.getMonth()+1) < 10)? '0'+(start_date.getMonth()+1): (start_date.getMonth()+1)) + '-' + (((start_date.getDate()) < 10)? ('0'+ start_date.getDate()): start_date.getDate());
+								events.push({title: 'Absent', start: startDate, rendering: 'background', color: '#F44336'});
+							}*/
 						}
+
+						absents = absents.filter( function( item, index, inputArray ) {
+					           return inputArray.indexOf(item) == index;
+					    });
+
+					    for (var b = 0; b < absents.length; b++)
+					    {
+					    	console.log('absent: ' + absents[b]);
+					    	events.push({title: 'Absent', start: absents[b], rendering: 'background', color: '#F44336'});
+					    }
 						haveClasses = false;
 					}
 
