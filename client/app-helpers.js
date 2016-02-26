@@ -140,9 +140,9 @@ Helpers = {
 			return false;
 		var currentDay = time.getDay() + 1;
 		var currentHour = time.getHours();
-		console.log('I do not understand.');
+		//console.log('I do not understand.');
 		var durationPast = Helpers.getDurationPast(time, currentClass.hour, currentClass.minute);
-		console.log('I do not understand. Since game man.');
+		//console.log('I do not understand. Since game man.');
 		return (currentClass.day.includes(currentDay) && currentHour >= currentClass.hour &&
 			durationPast < currentClass.duration);
 	},
