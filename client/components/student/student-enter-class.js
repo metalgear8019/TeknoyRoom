@@ -38,7 +38,7 @@ Template.studentEnterClass.onRendered(function () {
 			incomingCall.answer(PeerMedia.streams.local);
 			incomingCall.on('stream', function (remoteStream) {
 				PeerMedia.streams[incomingPeerId] = remoteStream;
-				video.src = URL.createObjectURL(PeerMedia.streams.local);
+				video.src = URL.createObjectURL(remoteStream);
 			});
 		});
 
