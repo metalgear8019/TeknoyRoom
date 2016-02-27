@@ -1,0 +1,21 @@
+<template name="userSidebar">
+	<!-- Sidebar -->
+	<div id="sidebar-wrapper" style="margin-top:-50px;">
+		<ul id="sidebar_menu" class="sidebar-nav">
+			<li class="sidebar-brand">
+				<div style="background: #6b161d; width:250px;padding-top:20px;">
+					<img src="{{ image }}" class="sidebar-normal-image {{#if notEquals image '/assets/profile-picture3.png'}}img-circle{{/if}}" width="200" height="200">
+				</div>
+			</li>
+			<li class="sidebar-brand">
+				<a id="menu-toggle" href="#">{{ name }}<i id="main_icon" class="fa fa-bars"></i></a>
+			</li>
+		</ul>
+		<ul class="sidebar-nav">
+			<h5 class="sidebar-brand">&nbsp;</h5>
+			{{ #each links }}
+				<li class="{{ selected }}"><a href="{{ link }}">{{ label }}<i class="{{ icon }}"></i></a></li>
+			{{ /each }}
+		</ul>
+	</div>
+</template>

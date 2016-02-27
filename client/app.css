@@ -150,6 +150,11 @@
   margin-bottom:20px;
 }
 
+.sidebar-selected
+{
+  background-color: #383838;
+}
+
 .normal-image
 {
   height: 270px;

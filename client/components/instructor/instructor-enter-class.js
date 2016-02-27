@@ -16,7 +16,6 @@ Template.instructorEnterClass.onCreated(function () {
 		}
 
 		self.subscribe(SubscriptionTag.PRESENCES);
-		self.subscribe(SubscriptionTag.ALL_USERS);
 
 		PeerMedia.connections.local = Helpers.createNewPeer();
 	});
@@ -117,7 +116,10 @@ Template.instructorEnterClass.events
 				});
 			} else {
 				console.log('switching stream...');
-				video.src = URL.createObjectURL(PeerMedia.streams[userPeerId]);
+				if (userPeerId === Meteor.user().peer._id)
+					video.src = URL.createObjectURL(PeerMedia.streams.local);
+				else
+					video.src = URL.createObjectURL(PeerMedia.streams[userPeerId]);
 			}
 		},
 		'click #answerQuestion': function (event) {
@@ -134,7 +136,10 @@ Template.instructorEnterClass.events
 				});
 			} else {
 				console.log('switching stream...');
-				video.src = URL.createObjectURL(PeerMedia.streams[userPeerId]);
+				if (userPeerId === Meteor.user().peer._id)
+					video.src = URL.createObjectURL(PeerMedia.streams.local);
+				else
+					video.src = URL.createObjectURL(PeerMedia.streams[userPeerId]);
 			}
 		},
 		'click #endQuestion': function (event) 

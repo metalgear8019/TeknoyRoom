@@ -21,6 +21,8 @@ Template.studentEnterClass.onCreated(function () {
 		self.subscribe(SubscriptionTag.PRESENCES);
 		self.subscribe(SubscriptionTag.CURRENT_NOTE, Meteor.userId(), Session.get('course'));
 
+		Session.set('note', Notes.findOne());
+
 		PeerMedia.connections.local = Helpers.createNewPeer();
 	});
 });
@@ -97,6 +99,9 @@ Template.studentEnterClass.helpers
 			console.log('available instructor >> ' + JSON.stringify(result));
 			return available;
 		},
+		note: function () {
+			return Session.get('note');
+		},
 		questionPending: function () {
 			var result = isQuestionPending();
 			console.log('is question pending >> ' + result);
@@ -108,19 +113,6 @@ Template.studentEnterClass.helpers
 Template.studentEnterClass.events
 (
 	{
-		'click #share-screen': function (event)
-		{
-			event.preventDefault();
-			$('#share-camera').removeAttr('disabled');
-			$('#share-screen').attr('disabled', 'disabled');
-		},
-
-		'click #share-camera': function (event)
-		{
-			event.preventDefault();
-			$('#share-screen').removeAttr('disabled');
-			$('#share-camera').attr('disabled', 'disabled');
-		},
 		'click #makeCall': function (event) 
 		{
 			event.preventDefault();
@@ -142,9 +134,10 @@ Template.studentEnterClass.events
 		},
 		'click #leave': function (event) {
 			event.preventDefault();
-			// MediaHelpers.stopStreams(PeerMedia.streams);
+			var note = Session.get('note');
+			note.content = document.getElementById('textArea').value;
+			Meteor.call('updateNote', note._id, note);
 			PeerMedia.streams.local.stop();
-			// MediaHelpers.closeConnections(PeerMedia.connections);
 			PeerMedia.connections.local.destroy();
 			MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);
 			FlowRouter.go('/student/current');

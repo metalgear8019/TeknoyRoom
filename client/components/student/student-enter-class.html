@@ -3,9 +3,6 @@
 	<div id="page-content-wrapper" style="margin-top:50px;">
 		<div class="page-content inset">
 			<div class="container-fluid">
-
-				<!--<div class="alert alert-danger" role="alert" style="margin-top:10px;">(Display warning here)</div>-->
-
 				<div style="margin-top:50px;margin-left:40px;">
 					<div class="panel panel-default" style="float:left;margin-right:10px;height:574px;">
 						<div class="panel-body">
@@ -15,31 +12,22 @@
 								</a>
 							</div>
 							<div class="row">
-						  		<!--<input type="image" alt="Profile Picture" src="/assets/classroom.jpg" style="height:450px;width:550px;float:left;margin:10px;">-->
 						  		<div class="video-container" style="height:450px;width:550px;float:left;margin:10px;">
 							  		{{ #if isAvailable }}
 							  			Instructor is now connected. <a href = "" id="makeCall">Refresh</a>
 							  		{{ else }}
 							  			Instructor is not yet online. Please wait...
 							  		{{ /if }}
-							  		<!--<br>Own video:
-						  			<video id="myVideo" muted="true" class="myVideo" autoplay style="height:auto;width:550px;"></video>-->
-						  			<br>Instructor video:
+						  			<br>
 						  			<video id="theirVideo" class="theirVideo" autoplay style="height:auto;width:550px;"></video>
 						  			{{ autocall }}
 						  		</div>
 						  	</div>
-							<div class="row" style="float:left;">
-								<a id="share-screen" href="" class="btn btn-success" data-toggle="tooltip" title="Share Current Screen">
-						  			<i class="fa fa-line-chart"></i>
-						  		</a>&nbsp;&nbsp;
-								<a id="share-camera" href="" class="btn btn-success" data-toggle="tooltip" title="Share Camera Feed">
-									<i class="fa fa-video-camera"></i>
-								</a>&nbsp;&nbsp;
+							<div class="row" style="float:right;">
+								<a href="" id="askQuestion" class="btn btn-success" data-toggle="tooltip" {{ questionPending }} title="Ask a Question">
+									<i class="fa fa-question-circle"></i>&nbsp;&nbsp;ASK A QUESTION
+								</a>
 							</div>
-							<a href="" style="float:right;" class="btn btn-success" data-toggle="tooltip" {{ questionPending }} title="Ask a Question">	
-								<i class="fa fa-question-circle"></i>
-							</a>
 						</div>
 					</div>
 
@@ -58,7 +46,7 @@
 							  	<h5 class="panel-title"><i class="fa fa-check-square-o"></i>&nbsp;&nbsp;Notes</h5>
 							</div>
 							<div class="panel-body">
-								<textarea class="form-control" rows="9" id="textArea"></textarea>
+								<textarea class="form-control" rows="9" id="textArea">{{ note.content }}</textarea>
 							</div>
 						</div>
 					</div>
