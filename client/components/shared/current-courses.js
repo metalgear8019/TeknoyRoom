@@ -48,6 +48,7 @@ Template.currentCourses.events
 				console.log("duration >> " + result.duration + "\ntime passed >> " + 
 					Helpers.getDurationPast(Helpers.getTime(), result.hour, result.minute));
 				Session.set('class', result._id);
+				Session.set('course', result.course);
 				console.log('enrolled id >> ' + Session.get('class'));
 				FlowRouter.go(getRouteGroup() + '/current/enter');
 			} else {

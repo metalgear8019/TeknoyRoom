@@ -1,3 +1,5 @@
+var note;
+
 Template.studentEnterClass.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
@@ -12,11 +14,12 @@ Template.studentEnterClass.onCreated(function () {
 			else {
 				classId = classId._id;
 				Session.set('class', classId);
+				Session.set('course', classId.course);
 			}
 		}
 
 		self.subscribe(SubscriptionTag.PRESENCES);
-		self.subscribe(SubscriptionTag.ALL_USERS);
+		self.subscribe(SubscriptionTag.CURRENT_NOTE, Meteor.userId(), Session.get('course'));
 
 		PeerMedia.connections.local = Helpers.createNewPeer();
 	});

@@ -1,15 +1,4 @@
 Meteor.startup(function () {
-	/*SSLProxy({
-		port: 6000, //or 443 (normal port/requires sudo)
-		ssl : {
-			key: Assets.getText("server.key"),
-			cert: Assets.getText("server.crt"),
-
-			//Optional CA
-			//Assets.getText("ca.pem")
-		}
-	});*/
-
 	// code to run on server at startup
 	Accounts.onCreateUser(function (options, user) {
 		if (options.profile) {
@@ -65,6 +54,12 @@ Meteor.publish(SubscriptionTag.ALL_COURSES, function() {
 Meteor.publish(SubscriptionTag.ONE_COURSE, function(id) {
 	check(id, String);
 	return Courses.find({ _id: id });
+});
+
+Meteor.publish(SubscriptionTag.ONE_COURSE_SECTION, function(sectionId) {
+	check(sectionId, String);
+	var section = Sections.findOne({ _id: sectionId }) || { course: null };
+	return Courses.find({ _id: section.course });
 });
 
 Meteor.publish(SubscriptionTag.ALL_SEMESTERS, function() {
@@ -123,6 +118,12 @@ Meteor.publish(SubscriptionTag.ALL_NOTES, function() {
 Meteor.publish(SubscriptionTag.ONE_NOTE, function(id) {
 	check(id, String);
 	return Notes.find({ _id: id });
+});
+
+Meteor.publish(SubscriptionTag.CURRENT_NOTE, function(userId, courseId) {
+	check(userId, String);
+	check(courseId, String);
+	return Notes.find({ owner: userId, course: courseId });
 });
 
 Meteor.publish(SubscriptionTag.ONE_ENROLLEE_SECTION, function(id){

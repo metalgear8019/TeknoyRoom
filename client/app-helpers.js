@@ -9,6 +9,16 @@ Helpers = {
 				empty = true;
 		return empty;
 	},
+	getRouteGroup: function (type) {
+		var result = '/';
+		if (type == 0)
+			result = '/admin';
+		else if (type == 1)
+			result = '/instructor';
+		else if (type == 2)
+			result = '/student';
+		return result;
+	},
 	generateRedirectRoute: function (splitPath, userType) {
 		var route = '/' + userType;
 		if (!Helpers.isEmpty(splitPath) && splitPath[1] === userType) {
@@ -163,12 +173,8 @@ Helpers = {
 		if (Helpers.isClassOngoing(result, time)) {
 			console.log("duration >> " + result.duration + "\ntime passed >> " + 
 				Helpers.getDurationPast(time, result.hour, result.minute));
-			// Session.set('class', result._id);
-			// console.log('enrolled id >> ' + Session.get('class'));
-			// FlowRouter.go(getRouteGroup() + '/current/enter');
 			return result;
 		} else {
-			// alert('No classes currently held.');
 			return null;
 		}
 	},

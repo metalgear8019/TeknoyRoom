@@ -1,4 +1,4 @@
-<template name="currentCourses">
+<template name="instructorClassList">
 	<!-- Instructor Current Courses -->
 	<div id="page-content-wrapper" style="margin-top:50px;">
 		<div class="page-content inset">
@@ -6,38 +6,34 @@
 				{{> notifications}}
 				<div class="panel panel-default" style="margin-top:50px;margin-left:100px;">
 					<div class="panel-body">
+						<div class="input-group" style="float:left;">
+							<h5>{{ section.course.title }} - {{ section.name }}</h5>
+						</div>
 						<div class="input-group" style="float:right;">
 							<i class="fa fa-search"></i>
 							<input type="text" id="search" name="search">
 						</div>
 						{{ #if Template.subscriptionsReady }}
-							{{#if sections.length}}
+							{{ #if users.length }}
 								<table class="table">
 								  	<thead>
 										<tr>
-											<th>SECTION</th>
+											<th>NAME</th>
 											<th>COURSE</th>
-											<th>SEMESTER</th>
-											<th>SCHEDULE</th>
 										</tr>
 									</thead>
 									<tbody>
-										{{ #each sections }}
+										{{ #each users }}
 											<tr class="{{#if state}}alert alert-warning{{/if}}">
-												<td class="pointer-hover">{{name}}</td>
-												<td class="pointer-hover">{{course.title}}</td>
-												<td class="pointer-hover">{{semester.name}}</td>
-												<td class="pointer-hover">{{time}}</td>
+												<td class="pointer-hover">{{ profile.first_name }} {{ profile.middle_name }} {{ profile.last_name }}</td>
+												<td class="pointer-hover">{{ profile.program }} - {{ profile.year }}</td>
 											</tr>
 										{{/each}}
 									</tbody>
-								</table> 
-								<div>
-									<a class="btn btn-warning" id="enterClass"><i class="fa fa-sign-in"></i>&nbsp;&nbsp;Enter Class</a>
-								</div>
-							{{else}}
-								{{> collectionEmpty message="You have no current course enrolled."}}
-							{{/if}}
+								</table>
+							{{ else }}
+								{{> collectionEmpty message="There are no users enrolled in this section."}}
+							{{ /if }}
 						{{ else }}
 							{{> loading }}
 						{{ /if }}

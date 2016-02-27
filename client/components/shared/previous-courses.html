@@ -32,13 +32,7 @@
 									</tbody>
 								</table>
 							{{else}}
-								<div class="jumbotron text-center" style="background:white;">
-									<img src="/assets/empty_list_icon.png" style="height:288px;">
-									<div >
-										<h4>Nothing to display!</h4>
-										<p>You have no previous course.</p>
-									</div>
-								</div>
+								{{> collectionEmpty message="You have no previous course."}}
 							{{/if}}
 						{{ else }}
 							{{> loading }}

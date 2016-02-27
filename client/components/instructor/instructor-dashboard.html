@@ -1,13 +1,6 @@
 <template name="instructorDashboard">
 	<div class="jumbotron" style="margin-top:50px;margin-left:50px;">
 	  	<p>
-	  		{{ #if Template.subscriptionsReady }}
-		  		<a class="btn btn-primary btn-lg" href="" id="enterClass" role="button" style="float:right;">
-			  		{{ class }}&nbsp;<i class="fa fa-sign-out"></i>
-			  	</a>
-			{{ else }}
-				{{> loading }}
-			{{ /if }}
 		  	<h1>Hello, {{name}}!</h1>
 	  	</p>
 
@@ -34,13 +27,7 @@
 					  </div>
 					</div>
 				{{else}}
-					<div class="jumbotron text-center" style="background:white;">
-						<img src="/assets/empty_list_icon.png" style="height:288px;">
-						<div >
-							<h4>Nothing to display!</h4>
-							<p>Your shelf is empty. There are no notes available.</p>
-						</div>
-					</div>
+					{{> collectionEmpty message="Your shelf is empty. There are no notes available."}}
 	  			{{/each}}
 	  		{{ else }}
 				{{> loading }}

@@ -15,11 +15,12 @@ Template.studentAttendance.helpers
 		{
             height: 500,
             events: function(start, end, timezone, callback) {
+            	var userId = FlowRouter.getParam('userId') || Meteor.userId();
                 var events = [];
                 var id = FlowRouter.getParam('id');
                 var section = Sections.findOne(id);
                 var semester = Semesters.findOne(section.semester);
-				var result = Enrollees.findOne({ user: Meteor.userId(), section: id });
+				var result = Enrollees.findOne({ user: userId, section: id });
 				var attendance = result.attendance;
 				var start_date = semester.start_date;
 				var end_date = semester.end_date;
