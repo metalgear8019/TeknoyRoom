@@ -70,7 +70,6 @@ Tracker.autorun(function(){
 
 	if (id == 'students')
 	{
-		console.log('tracker 2');
 		sections = [{
 			_id: 'new',
 			name: '',
@@ -147,7 +146,6 @@ Template.enrollStudent.helpers
 				{
 					if (!flagSection2)
 					{
-						//console.log(enrollee._id);
 						for (var i = 0; i < cursorSections.length; i ++)
 						{
 							sections[i] = {
@@ -163,16 +161,17 @@ Template.enrollStudent.helpers
 								isEnrolled: false
 							}
 						}
-						//console.log(enrollee.section.length);
+
 						for (var i = 0; i < enrollee.section.length; i++)
 						{
-							//console.log('condition: ' + sections[i]._id + '=' + enrollee.section[i]._id);
 							for (var j = 0; j < sections.length; j++)
-							if (sections[j]._id == enrollee.section[i]._id)
 							{
-								sections[j].isChecked = true;
-								sections[j].isEnrolled = true;
-								continue;
+								if (sections[j]._id == enrollee.section[i]._id)
+								{
+									sections[j].isChecked = true;
+									sections[j].isEnrolled = true;
+									continue;
+								}
 							}
 						}
 						flagSection2 = true;
@@ -213,8 +212,6 @@ Template.enrollStudent.helpers
 								isEnrolled: false
 							}
 
-							//console.log('course: ' + '[' + sections[i].course._id + ']' + sections[i].course.subject_number);
-							//console.log('semester: ' + '[' + sections[i].semester._id + ']' + sections[i].semester.school_year);
 						}
 						flagSection2 = true;
 					}
@@ -295,7 +292,6 @@ Template.enrollStudent.events
 		{
 			event.preventDefault();
 			section = this;
-			//console.log(section);
 			flagSection = true;
 			sectionDependency.changed();;
 		},
@@ -326,13 +322,8 @@ Template.enrollStudent.events
 										continue;
 									}
 									
-									//console.log('conditon: ' + sections[i].course._id + '=' + sections[j].course._id + '&&' + sections[i].semester._id + '=' + sections[j].semester._id);
 									if (sections[i].course._id == sections[j].course._id && sections[i].semester._id == sections[j].semester._id)
 									{
-										console.log('i: ' + i + ' j: ' + j);
-										console.log('conditon: ' + sections[i].course.subject_number + '=' + sections[j].course.subject_number + 
-													'&&' + sections[i].semester.school_year + '=' + sections[j].semester.school_year + 
-													'&&' + sections[i]._id + '!=' + sections[j]._id);
 
 										if (sections[j].isChecked)
 										{
@@ -346,7 +337,7 @@ Template.enrollStudent.events
 
 								if (!isAlreadyEnrolledInThatCourse)
 								{
-									enrollees.push({user: user, section: sections[i]._id, attendance: [{ time_in: new Date(), time_out: new Date() }]});
+									enrollees.push({user: user, section: sections[i]._id});
 								}
 							}
 						}

@@ -87,7 +87,6 @@ Tracker.autorun(function(){
 
 	if (id == 'students')
 	{
-		console.log('tracker');
 		instructor = {
 			_id: 'new',
 			profile: 
@@ -437,7 +436,7 @@ Template.enrollForm.events
 							});
 						}
 
-						enrollees.push({user: assignedInstructor, section: section, attendance: [{ time_in: new Date(), time_out: new Date() }, { date: new Date('February 29, 2016'), time_in: new Date('February 29, 2016'), time_out: new Date('February 29, 2016') }] });
+						enrollees.push({user: assignedInstructor, section: section});
 					}
 
 					for (var i = 0; i < students.length; i++)
