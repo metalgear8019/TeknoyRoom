@@ -53,6 +53,7 @@ Template.instructorAttendance.helpers
 
 					if (haveClasses)
 					{
+						console.log(attendance.length);
 						if (attendance.length != 0)
 						{
 							for (var a = 0; a < attendance.length; a++)
@@ -87,7 +88,7 @@ Template.instructorAttendance.helpers
 
 				if (absents.length != 0)
 				{
-					absents = absents.filter( function( item, index, inputArray ) {
+					absents = absents.filter(function( item, index, inputArray ) {
 			           return inputArray.indexOf(item) == index;
 				    });
 

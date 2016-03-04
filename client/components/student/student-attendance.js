@@ -64,6 +64,7 @@ Template.studentAttendance.helpers
 								{
 									var startDate = (attendance[a].time_in.getFullYear()) + '-' + (((attendance[a].time_in.getMonth()+1) < 10)? '0'+(attendance[a].time_in.getMonth()+1): (attendance[a].time_in.getMonth()+1)) + '-' + (((attendance[a].time_in.getDate()) < 10)? ('0'+ attendance[a].time_in.getDate()): attendance[a].time_in.getDate());
 									events.push({title: 'Present', start: startDate, rendering: 'background', color: '#8BC34A'});
+									break;
 								}
 								else
 								{

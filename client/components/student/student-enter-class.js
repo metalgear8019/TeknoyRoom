@@ -135,13 +135,26 @@ Template.studentEnterClass.events
 		'click #leave': function (event) {
 			event.preventDefault();
 			var note = Session.get('note');
-			var classId = Session.get('class');
 			note.content = document.getElementById('textArea').value;
 			Meteor.call('updateNote', note._id, note);
 			PeerMedia.streams.local.stop();
 			PeerMedia.connections.local.destroy();
-			var enrollee = Enrollees.findOne({'user':Meteor.userId(), 'section':classId});
-			MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);
+			
+			var enrollee = Enrollees.findOne({'user':Meteor.userId(), 'section': Session.get('class')});
+			var isAlreadyLog = false;
+
+			for (var i = 0; i < enrollee.attendance.length; i++)
+			{
+				if (PeerMedia.attendance.toDateString() == enrollee.attendance[i].toDateString)
+				{
+					isAlreadyLog = true;
+				}
+			}			
+
+			if (!isAlreadyLog)
+			{
+				MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);
+			}
 			FlowRouter.go('/student/current');
 		}
 	}

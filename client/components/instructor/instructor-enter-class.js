@@ -155,7 +155,23 @@ Template.instructorEnterClass.events
 			PeerMedia.streams.local.stop();
 			// MediaHelpers.closeConnections(PeerMedia.connections);
 			PeerMedia.connections.local.destroy();
-			MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);
+
+			var enrollee = Enrollees.findOne({'user':Meteor.userId(), 'section': Session.get('class')});
+			var isAlreadyLog = false;
+
+			for (var i = 0; i < enrollee.attendance.length; i++)
+			{
+				if (PeerMedia.attendance.toDateString() == enrollee.attendance[i].toDateString)
+				{
+					isAlreadyLog = true;
+				}
+			}			
+
+			if (!isAlreadyLog)
+			{
+				MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);
+			}
+			
 			FlowRouter.go('/instructor/current');
 		},
 		'click #online': function (event)
