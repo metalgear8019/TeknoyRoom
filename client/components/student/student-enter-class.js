@@ -143,14 +143,17 @@ Template.studentEnterClass.events
 			var enrollee = Enrollees.findOne({'user':Meteor.userId(), 'section': Session.get('class')});
 			var isAlreadyLog = false;
 
-			for (var i = 0; i < enrollee.attendance.length; i++)
+			if (enrollee.attendance != undefined)
 			{
-				if (PeerMedia.attendance.time_in.toDateString() == enrollee.attendance[i].time_in.toDateString())
+				for (var i = 0; i < enrollee.attendance.length; i++)
 				{
-					isAlreadyLog = true;
+					if (PeerMedia.attendance.time_in.toDateString() == enrollee.attendance[i].time_in.toDateString())
+					{
+						isAlreadyLog = true;
+					}
 				}
 			}			
-
+			
 			if (!isAlreadyLog)
 			{
 				MediaHelpers.logAttendance(Meteor.userId(), Session.get('class'), PeerMedia.attendance);

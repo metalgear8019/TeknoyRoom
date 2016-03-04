@@ -162,7 +162,6 @@ Template.instructorEnterClass.events
 			{
 				for (var i = 0; i < enrollee.attendance.length; i++)
 				{
-					console.log(enrollee.attendance[i].time_out.toDateString());
 					if (PeerMedia.attendance.time_in.toDateString() == enrollee.attendance[i].time_in.toDateString())
 					{
 						isAlreadyLog = true;
