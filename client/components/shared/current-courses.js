@@ -56,7 +56,8 @@ Template.currentCourses.events
 			}
 		},
 		'click .pointer-hover': function (event) {
-			FlowRouter.go(getRouteGroup() + '/current/' + this._id);
+			var param = (this._id === Meteor.userId())? 'self' : this._id;
+			FlowRouter.go(getRouteGroup() + '/current/' + param);
 		}
 	}
 );
