@@ -3,8 +3,8 @@ Template.instructorEnterClass.onCreated(function () {
 	self.autorun(function () {
 		var classId = Session.get('class');
 
+		self.subscribe(SubscriptionTag.ALL_ENROLLEES);
 		if (Helpers.isEmpty(classId)) {
-			self.subscribe(SubscriptionTag.ALL_ENROLEES);
 			self.subscribe(SubscriptionTag.ALL_SECTIONS);
 			classId = Helpers.getCurrentClass();
 			if (Helpers.isEmpty(classId))
@@ -156,14 +156,18 @@ Template.instructorEnterClass.events
 			// MediaHelpers.closeConnections(PeerMedia.connections);
 			PeerMedia.connections.local.destroy();
 
-			var enrollee = Enrollees.findOne({'user':Meteor.userId(), 'section': Session.get('class')});
+			var enrollee = Enrollees.findOne({user: Meteor.userId(), section: Session.get('class')});
 			var isAlreadyLog = false;
-
-			for (var i = 0; i < enrollee.attendance.length; i++)
+			if (enrollee.attendance != undefined)
 			{
-				if (PeerMedia.attendance.toDateString() == enrollee.attendance[i].toDateString)
+				for (var i = 0; i < enrollee.attendance.length; i++)
 				{
-					isAlreadyLog = true;
+					console.log(enrollee.attendance[i].time_out.toDateString());
+					if (PeerMedia.attendance.time_in.toDateString() == enrollee.attendance[i].time_in.toDateString())
+					{
+						isAlreadyLog = true;
+						break;
+					}
 				}
 			}			
 

@@ -4,9 +4,9 @@ Template.studentEnterClass.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
 		var classId = Session.get('class');
-
+		self.subscribe(SubscriptionTag.ALL_ENROLLEES);
+		
 		if (Helpers.isEmpty(classId)) {
-			self.subscribe(SubscriptionTag.ALL_ENROLEES);
 			self.subscribe(SubscriptionTag.ALL_SECTIONS);
 			classId = Helpers.getCurrentClass();
 			if (Helpers.isEmpty(classId))
@@ -145,7 +145,7 @@ Template.studentEnterClass.events
 
 			for (var i = 0; i < enrollee.attendance.length; i++)
 			{
-				if (PeerMedia.attendance.toDateString() == enrollee.attendance[i].toDateString)
+				if (PeerMedia.attendance.time_in.toDateString() == enrollee.attendance[i].time_in.toDateString())
 				{
 					isAlreadyLog = true;
 				}
