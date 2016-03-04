@@ -2,8 +2,6 @@ Template.instructorAttendance.onCreated(function () {
 	var self = this;
 	self.autorun(function () {
 		var id = FlowRouter.getParam('id');
-		if (id === 'self')
-			id = Meteor.userId();
 		self.subscribe(SubscriptionTag.ONE_ENROLLEE_SECTION, id);
 		self.subscribe(SubscriptionTag.ONE_SECTION, id);
 		self.subscribe(SubscriptionTag.ALL_SEMESTERS);
@@ -19,11 +17,10 @@ Template.instructorAttendance.helpers
             events: function(start, end, timezone, callback) {
                 var events = [];
                 var id = FlowRouter.getParam('id');
-                if (id === 'self')
-					id = Meteor.userId();
+                var userId = FlowRouter.getParam('userId') || Meteor.userId();
                 var section = Sections.findOne(id);
                 var semester = Semesters.findOne(section.semester);
-				var result = Enrollees.findOne({ section: id });
+				var result = Enrollees.findOne({ user: userId, section: id });
 				var attendance = result.attendance;
 				var start_date = semester.start_date;
 				var end_date = semester.end_date;
@@ -57,6 +54,7 @@ Template.instructorAttendance.helpers
 
 					if (haveClasses)
 					{
+						console.log(attendance);
 						if (attendance != undefined)
 						{
 							for (var a = 0; a < attendance.length; a++)
