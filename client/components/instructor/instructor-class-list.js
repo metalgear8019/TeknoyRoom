@@ -50,7 +50,8 @@ Template.instructorClassList.events
 		},
 		'click .pointer-hover': function (event) {
 			var currentPath = FlowRouter.current().path || '';
-			FlowRouter.go(currentPath + '/' + this._id);
+			var param = (Meteor.userId() === this._id) ? 'self' : this._id;
+			FlowRouter.go(currentPath + '/' + param);
 		}
 	}
 );

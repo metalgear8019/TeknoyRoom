@@ -48,8 +48,7 @@ Template.previousCourses.events
 				result = '/instructor';
 			else if (result == 2)
 				result = '/student';
-			var param = (this._id === Meteor.userId())? 'self' : this._id;
-			FlowRouter.go(result + '/previous/' + param);
+			FlowRouter.go(result + '/previous/' + this._id);
 		}
 	}
 );
