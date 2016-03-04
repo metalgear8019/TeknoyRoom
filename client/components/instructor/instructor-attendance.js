@@ -57,8 +57,7 @@ Template.instructorAttendance.helpers
 
 					if (haveClasses)
 					{
-						console.log(attendance.length);
-						if (attendance.length != 0)
+						if (attendance != undefined)
 						{
 							for (var a = 0; a < attendance.length; a++)
 							{

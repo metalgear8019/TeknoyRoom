@@ -53,7 +53,7 @@ Template.studentAttendance.helpers
 
 					if (haveClasses)
 					{
-						if (attendance.length != 0)
+						if (attendance != undefined	)
 						{
 							for (var a = 0; a < attendance.length; a++)
 							{
